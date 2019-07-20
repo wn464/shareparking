@@ -12,7 +12,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<junit.version>4.12</junit.version>
 		<log4j.version>1.2.17</log4j.version>
-		<!--  lombok插件可以消除封装对象需要写重复的代码 -->
+		<!--  lombok插件可以消除封装对象需要写重复的代码。-->
 		<lombok.version>1.16.18</lombok.version>
 	</properties>
 
