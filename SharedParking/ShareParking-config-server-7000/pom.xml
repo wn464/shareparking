@@ -4,7 +4,7 @@
     <groupId>com.project.sharedparking</groupId>
     <artifactId>SharedParking</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-  </parent>
+  </parent> 
   <artifactId>ShareParking-config-server-7000</artifactId>
   <packaging>war</packaging>
   <dependencies>
