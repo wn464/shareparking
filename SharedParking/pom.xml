@@ -107,5 +107,6 @@
 		<module>ShareParking-config-server-7000</module>
 		<module>ShareParking-provider-8090</module>
 		<module>ShareParking-zuul-9500</module>
+		<module>ShareParking-Order-8010</module>
 	</modules>
 </project>
