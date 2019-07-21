@@ -1,6 +1,0 @@
-spring:
-  cloud:
-    config: 
-      name: spring-prodiver
-      profile:  provider8090
-      uri: http://localhost:7000
