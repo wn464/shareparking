@@ -1,0 +1,14 @@
+server:
+  port: 7000
+  
+spring:
+  application:
+    name: shareparking-config-server-7000
+  profiles:
+    active: native
+  cloud: 
+    config:
+      server:
+        native: #本地配置
+          search-locations: classpath:/config
+          
