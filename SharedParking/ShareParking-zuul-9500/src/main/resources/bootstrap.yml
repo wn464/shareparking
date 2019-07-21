@@ -1,0 +1,6 @@
+spring: 
+  cloud:
+    config:
+      name: spring-zuul    #要读取的文件名字
+      profile: eureka9500                #要加载的环境
+      uri: http://localhost:7000   #连接到config-server

@@ -18,13 +18,12 @@
 		<groupId>junit</groupId>
 		<artifactId>junit</artifactId>
 	</dependency>
-	
-
+	 <!-- Spring AOP  依赖-->
+	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
 	<dependency>
-		 <groupId>com.alibaba</groupId>
-		 <artifactId>druid-spring-boot-starter</artifactId>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-aop</artifactId>
 	</dependency>
-	
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-web</artifactId>
@@ -34,8 +33,7 @@
 		<artifactId>spring-boot-starter-test</artifactId>
 	</dependency>
 	
-	 <!-- 驱动包 -->
-	 <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+	<!-- 驱动包 -->
 	<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 	<dependency>
 	    <groupId>mysql</groupId>
@@ -47,27 +45,45 @@
 		 <artifactId>spring-boot-devtools</artifactId>
 		 <optional>true</optional>
 	</dependency>
+	<!-- mybatis -->
 	 <dependency>
 		 <groupId>org.mybatis.spring.boot</groupId>
 		 <artifactId>mybatis-spring-boot-starter</artifactId>
-		 
 	 </dependency>
 	 <!-- log4j -->
 	<dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
     </dependency>
-    <!-- Spring AOP  依赖-->
-	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
-	<dependency>
-	    <groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter-aop</artifactId>
-	</dependency>
+   
 	<dependency>
 	    <groupId>cglib</groupId>
 	    <artifactId>cglib</artifactId>
 	    <version>3.2.12</version>
 	</dependency>
+	
+	<!-- 导入shiro依赖 -->
+    <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring -->
+	<dependency>
+	    <groupId>org.apache.shiro</groupId>
+	    <artifactId>shiro-spring</artifactId>
+	    <version>1.4.0</version>
+	</dependency>
+	
+	<!-- thymeleaf模块 html动态 -->
+	<dependency>
+		 <groupId>org.springframework.boot</groupId>
+		 <artifactId>spring-boot-starter-thymeleaf</artifactId>
+	</dependency>
+    <!-- thymeleaf权限 -->
+    <!-- https://mvnrepository.com/artifact/com.github.theborakompanioni/thymeleaf-extras-shiro -->
+	<dependency>
+	    <groupId>com.github.theborakompanioni</groupId>
+	    <artifactId>thymeleaf-extras-shiro</artifactId>
+	    <version>2.0.0</version>
+	</dependency>
+	
+	
 	<!-- 整合redis -->
 	<dependency>
            <groupId>org.springframework.boot</groupId>
@@ -94,5 +110,6 @@
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-config-client</artifactId>
     </dependency>
+    
   </dependencies>
 </project>
