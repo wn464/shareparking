@@ -1,6 +1,0 @@
-spring:
-  cloud:
-    config: 
-      name: spring-zull
-      profile:  zull9500
-      uri: http://localhost:7000
