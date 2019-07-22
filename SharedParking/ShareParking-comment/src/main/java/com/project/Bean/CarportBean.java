@@ -1,5 +1,27 @@
 package com.project.Bean;
 
-public class CarportBean {
+import java.util.Date;
+import java.util.List;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+/**
+ * 车位对象
+ * @author zxc
+ *
+ */
+@Data
+@Accessors(chain = true)//链式表达
+public class CarportBean {
+	private int id;
+	private String address;
+	private String carportnumber;
+	private double coordinate_x;
+	private double coordinate_y;
+	private Date begintime;
+	private Date endtime;
+	private int status;
+	private List<?> imgs_id;
+	private double price;
+	private MemberBean m_id;
 }
