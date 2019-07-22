@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.dao.IOrderDao">
+<!-- 	添加订单 (除支付号、押金)-->
+	<insert id="insertOrder" parameterType="OrderBean">
+		insert into orders(ordertime,ordernumber,status,price,delStatus,carport_id,mem_j_id,mem_y_id,begintime,endtime,carnumber
+		values(#{orderTime},#{orderNumber},#{statusBean.id},#{price},#{delState.id},
+		#{carportBean.id},#{memberBean1.id},#{memberBean2.id},#{beginTime},#{endTime},#{carNumber})
+	</insert>
+	
+</mapper>
