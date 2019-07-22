@@ -20,7 +20,7 @@ public class CarportBean {
 	private double coordinate_y;
 	private Date begintime;
 	private Date endtime;
-	private int status;
+	private MarkBean status;
 	private List<?> imgs_id;
 	private double price;
 	private MemberBean m_id;
