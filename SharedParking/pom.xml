@@ -110,5 +110,6 @@
 		<module>ShareParking-Order-8010</module>
 		<module>ShareParking-Complaint-8011</module>
 		<module>ShareParking_carport_8050</module>
+		<module>ShareParking_carport</module>
 	</modules>
 </project>
