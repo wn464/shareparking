@@ -7,7 +7,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@EnableEurekaClient
 @ComponentScan({"com.project.service"})
 @MapperScan("com.project.dao")
 public class ApplicationDemo {

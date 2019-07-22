@@ -2,7 +2,7 @@ server:
   port: 8010         #当前服务的端口号
   
 mybatis:
-  config-location: classpath:mybatis/mybatis-config.xml  # mybatis配置文件所在路径
+  config-location: classpath:mybatis/mybatis_config.xml  # mybatis配置文件所在路径
   type-aliases-package: com.project.bean              # 所有Entity别名类所在包
   mapper-locations: classpath:mybatis/mapper/*.xml    # mapper映射文件
   

@@ -26,6 +26,7 @@ public class OrderTest {
 	    
 	    @Test
 	    public void insert() {
+	    	System.out.println("===========================================");
 	    	OrderBean orderBean = new OrderBean();
 	    	orderBean.setBeginTime("2019-07-22 18:53:37").setEndTime("2019-07-22 18:53:41").setCarNumber("111");
 	    	CarportBean carportBean = new CarportBean();
@@ -45,9 +46,9 @@ public class OrderTest {
 	    	statusBean.setId(3);
 	    	orderBean.setStatusBean(statusBean);
 	    
-	    	System.out.println(orderBean);
+	    
 	    	
-//	    	orderService.getOrder(orderBean);
+	    	orderService.getOrder(orderBean);
 		}
 	
 
