@@ -109,5 +109,6 @@
 		<module>ShareParking-zuul-9500</module>
 		<module>ShareParking-Order-8010</module>
 		<module>ShareParking-Complaint-8011</module>
+		<module>ShareParking_carport_8050</module>
 	</modules>
 </project>
