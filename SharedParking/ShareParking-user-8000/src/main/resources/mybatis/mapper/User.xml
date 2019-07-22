@@ -12,7 +12,5 @@
         where u.username = #{username}
     </select>
 
-    <select id="findById" resultType="UserBean">
-        select * from user where id = #{id}
-    </select>
+
 </mapper>

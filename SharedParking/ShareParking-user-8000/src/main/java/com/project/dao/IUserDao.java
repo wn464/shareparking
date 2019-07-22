@@ -13,10 +13,7 @@ public interface IUserDao {
      */
     UserBean findByUserName(String username);
 
-    /*、
-        通过id查询
-     */
-    UserBean findById(int id);
+
 
     /*
         修改手机号
