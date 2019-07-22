@@ -21,7 +21,7 @@ public class CarportBean {
 	private Date begintime;
 	private Date endtime;
 	private MarkBean status;
-	private List<?> imgs_id;
+	private ImagesBean imgs_id;
 	private String statusimage;
 	private double price;
 	private MemberBean m_id;
