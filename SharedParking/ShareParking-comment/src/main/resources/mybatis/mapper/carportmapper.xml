@@ -3,18 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.project.dao.CarportDao">
+  <!--通过所属人查询车位  -->
   <select id="findcarportbyMID" resultMap="onemap">
-  
   select *from carport where m_id=#{mid}
   </select>
-  <resultMap type="CarprotBean" id="onemap">
+  <resultMap type="CarportBean" id="onemap">
   <id property="id" column="id" />
   <result property="address" column="address" />
   <result property="carportnumber" column="carportnumber" />
   <result property="coordinate_x" column="coordinate_x" />
   <result property="coordinate_y" column="coordinate_y" />
   <result property="begintime" column="begintime" />
-  <result property="" column="" />
-  
+  <result property="endtime" column="endtime"/>
+  <result property="statusimage" column="statusimage" />
+  <result property="price" column="price" />
+ <association property="status" javaType="MarkBean" select="com.project.dao.MarkDao.findmarkbyid" column="status" />
+  <association property="imgs_id" javaType="ImagesBean" select="com.project.dao.ImagesDao.findimagesbyid" column="imgs_id" />
+  <association property="m_id" javaType="MemberBean" select="com.project.dao.IMemberDao.findById" column="m_id" />
   </resultMap>
   </mapper>
