@@ -8,9 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import com.project.Bean.CarportBean;
 
 
-
-
-
 /**
  * 停车位接口
  * @author zxc
@@ -57,7 +54,7 @@ public interface CarportDao {
 	 * @param status
 	 * @return
 	 */
-	int updatecarport(int id,int status);
+	int updatecarport(@Param("id")int id,@Param("status")int status);
 	/**
 	 * 通过价格范围查询车位
 	 * @param price
