@@ -17,7 +17,7 @@
   <result property="endtime" column="endtime"/>
   <result property="statusimage" column="statusimage" />
   <result property="price" column="price" />
- <association property="status" javaType="MarkBean" select="com.project.dao.MarkDao.findmarkbyid" column="status" />
+  <association property="status" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="status" />
   <association property="imgs_id" javaType="ImagesBean" select="com.project.dao.ImagesDao.findimagesbyid" column="imgs_id" />
   <association property="m_id" javaType="MemberBean" select="com.project.dao.IMemberDao.findById" column="m_id" />
   </resultMap>
