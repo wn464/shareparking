@@ -2,8 +2,10 @@ package com.project.Bean;
 
 import java.util.List;
 
+import lombok.Data;
 
 
+@Data
 public class OrderBean {
 
 	private int id;//订单主键
