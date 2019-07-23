@@ -1,8 +1,8 @@
 package com.project.Bean;
 
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 //前台用户登录bean
 @Data

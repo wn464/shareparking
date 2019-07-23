@@ -3,26 +3,33 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.project.dao.CarportDao">
+  <select id="findcarportbydaynumber" resultType="int">
+  select count(*) from carport where begintime&lt;=day
+  </select>
+  <!-- 查询今日新增车位 -->
+  <select id="findcarportdaybytime" resultMap="onemap">
+  select * from carport where begintime&lt;=day limit #{page},#{size}
+  </select>
   <!-- 添加车位 -->
   <insert id="addcarport">
   insert into carport (address,carportnumber,coordinate_x,coordinate_y,begintime,endtime,status,imgs_id,statusimage,price,m_id,auditstatus) 
-  values(#{carport.address},#{carport.carportnumber},#{carport.coordinate_x},#{carport.coordinate_y},#{carport.begintime},#{carport.endtime},11,#{carport.imgs_id},#{carport.statusimage},#{carport.price},#{carport.m_id},8)
+  values(#{carport.address},#{carport.carportnumber},#{carport.coordinate_x},#{carport.coordinate_y},#{carport.begintime},#{carport.endtime},11,#{carport.imgs_id.id},#{carport.statusimage},#{carport.price},#{carport.m_id.id},8)
   </insert>
   <!-- 修改车位信息 -->
   <update id="updatecarport">
   update carport
   <set>
   <if test="carport.status!=null">
-  status=#{carport.status},
+  status=#{carport.status.id},
   </if>
   <if test="carport.auditstatus!=null">
-   auditstatus=#{carport.auditstatus},
+   auditstatus=#{carport.auditstatus.id},
   </if>
   <if test="carport.begintime!=null">
-  begintime=#{carport.begintime}
+  begintime=#{carport.begintime},
   </if>
   <if test="carport.endtime!=null">
-  endtime=#{carport.endtime}
+  endtime=#{carport.endtime},
   </if>
   <if test="carport.price!=null">
   price=#{carport.price}
@@ -33,9 +40,6 @@
   <!-- 查询所有可出租的状态 -->
  <select id="findcarportnumber" resultType="int">
  select count(*) from carport where status=#{status}
- </select>
- <select id="findcarportdaybytime" resultMap="onemap">
- select * from carport begintime=#{day}
  </select>
   <!--通过车位出租状态查询车位  -->
    <select id="findcarportbyStatus" resultMap="onemap">

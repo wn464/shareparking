@@ -21,7 +21,7 @@ public interface CarportDao {
 	 * @param carportnumber
 	 * @return
 	 */
-	CarportBean findcarportbycarportnumber(@Param("number") int carportnumber);
+	CarportBean findcarportbycarportnumber(@Param("number") String carportnumber);
 
 	/**
 	 * 通过车位id查询车位
@@ -101,5 +101,11 @@ int findcarportnumber(int status);
 	 * @param day
 	 * @return
 	 */
-	List<CarportBean> findcarportdaybytime(@Param("day")String day);
+	List<CarportBean> findcarportdaybytime(@Param("day")String day,int page,int size);
+	/**
+	 * 查询今日新增车位的数量
+	 * @param day
+	 * @return
+	 */
+	int findcarportbydaynumber(@Param("day")String day);
 }
