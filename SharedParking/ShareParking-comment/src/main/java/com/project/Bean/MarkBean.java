@@ -1,5 +1,7 @@
 package com.project.Bean;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Data
-public class MarkBean {
+public class MarkBean implements Serializable{
 
 	private int id;
 	private String name;

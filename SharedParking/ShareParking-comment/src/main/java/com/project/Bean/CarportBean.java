@@ -1,5 +1,6 @@
 package com.project.Bean;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)//链式表达
-public class CarportBean {
+public class CarportBean  implements Serializable{
 	private int id;
 	private String address;//车位地址
 	private String carportnumber;//车位编号

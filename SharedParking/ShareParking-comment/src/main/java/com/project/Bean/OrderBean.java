@@ -1,5 +1,6 @@
 package com.project.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Data
-public class OrderBean {
+public class OrderBean implements Serializable{
 
 	private int id;//订单主键
 	private String orderTime;//订单生成时间
