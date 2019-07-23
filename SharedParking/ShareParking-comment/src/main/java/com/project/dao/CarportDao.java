@@ -21,7 +21,7 @@ public interface CarportDao {
 	 * @param carportnumber
 	 * @return
 	 */
-	CarportBean findcarportbycarportnumber(@Param("number") int carportnumber);
+	CarportBean findcarportbycarportnumber(@Param("number") String carportnumber);
 
 	/**
 	 * 通过车位id查询车位

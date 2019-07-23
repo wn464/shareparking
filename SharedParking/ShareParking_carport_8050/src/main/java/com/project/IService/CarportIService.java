@@ -23,7 +23,7 @@ CarportBean findcarportbycid(int cid);
  * @param carportnumber
  * @return
  */
-CarportBean findcarportbynumber(int carportnumber);
+CarportBean findcarportbynumber(String carportnumber);
 /**
  * 通过坐标查询范围内车位
  * @param coordinate_x

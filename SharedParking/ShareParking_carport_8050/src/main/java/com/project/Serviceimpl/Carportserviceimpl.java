@@ -50,7 +50,7 @@ private CarportDao dao;
 	 */
 	@Override
 	@Cacheable(value="findcarportbynumber")
-	public CarportBean findcarportbynumber(int carportnumber) {
+	public CarportBean findcarportbynumber(String carportnumber) {
 		CarportBean carport=dao.findcarportbycarportnumber(carportnumber);
 		return carport;
 	}
