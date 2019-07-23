@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.dao.CredibilityDao">
+	<insert id="addCredibility" parameterType="CredibilityBean">
+		insert into reliable(m_id,ordersum,accusesum,credibility)values(#{m_id.id},#{ordersum},#{accusesum},#{credibility})
+	</insert>
+    <select id="findById" parameterType="int" resultType="CredibilityBean">
+        select * from reliable where m_id =#{id}
+    </select>   	
+</mapper>
