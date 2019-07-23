@@ -11,10 +11,10 @@ import lombok.experimental.Accessors;
 public class ComplaintBean {
 	private int id;
 	private String message;
-	private String Comtime;
+	private String comtime;
 	private String imgName;
-	private int o_id;
-	private int mem_j_id;
-	private int mem_y_id;
-
+	private OrderBean o_id;
+	private MemberBean mem_j_id;
+	private MemberBean mem_y_id;
+    private MarkBean status;
 }
