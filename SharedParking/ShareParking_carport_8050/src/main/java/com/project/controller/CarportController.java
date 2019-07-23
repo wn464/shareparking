@@ -88,9 +88,26 @@ public CarportBean findcarportbymid(@PathVariable("mid")int mid) {
 		PageBean pagebean=service.findcarportbyunkezu(page, size);
 		return pagebean;
 	}
-	@PutMapping(value="/carport/{cid}")
+	/**
+	 * 修改车位为可租状态
+	 * @param cid
+	 * @return
+	 */
+	@PutMapping(value="/carport/yes/{cid}")
+	@ResponseBody
 	public boolean updatestatusy(@PathVariable("cid")int cid) {
 		boolean l=service.updatecarportstatusy(cid);
+		return l;
+	}
+	/**
+	 * 修改车位为不可租状态
+	 * @param cid
+	 * @return
+	 */
+	@PutMapping(value="/carport/false/{cid}")
+	@ResponseBody
+	public boolean updatestatusf(@PathVariable("cid")int cid) {
+		boolean l=service.updatecarportstatusf(cid);
 		return l;
 	}
 }
