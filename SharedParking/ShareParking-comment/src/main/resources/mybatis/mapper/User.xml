@@ -12,8 +12,12 @@
         where u.username = #{username}
     </select>
 
-    <select id="findAll" resultType="UserBean">
+    <select id="findAll" resultMap="map">
         select * from user where id != #{id}
     </select>
-
+    <resultMap id="map" type="UserBean">
+        <id property="id" column="id" />
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
 </mapper>

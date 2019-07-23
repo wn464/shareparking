@@ -1,17 +1,20 @@
 server:
-  port: 8000 #当前服务端口
+  port: 8001 #当前服务端口
 mybatis:
-  config-location: calsspath:mybatis/mybatis_config.xml #mybatis配置文件
-  type-aliases-package: com.project.bean #所有entity别名所在包
+  config-location: classpath:mybatis/mybatis_config.xml #mybatis配置文件
+  type-aliases-package: com.project.Bean #所有entity别名所在包
   mapper-locations: classpath:mybatis/mapper/*.xml #mapper文件所在路径
-eureka:
-  client:
-    service-url:
-      defaultZone: 
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone:  http://eurakeserver9000.com:9000/eureka
+#  instance:
+#    instance-id: ShareParking-carport8050
+#    prefer-ip-address: true
       
 spring:
   datasource:
-    type: com.alibaba.pool.DruidDataSource #当前数据源操作类型
+    type: com.alibaba.druid.pool.DruidDataSource #当前数据源操作类型
     driver-class-name: com.mysql.jdbc.Driver #mysql驱动包
     url: jdbc:mysql://106.52.25.168:3306/park #数据库地址
     username: root
@@ -31,4 +34,8 @@ spring:
         max-active: 10 #最大连接数
         max-wait: -1 #连接等待时间
         min-idle: 0 #最小连接数
-info: #监控信息 
+#info: #监控信息
+#  app.name: ShareParking8001
+#  company.name: www.zcz.com
+#  build.artifactId: $project.artifactId$
+#  build.version: $project.version$
