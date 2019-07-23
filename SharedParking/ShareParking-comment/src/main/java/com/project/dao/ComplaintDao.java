@@ -15,4 +15,5 @@ public interface ComplaintDao {
     public int findComNum(@Param("status")int status);
     public List<ComplaintBean> findByDate(@Param("beginTime")String beginTime,@Param("endTime")String endTime,@Param("page")int page,@Param("size")int size);
     public int findDateNum(@Param("beginTime")String beginTime,@Param("endTime")String endTime);
+    public int findCreNum(int id);
 }

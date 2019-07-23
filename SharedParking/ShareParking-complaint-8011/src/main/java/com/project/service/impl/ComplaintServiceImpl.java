@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 import com.project.Bean.ComplaintBean;
 import com.project.Bean.PageBean;
 import com.project.dao.ComplaintDao;
+import com.project.dao.IOrderDao;
 import com.project.service.IComplaintService;
 
 @Service
 public class ComplaintServiceImpl implements IComplaintService{
 	@Autowired
 	private ComplaintDao dao;
+	@Autowired
+	private IOrderDao dao1;
 
 	@Override
 	public void addComplaint(ComplaintBean bean) {
@@ -40,7 +43,7 @@ public class ComplaintServiceImpl implements IComplaintService{
 	@Override
 	public void updateComplaint(int id) {
 		dao.updateComplaint(id);
-		
+		int accusesum=dao.findCreNum(id);
 	}
 
 	@Override
