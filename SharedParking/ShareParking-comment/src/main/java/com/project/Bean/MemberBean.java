@@ -9,5 +9,5 @@ public class MemberBean {
     private String username;
     private String password;
     private String phonenumber;
-
+    private MessageBean message;
 }
