@@ -10,6 +10,7 @@ public interface IOrderDao {
 
 	//添加订单
 	public int insertOrder(OrderBean orderBean);
+	
 	//通过订单号查询订单id
 	public OrderBean selectOrderByOrderNumber(String orderNumber);
 	//通订单id查询订单
@@ -24,12 +25,13 @@ public interface IOrderDao {
 	//根据状态查询订单总数量（出租者）
 	public int selectNumberByState2(@Param("mid")int mid,@Param("status")int status);
 	
-	//修改订单属性
-	public int updateOrderAttr(OrderBean orderBean);
 	//统计订单
 	public List<Double> selectOrderByMonth(@Param("startTime")String startTime,@Param("endTime")String endTime);
 	//统计订单（日期）
 	public List<Double> selcetOrderByDate(@Param("startTime")String startTime,@Param("endTime")String endTime);
+	
+	//修改订单属性
+	public int updateOrderAttr(OrderBean orderBean);
 	
 
 }

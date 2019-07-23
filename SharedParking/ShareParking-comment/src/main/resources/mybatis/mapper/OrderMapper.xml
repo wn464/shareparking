@@ -8,4 +8,75 @@
 		#{carportBean.id},#{memberBean1.id},#{memberBean2.id},#{beginTime},#{endTime},#{carNumber})
 	</insert>
 	
+	<!-- 	通过订单号查询订单 -->
+	<select id="selectOrderByOrderNumber"  resultMap="map">
+		select * from orders where ordernumber = #{orderNumber}
+	</select>
+	
+	<!-- 	通过订单id查询订单 -->
+	<select id="selectOrderById" parameterType="int" resultMap="map">
+		select * from orders where id = #{oid} 
+	</select>
+	
+	<!-- 	通过支付状态分页查询订单 1-->
+	<select id="selectOrderByState1" parameterType="int" resultMap="map">
+		select * from orders where status = #{statusBean} and mem_j_id = #{mid} and delStatus = 6
+		limit #{page},#{size}	
+	</select>
+	<!-- 	查询支付数量 -->
+	<select id="selectNumberByState1" resultType="int">
+		select count(*) from orders where status = #{statusBean} and mem_j_id = #{mid} and delStatus = 6
+	</select>
+	<!-- 	通过支付状态分页查询订单2 -->
+	<select id="selectOrderByState2" parameterType="int" resultMap="map">
+		select * from orders where status = #{statusBean} and mem_y_id = #{mid} and delStatus = 6
+		limit #{page},#{size}	
+	</select>
+	<!-- 	查询支付数量 -->
+	<select id="selectNumberByState2" resultType="int">
+		select count(*) from orders where status = #{statusBean} and mem_y_id = #{mid} and delStatus = 6
+	</select>
+	
+	
+	<!-- 	统计订单 -->
+	<select id="selectOrderByMonth"  resultType="Double">
+		select price from orders where orderTime  between #{beginTime} and #{endTime} 	
+	</select>
+	
+		<!-- 	通过日期查询订单 -->
+	<select id="selcetOrderByDate" resultType="Double">
+		select price from orders where orderTime  between #{beginTime} and #{endTime} 	
+	</select>
+	<!-- 	修改订单属性 -->
+	<update id="updateOrderAttr" parameterType="OrderBean">
+		update orders
+		<set>
+			<if test="alipaynumber!=null">
+				alipaynumber = #{alipayNumber}
+			</if>
+			<if test="delState!=0">
+				delStatus = #{delState.id}
+			</if>
+			<if test="status!=null">
+				status= #{statusBean.id} 
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+		<resultMap id="map" type="OrderBean">
+		<id property="id" column="id"></id>
+		<result property="ordertime" column="orderTime"></result>
+		<result property="ordernumber" column="orderNumber"></result>
+		<result property="alipaynumber" column="alipayNumber"></result>
+		<result property="begintime" column="beginTime"></result>
+		<result property="endtime" column="endTime"></result>
+		<result property="carnumber" column="carNumber"></result>
+		<result property="price" column="price"></result>
+		<association property="memberBean1" javaType="MemberBean" select="com.project.dao.IMemberDao.selectById" column="mem_j_id"/>
+		<association property="memberBean2" javaType="MemberBean" select="com.project.dao.IMemberDao.selectById" column="mem_y_id"/>
+		<association property="statusBean" javaType="MarkBean" select="com.project.dao.MarkDao.findmarkbyid" column="status"/>
+		<association property="delState" javaType="MarkBean" select="com.project.dao.MarkDao.findmarkbyid" column="delStatus"/>
+		<association property="carportBean" javaType="CarportBean" select="com.project.dao.MarkDao." column="carport_id"/>	
+	</resultMap>
+	
 </mapper>

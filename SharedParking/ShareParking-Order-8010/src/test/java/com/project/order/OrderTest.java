@@ -14,6 +14,7 @@ import com.project.Bean.CarportBean;
 import com.project.Bean.MarkBean;
 import com.project.Bean.MemberBean;
 import com.project.Bean.OrderBean;
+import com.project.Bean.PageBean;
 import com.project.demo.ApplicationDemo;
 import com.project.service.IOrderService;
 
@@ -45,7 +46,6 @@ public class OrderTest {
 	    	MarkBean statusBean = new MarkBean();
 	    	statusBean.setId(3);
 	    	orderBean.setStatusBean(statusBean);
-	    
 	    
 	    	
 	    	orderService.getOrder(orderBean);
