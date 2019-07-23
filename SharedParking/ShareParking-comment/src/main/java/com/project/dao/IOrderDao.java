@@ -33,5 +33,11 @@ public interface IOrderDao {
 	//修改订单属性
 	public int updateOrderAttr(OrderBean orderBean);
 	
+	//每日新增订单数
+	public int selcetOrderNumberByDate(@Param("startTime")String startTime,@Param("endTime")String endTime);
+
+	//每日订单
+	public List<OrderBean> selcetOrderByDay(@Param("startTime")String startTime,@Param("endTime")String endTime,@Param("page")int page,@Param("size")int size);
+
 
 }

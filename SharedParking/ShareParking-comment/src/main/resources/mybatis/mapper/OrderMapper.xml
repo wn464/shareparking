@@ -3,9 +3,9 @@
 <mapper namespace="com.project.dao.IOrderDao">
 <!-- 	添加订单-->
 	<insert id="insertOrder" parameterType="OrderBean">
-		insert into orders(ordertime,ordernumber,status,price,delStatus,carport_id,mem_j_id,mem_y_id,begintime,endtime,carnumber)
-		values(#{orderTime},#{orderNumber},#{statusBean.id},#{price},#{delState.id},
-		#{carportBean.id},#{memberBean1.id},#{memberBean2.id},#{beginTime},#{endTime},#{carNumber})
+		insert into orders(ordertime,ordernumber,status,delStatus,carport_id,mem_j_id,mem_y_id,begintime,carnumber)
+		values(#{orderTime},#{orderNumber},#{statusBean.id},#{delState.id},
+		#{carportBean.id},#{memberBean1.id},#{memberBean2.id},#{beginTime},#{carNumber})
 	</insert>
 	
 	<!-- 	通过订单号查询订单 -->
@@ -20,21 +20,21 @@
 	
 	<!-- 	通过支付状态分页查询订单 1-->
 	<select id="selectOrderByState1" parameterType="int" resultMap="map">
-		select * from orders where status = #{statusBean} and mem_j_id = #{mid} and delStatus = 6
+		select * from orders where status = #{status} and mem_j_id = #{mid} and delStatus = 6
 		limit #{page},#{size}	
 	</select>
 	<!-- 	查询支付数量 -->
 	<select id="selectNumberByState1" resultType="int">
-		select count(*) from orders where status = #{statusBean} and mem_j_id = #{mid} and delStatus = 6
+		select count(*) from orders where status = #{status} and mem_j_id = #{mid} and delStatus = 6
 	</select>
 	<!-- 	通过支付状态分页查询订单2 -->
 	<select id="selectOrderByState2" parameterType="int" resultMap="map">
-		select * from orders where status = #{statusBean} and mem_y_id = #{mid} and delStatus = 6
+		select * from orders where status = #{status} and mem_y_id = #{mid} and delStatus = 6
 		limit #{page},#{size}	
 	</select>
 	<!-- 	查询支付数量 -->
 	<select id="selectNumberByState2" resultType="int">
-		select count(*) from orders where status = #{statusBean} and mem_y_id = #{mid} and delStatus = 6
+		select count(*) from orders where status = #{status} and mem_y_id = #{mid} and delStatus = 6
 	</select>
 	
 	
@@ -43,10 +43,21 @@
 		select price from orders where orderTime  between #{beginTime} and #{endTime} 	
 	</select>
 	
-		<!-- 	通过日期查询订单 -->
+		<!-- 	通过日期查询订单价格-->
 	<select id="selcetOrderByDate" resultType="Double">
 		select price from orders where orderTime  between #{beginTime} and #{endTime} 	
 	</select>
+	
+		<!-- 	每日新增订单数 -->
+	<select id="selcetOrderNumberByDate" resultType="int">
+		select count(*) from orders where orderTime  between #{beginTime} and #{endTime} 	
+	</select>
+	
+		<!-- 查询今日所有订单 -->
+	<select id="selcetOrderByDay"  resultMap="map">
+		select * from orders where orderTime  between #{beginTime} and #{endTime} limit #{page},#{size}	
+	</select>
+	
 	<!-- 	修改订单属性 -->
 	<update id="updateOrderAttr" parameterType="OrderBean">
 		update orders
@@ -63,7 +74,7 @@
 		</set>
 		where id = #{id}
 	</update>
-		<resultMap id="map" type="OrderBean">
+	<resultMap id="map" type="OrderBean">
 		<id property="id" column="id"></id>
 		<result property="ordertime" column="orderTime"></result>
 		<result property="ordernumber" column="orderNumber"></result>
@@ -76,7 +87,7 @@
 		<association property="memberBean2" javaType="MemberBean" select="com.project.dao.IMemberDao.selectById" column="mem_y_id"/>
 		<association property="statusBean" javaType="MarkBean" select="com.project.dao.MarkDao.findmarkbyid" column="status"/>
 		<association property="delState" javaType="MarkBean" select="com.project.dao.MarkDao.findmarkbyid" column="delStatus"/>
-		<association property="carportBean" javaType="CarportBean" select="com.project.dao.MarkDao." column="carport_id"/>	
+		<association property="carportBean" javaType="CarportBean" select="com.project.dao.CarportDao.findcarportbycid" column="carport_id"/>	
 	</resultMap>
 	
 </mapper>

@@ -1,5 +1,8 @@
 package com.project.order;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +49,7 @@ public class OrderTest {
 	    	MarkBean statusBean = new MarkBean();
 	    	statusBean.setId(3);
 	    	orderBean.setStatusBean(statusBean);
-	    
-	    	
-	    	orderService.getOrder(orderBean);
+	   
 		}
 	
 
