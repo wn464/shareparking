@@ -14,5 +14,5 @@ public class ImagesBean {
 	private int id;
 	private String image1;
 	private String image2;
-	private String image;
+	private String image3;
 }

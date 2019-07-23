@@ -14,15 +14,16 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)//链式表达
 public class CarportBean {
 	private int id;
-	private String address;
-	private String carportnumber;
-	private double coordinate_x;
-	private double coordinate_y;
-	private Date begintime;
-	private Date endtime;
-	private MarkBean status;
-	private ImagesBean imgs_id;
-	private String statusimage;
-	private double price;
-	private MemberBean m_id;
+	private String address;//车位地址
+	private String carportnumber;//车位编号
+	private double coordinate_x;//车位经度
+	private double coordinate_y;//车位纬度
+	private Date begintime;//车位开始出租时间
+	private Date endtime;//车位结束出租时间
+	private MarkBean status;//车位出租状态
+	private ImagesBean imgs_id;//车位图片
+	private String statusimage;//车位审核图片
+	private double price;//车位出租价格
+	private MemberBean m_id;//车位所属人
+	private MarkBean auditstatus; //车位审核状态
 }

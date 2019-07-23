@@ -3,6 +3,35 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.project.dao.CarportDao">
+  <!--通过车位出租状态查询车位  -->
+  <select id="findcarportbyStatus" resultMap="onemap">
+  select * from carport where status=#{status} limit #{page},#{size}
+  </select>
+  <!--时间范围查询  -->
+  <select id="findcarportbytime" resultMap="onemap">
+  select * from carport where begintime &gt;=#{btime} and endtime &lt;=#{etime} limit #{page},#{size}
+  </select>
+  <!--经纬度范围查询  -->
+  <select id="findcarportbycoordinate" resultMap="onemap">
+select * from carport where sqrt(  
+    (  
+     ((113.914619-#{x})*PI()*12656*cos(((22.50128+#{y})/2)*PI()/180)/180)  
+     *  
+     ((113.914619-#{x})*PI()*12656*cos (((22.50128+#{y})/2)*PI()/180)/180)  
+    )  
+    +  
+    (  
+     ((22.50128-#{x})*PI()*12656/180)  
+     *  
+     ((22.50128-#{y})*PI()*12656/180)  
+    )  
+)&lt;10 limit #{page},#{size}
+  </select>
+  
+  <!--通过车位id查询车位  -->
+  <select id="findcarportbycid" resultMap="onemap">
+   select *from carport where id=#{cid}
+  </select>
   <!--通过所属人查询车位  -->
   <select id="findcarportbyMID" resultMap="onemap">
   select *from carport where m_id=#{mid}
@@ -17,6 +46,7 @@
   <result property="endtime" column="endtime"/>
   <result property="statusimage" column="statusimage" />
   <result property="price" column="price" />
+  <association property="auditstatus" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="auditstatus" />
   <association property="status" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="status" />
   <association property="imgs_id" javaType="ImagesBean" select="com.project.dao.ImagesDao.findimagesbyid" column="imgs_id" />
   <association property="m_id" javaType="MemberBean" select="com.project.dao.IMemberDao.findById" column="m_id" />
