@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ShareParking-user-8001</artifactId>
+    <artifactId>ShareParking-member-8002</artifactId>
     <packaging>war</packaging>
 
     <dependencies>
@@ -133,4 +133,6 @@
             <classifier>jdk15</classifier>
         </dependency>
     </dependencies>
+
+
 </project>

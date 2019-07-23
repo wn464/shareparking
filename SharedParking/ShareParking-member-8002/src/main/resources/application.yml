@@ -1,5 +1,5 @@
 server:
-  port: 8001 #当前服务端口
+  port: 8002 #当前服务端口
 mybatis:
   config-location: classpath:mybatis/mybatis_config.xml #mybatis配置文件
   type-aliases-package: com.project.Bean #所有entity别名所在包
@@ -9,7 +9,7 @@ mybatis:
 #    service-url:
 #      defaultZone:  http://eurakeserver9000.com:9000/eureka
 #  instance:
-#    instance-id: ShareParking-user8001
+#    instance-id: ShareParking-member8002
 #    prefer-ip-address: true
       
 spring:
@@ -35,7 +35,7 @@ spring:
         max-wait: -1 #连接等待时间
         min-idle: 0 #最小连接数
 #info: #监控信息
-#  app.name: ShareParking8001
+#  app.name: ShareParking8002
 #  company.name: www.zcz.com
 #  build.artifactId: $project.artifactId$
 #  build.version: $project.version$

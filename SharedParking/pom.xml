@@ -117,6 +117,7 @@
 		<module>ShareParking-user-8001</module>
         <module>ShareParking-Order-8010</module>
         <module>ShareParking-complaint-8011</module>
+        <module>ShareParking-member-8002</module>
 
-	</modules>
+    </modules>
 </project>
