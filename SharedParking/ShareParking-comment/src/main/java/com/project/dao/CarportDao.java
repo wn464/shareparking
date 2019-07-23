@@ -15,6 +15,12 @@ import com.project.Bean.CarportBean;
  */
 public interface CarportDao {
 	/**
+	 * 通过车位id查询车位
+	 * @param cid
+	 * @return
+	 */
+	CarportBean findcarportbycid(@Param("cid")int cid);
+	/**
 	 * 通过车位所属人查询车位
 	 * @param mid
 	 * @return
@@ -35,13 +41,7 @@ public interface CarportDao {
 	 */
 	List<CarportBean> findcarportbytime(@Param("btime")Date begintime,@Param("etime")Date endtime,@Param("page")int page,@Param("size")int size);
 	/**
-	 * 通过地址来查找车位
-	 * @param address
-	 * @return
-	 */
-	List<CarportBean> findcarportbyaddress(@Param("address")String address,@Param("page")int page,@Param("size")int size);
-	/**
-	 * 通过车位状态来查询车位
+	 * 通过车位出租状态来查询车位
 	 * @param status
 	 * @param page
 	 * @param size
@@ -49,17 +49,29 @@ public interface CarportDao {
 	 */
 	List<CarportBean> findcarportbyStatus(@Param("status")int status,@Param("page")int page,@Param("size")int size);
 	/**
-	 * 通过id修改车位的状态
+	 * 通过id修改车位出租的状态
 	 * @param id
 	 * @param status
 	 * @return
 	 */
 	int updatecarport(@Param("id")int id,@Param("status")int status);
 	/**
+	 * 通过id修改审核的状态
+	 * @param id
+	 * @param auditstatus
+	 * @return
+	 */
+	int updatecarportauditstatus(int id,int auditstatus);
+	/**
 	 * 通过价格范围查询车位
 	 * @param price
 	 * @return
 	 */
 	List<CarportBean> findcarportbyprice(@Param("minprice")double minprice,@Param("maxprice")double maxprice);
-	
+	/**
+	 * 添加车位
+	 * @param carportBean
+	 * @return
+	 */
+	int addcarport(CarportBean carportBean) ;
 }
