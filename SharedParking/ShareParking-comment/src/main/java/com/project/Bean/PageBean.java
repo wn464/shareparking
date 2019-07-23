@@ -1,5 +1,6 @@
 package com.project.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageBean {
+public class PageBean implements Serializable{
 
 	private int page;
 	private int size;
