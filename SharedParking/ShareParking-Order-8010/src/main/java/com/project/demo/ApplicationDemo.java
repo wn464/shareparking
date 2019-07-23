@@ -5,15 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 
 @SpringBootApplication
-@ComponentScan("com.project.controller")
-@ComponentScan("com.project.Serviceimpl")
+@ComponentScan({"com.project.service"})
 @MapperScan("com.project.dao")
-@EnableEurekaClient
-public class Application8050demo {
-public static void main(String[] args) {
-	SpringApplication.run(Application8050demo.class, args);
-}
+public class ApplicationDemo {
+	public static void main(String[] args) {
+		SpringApplication.run(ApplicationDemo.class, args);
+	}
 }
