@@ -33,7 +33,7 @@ public class OrderServiceImp implements IOrderService{
     String orderNumber =  CreateOrderInfo.getOrderNumber();
     orderBean.setOrderNumber(orderNumber);
     
-	System.out.println("0909_++++++++==========================-"+orderBean);
+	System.out.println("order++++++++==========================-"+orderBean);
     //添加订单
     int num =orderDao.insertOrder(orderBean);
 		return num;

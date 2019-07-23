@@ -26,18 +26,19 @@ public interface IOrderDao {
 	public int selectNumberByState2(@Param("mid")int mid,@Param("status")int status);
 	
 	//统计订单
-	public List<Double> selectOrderByMonth(@Param("startTime")String startTime,@Param("endTime")String endTime);
+	public List<Double> selectOrderByMonth(@Param("beginTime")String beginTime,@Param("endTime")String endTime);
 	//统计订单（日期）
-	public List<Double> selcetOrderByDate(@Param("startTime")String startTime,@Param("endTime")String endTime);
+	public List<Double> selcetOrderByDate(@Param("beginTime")String beginTime,@Param("endTime")String endTime);
 	
 	//修改订单属性
 	public int updateOrderAttr(OrderBean orderBean);
 	
 	//每日新增订单数
-	public int selcetOrderNumberByDate(@Param("startTime")String startTime,@Param("endTime")String endTime);
+	public int selcetOrderNumberByDate(@Param("beginTime")String beginTime,@Param("endTime")String endTime);
 
 	//每日订单
-	public List<OrderBean> selcetOrderByDay(@Param("startTime")String startTime,@Param("endTime")String endTime,@Param("page")int page,@Param("size")int size);
+	public List<OrderBean> selcetOrderByDay(@Param("beginTime")String beginTime,@Param("endTime")String endTime,@Param("page")int page,@Param("size")int size);
 
-
+	public int selectOrderNumberByMem1(int mem1);
+	public int selectOrderNumberByMem2(int mem2);
 }

@@ -1,6 +1,7 @@
 package com.project.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import com.project.Bean.MemberBean;
 import com.project.Bean.OrderBean;
 import com.project.Bean.PageBean;
 import com.project.service.IOrderService;
-
 @RestController
 public class OrderHandler {
 
@@ -28,6 +28,7 @@ public class OrderHandler {
 	 */
 	@PostMapping("/order")
 	public String insertOrder(OrderBean orderBean) {
+		System.out.println("-----"+orderBean);
         MemberBean memberBean1 = new MemberBean();
         memberBean1.setId(1);
         orderBean.setMemberBean1(memberBean1);
@@ -39,13 +40,15 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/{oid}")
 	public OrderBean selectOrderById(@PathVariable("oid")int oid) {
+		System.out.println("111111111-=-=-=-=-=-=-"+oid);
 		OrderBean orderBean = orderService.selectOrderById(oid);
+		System.out.println("-----========="+orderBean);
 		return orderBean;
 	}
 	/*
 	 * 租客分页查询
 	 */
-	@GetMapping("/order/status/{status}/{page}/{size}")
+	@GetMapping("/order/status1/{status}/{page}/{size}")
 	public PageBean selectOrderByState1(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
 		 int mid = 1;//测试数据
 		PageBean pageBean = orderService.selectOrderByState1(mid, status, page, size);
@@ -54,7 +57,7 @@ public class OrderHandler {
 	/*
 	 * 出租客分页查询
 	 */
-	@GetMapping("/order/status/{status}/{page}/{size}")
+	@GetMapping("/order/status2/{status}/{page}/{size}")
 	public PageBean selectOrderByState2(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
 		 int mid = 2;//测试数据
 		PageBean pageBean = orderService.selectOrderByState2(mid, status, page, size);
@@ -70,11 +73,27 @@ public class OrderHandler {
 		return num;
 	}
 	
+	
+	//按时间段统计订单
+	@GetMapping("/order/month/{year}/{smonth}/{emonth}")
+	public double[] selcetOrderByMonth(@PathVariable("year")int year,@PathVariable("smonth")int smonth,@PathVariable("emonth")int emonth) {
+		double m[] = new double[12];
+		List<Double> list = new ArrayList<Double>();
+		list = orderService.selectOrderByMonth(year, smonth, emonth);
+		System.out.println(list);
+		int a = 0;
+		for (int i = smonth-1; i < emonth; i++) {
+			m[i] = list.get(a);
+			a++;
+			System.out.println("---------"+m[i]);
+		}	
+		return m;
+	}
 	/*
 	 * 按月份查询收入
 	 */
-	@GetMapping("/mth")
-	public double selcetOrderByDate(Integer year,Integer month,ModelMap map) {
+	@GetMapping("/order/mth/{year}/{month}")
+	public double selcetOrderByDate(@PathVariable("year")Integer year,@PathVariable("month")Integer month) {
 		List<Double> list = orderService.selectOrderByMonth(year, month, month);
 		double mprice = 0;
 		for (Double double1 : list) {
@@ -85,9 +104,8 @@ public class OrderHandler {
 	/*
 	 * 按日期查询收入
 	 */
-	@GetMapping("/dates")
-	public double selcetOrderByDate(String date) {
-		System.out.println(date);
+	@GetMapping("/order/dates/{date}")
+	public double selcetOrderByDate(@PathVariable("date")String date) {
 		List<Double> list = orderService.selcetOrderByDate(date);
 		double dprice = 0;
 		for (Double double1 : list) {
@@ -98,9 +116,9 @@ public class OrderHandler {
 	/*
 	 * 按年份查询收入
 	 */
-	@GetMapping("/year")
+	@GetMapping("/order/year/{year}")
 	@ResponseBody
-	public double selcetOrderByYear(int year,ModelMap map) {
+	public double selcetOrderByYear(@PathVariable("year")int year) {
 		List<Double> list = orderService.selectOrderByMonth(year, 1, 12);
 		System.out.println(list);
 		double yprice = 0;
