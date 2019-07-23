@@ -12,5 +12,8 @@
         where u.username = #{username}
     </select>
 
+    <select id="findAll" resultType="UserBean">
+        select * from user where id != #{id}
+    </select>
 
 </mapper>

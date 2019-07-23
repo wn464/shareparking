@@ -6,4 +6,15 @@
     <select id="findById" resultType="MemberBean">
         select * from member where id = #{id}
     </select>
+
+    <select id="findByUserName" resultMap="map">
+        select * from member where username=#{username}
+    </select>
+    
+    <resultMap id="map" type="MemberBean">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <association property="message" javaType="MessageBean" select="com.project.dao.IMessageDao.findByMid" column="id"/>
+    </resultMap>
 </mapper>
