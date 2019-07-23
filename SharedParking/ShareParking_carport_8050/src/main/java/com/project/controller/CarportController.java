@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.Bean.CarportBean;
@@ -109,5 +111,39 @@ public CarportBean findcarportbymid(@PathVariable("mid")int mid) {
 	public boolean updatestatusf(@PathVariable("cid")int cid) {
 		boolean l=service.updatecarportstatusf(cid);
 		return l;
+	}
+	/**
+	 * 修改车位的审核状态
+	 * @param cid
+	 * @return
+	 */
+	@PutMapping(value="/carport/audit/{cid}")
+	@ResponseBody
+	public boolean updateauditstatus(@PathVariable("cid")int cid) {
+		boolean l=service.updatecarauditstatus(cid);
+		return l;
+	} 
+	/**
+	 * 添加车位
+	 * @param carport
+	 * @return
+	 */
+	@PostMapping("/carport")
+	@ResponseBody
+	public boolean addcarport(@RequestBody CarportBean carport) {
+		boolean l =service.addcarport(carport);
+		return l;
+	}
+	/**
+	 * 查询今日新增车位
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	@GetMapping(value="/carport/time/{page}/{size}")
+	@ResponseBody
+	public PageBean findcarportbyday(@PathVariable("page")int page,@PathVariable("size")int size) {
+		PageBean pagebean=service.findcarportbyday(page, size);
+		return pagebean;
 	}
 }
