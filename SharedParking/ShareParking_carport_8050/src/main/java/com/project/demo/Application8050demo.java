@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @ComponentScan("com.project.Serviceimpl")
 @MapperScan("com.project.dao")
 @ComponentScan("com.project.util")
+@ComponentScan("com.project.config")
 @EnableEurekaClient
 @EnableScheduling
 public class Application8050demo {

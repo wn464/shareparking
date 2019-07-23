@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.dao.ComplaintDao">
+	<insert id="addComplaint" parameterType="ComplaintBean">
+		insert into complaint(message,comtime,img,o_id,mem_j_id,mem_y_id)values(#{message},#{comtime},#{imgName},#{o_id.id},#{mem_j_id.id},#{mem_y_id.id})
+	</insert>
+    <update id="updateComplaint" parameterType="int">
+        update complaint set status=13 where id =#{id}
+    </update>
+    <update id="deleteComplaint" parameterType="int" >
+        update complaint set status=14 where id =#{id}
+    </update>
+    <select id="findComNum" parameterType="int" resultType="int">
+        select count(*) from complaint where status=#{status}
+    </select>
+    <select id="findDateNum" parameterType="String" resultType="int">
+        select count(*) from complaint where comtime BETWEEN #{begintime} and #{endtime}
+    </select>
+    <select id="findByDate" resultMap="map">
+        select * from complaint where comtime BETWEEN #{begintime} and #{endtime} LIMIT #{page},#{size}
+    </select>
+    <select id="findByStatus" parameterType="int" resultMap="map">
+        select * from complaint where status =#{status} ORDER BY comtime DESC LIMIT #{page},#{size}
+    </select>
+    <resultMap id="map" type="ComplaintBean">
+		<id property="id" column="id"></id>
+		<result property="message" column="message"></result>
+		<result property="comtime" column="comtime"></result>
+		<result property="imgName" column="imgName"></result>
+		<association property="mem_j_id" javaType="MemberBean" select="com.project.dao.IMemberDao.selectById" column="mem_j_id"/>
+		<association property="mem_y_id" javaType="MemberBean" select="com.project.dao.IMemberDao.selectById" column="mem_y_id"/>
+		<association property="o_id" javaType="OrderBean" select="com.project.dao.IOrderDao.selectOrderById" column="o_id"/>
+		<association property="status" javaType="MarkBean" select="com.project.dao.MarkDao.findmarkbyid" column="status"/>
+	</resultMap>	
+</mapper>

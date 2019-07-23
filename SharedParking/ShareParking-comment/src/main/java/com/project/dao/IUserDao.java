@@ -1,6 +1,7 @@
 package com.project.dao;
 
 import com.project.Bean.UserBean;
+import feign.Param;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface IUserDao {
      查询所有管理员
      id是为了 超级管理员查询所有管理员时 不显示自己
     */
-    List<UserBean> findAll(int id);
+    List<UserBean> findAll(@Param("id") int id);
 
     /*
        修改密码

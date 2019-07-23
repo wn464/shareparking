@@ -73,8 +73,9 @@
 			    <artifactId>spring-cloud-starter-hystrix</artifactId>
 			    <version>1.4.7.RELEASE</version>
 			</dependency>
-						
-			
+
+
+
 		</dependencies>
 		
 	</dependencyManagement>
@@ -111,10 +112,11 @@
 		<module>ShareParking-config-server-7000</module>
 		<module>ShareParking-provider-8090</module>
 		<module>ShareParking-zuul-9500</module>
-		<module>ShareParking-Complaint-8011</module>
 		<module>ShareParking_carport_8050</module>
-        <module>ShareParking-user-8000</module>
-
         <module>ShareParking-Order-8010</module>
+		<module>ShareParking-user-8001</module>
+        <module>ShareParking-Order-8010</module>
+        <module>ShareParking-complaint-8011</module>
+
 	</modules>
 </project>
