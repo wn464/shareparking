@@ -31,7 +31,7 @@ public class ShiroConfig {
         fmap.put("/img/**","anon");
 
         //只有 这几个角色才能访问
-        fmap.put("/admin/**", "oneOfRole[admin,superadmin]");
+       // fmap.put("/admin/**", "oneOfRole[admin,superadmin]");
         fmap.put("/**","anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(fmap);
         return shiroFilterFactoryBean;

@@ -20,6 +20,7 @@ import java.util.List;
  */
 @RestController
 public class UserHandler {
+
     @Autowired
     private IUserService service;
 
@@ -66,7 +67,7 @@ public class UserHandler {
         ------------------------查询模块----------------------
      */
     //查询所有管理员
-    @GetMapping("/user/{id}")
+    @GetMapping("/user")
     public List<UserBean> findAll(Integer id){
         List<UserBean> list = service.findAll(id);
         return list;
