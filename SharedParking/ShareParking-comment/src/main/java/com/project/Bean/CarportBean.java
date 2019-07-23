@@ -18,8 +18,8 @@ public class CarportBean {
 	private String carportnumber;//车位编号
 	private double coordinate_x;//车位经度
 	private double coordinate_y;//车位纬度
-	private Date begintime;//车位开始出租时间
-	private Date endtime;//车位结束出租时间
+	private String begintime;//车位开始出租时间
+	private String endtime;//车位结束出租时间
 	private MarkBean status;//车位出租状态
 	private ImagesBean imgs_id;//车位图片
 	private String statusimage;//车位审核图片
