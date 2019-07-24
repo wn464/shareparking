@@ -27,4 +27,5 @@ public class CarportBean  implements Serializable{
 	private double price;//车位出租价格
 	private MemberBean m_id;//车位所属人
 	private MarkBean auditstatus; //车位审核状态
+	private String message;//车位描述
 }
