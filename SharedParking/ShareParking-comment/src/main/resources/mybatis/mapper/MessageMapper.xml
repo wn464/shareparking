@@ -3,7 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.dao.IMessageDao">
-    <select id="findByMid" resultType="MessageBean">
+    <select id="findByMid" resultMap="map">
         select * from message where m_id=#{id}
     </select>
+    <resultMap id="map" type="MessageBean">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="idCard" column="idCard"/>
+        <result property="address" column="address"/>
+        <result property="job" column="job"/>
+        <association property="gender" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="gender"/>
+
+    </resultMap>
 </mapper>
