@@ -140,6 +140,7 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/dateOrder/{date}/{page}/{size}")
 	public PageBean selcetOrderByDay(@PathVariable("date")String date,@PathVariable("page")int page,@PathVariable("size")int size){
+		System.out.println("=============================="+date);
 		PageBean pageBean = orderService.selcetOrderByDay(date, page, size);
 		return pageBean;
 		
