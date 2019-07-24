@@ -3,14 +3,14 @@ server:
   
 spring:
   application:
-    name: springcloud-zuul
+    name: sharePark-zuul
 
 eureka:
-  client:
-    service-url:
-      defaultZone: http://eurakeserver9000.com:9000/eureka
-  instance:
-    instance-id: woniucloud-zuul-9500 # 配置注册中心显示出来的微服务名称
+  client: #客户端注册进eureka服务列表内
+    service-url: 
+       defaultZone: http://eurakeserver9000.com:9000/eureka/
+  instance: 
+    instance-id: sharePark-zuul-9500 # 配置注册中心显示出来的微服务名称
     prefer-ip-address: true     #访问路径可以显示IP地址  
     
 #zuul
@@ -18,11 +18,15 @@ zuul:
   #ignored-services: woniucloud-provider    #设置不暴露微服务的名称
   ignored-services: "*"
   routes: 
-     product: #路由的名称，这个名字可以自己写
-      service-id: woniucloud-provider
-      path: /product/**      # 如果通过路由来访问，可以根据微服务的名字来访问，也可以直接访问资源
+     order: #路由的名称，这个名字可以自己写
+      service-id: park-order
+      path: /orders/**      # 如果通过路由来访问，可以根据微服务的名字来访问，也可以直接访问资源
 
 spring:
   profiles: zuul9500
   
----
+info: #监控信息 
+  app.name: sharePark-zuul-9500 
+  company.name: sharePark-zuul-9500 
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

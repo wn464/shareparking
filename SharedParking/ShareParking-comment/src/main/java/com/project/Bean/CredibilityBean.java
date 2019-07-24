@@ -10,5 +10,5 @@ public class CredibilityBean {
 	private MemberBean m_id;
 	private int ordersum;
 	private int accusesum;
-
+    private double credibility;
 }
