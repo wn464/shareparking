@@ -13,6 +13,8 @@ eureka:
     prefer-ip-address: true
       
 spring:
+  application:
+    name: park-user   #当前服务的名字，后面会用到
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource #当前数据源操作类型
     driver-class-name: com.mysql.jdbc.Driver #mysql驱动包
