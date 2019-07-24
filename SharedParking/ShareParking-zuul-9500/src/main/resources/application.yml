@@ -18,12 +18,21 @@ zuul:
   #ignored-services: woniucloud-provider    #设置不暴露微服务的名称
   ignored-services: "*"
   routes: 
-     order: #路由的名称，这个名字可以自己写
+    order: #路由的名称，这个名字可以自己写
       service-id: park-order
       path: /orders/**      # 如果通过路由来访问，可以根据微服务的名字来访问，也可以直接访问资源
-     complaint: 
+
+    complaint: 
       service-id: park-complaint
       path: /complaint/**
+
+    user:
+      service-id: park-user
+      path: /**
+    carport:
+      service-id: SHAREPARKING_CARPORT
+      path:  /port/** 
+
 info: #监控信息 
   app.name: sharePark-zuul-9500 
   company.name: sharePark-zuul-9500 
