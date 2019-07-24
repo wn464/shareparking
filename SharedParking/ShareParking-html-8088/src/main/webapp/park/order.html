@@ -92,7 +92,7 @@
 										</div>
 									</form>
 								</div>
-								<div class="panel-body no-padding" >
+								<div class="panel-body no-padding" id="order-tab">
 									<table class="table table-bordered table-striped">
 										<thead>
 											<tr>
@@ -247,12 +247,13 @@
 		
 
 	var vm = new Vue({
-				el:"#detail",
+				el:"#order-tab",
 				data:{
-					product:[]
+					order:[]
 				},
 				created(){
-					axios.get("/product/"+productid)
+					alert()
+					axios.get("http://myzuul.com:9500/orders/order/1")
 					.then(res=>{
 						console.info(res)
 						this.product=res.data
@@ -261,29 +262,7 @@
 						console.info(res)
 					})
 				}
-				,methods:{
-					add:function(id){
-						var num = $("#pNumber").html()
-						var typeName = $(".fl").filter(".on").children().attr("alt")
-						var params = new URLSearchParams();
-						params.append("num",num)
-						params.append("typeName",typeName)
-						params.append("productId",id)
-						
-						axios.post("/shopCar",params)
-						.then(res=>{
-							console.info(res)
-							if (res.data==true) {
-								alert("添加成功")
-							}
-						})
-						.catch(res=>{
-							console.info(res)
-						})
-						
-					}
-					
-				}
+				
 			})
 	</script>
 
