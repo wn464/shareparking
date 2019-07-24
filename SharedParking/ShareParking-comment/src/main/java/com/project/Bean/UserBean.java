@@ -1,5 +1,7 @@
 package com.project.Bean;
 
+import lombok.Data;
+
 /*
     后台用户bean
  */
@@ -10,7 +12,7 @@ public class UserBean {
     private String password;
     private String name;
     private String img;
-    private String gender;
+    private MarkBean gender;
     private String phonenumber;
     private String email;
     private AuthorityBean authority;        //权限
@@ -55,11 +57,11 @@ public class UserBean {
         this.img = img;
     }
 
-    public String getGender() {
+    public MarkBean getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(MarkBean gender) {
         this.gender = gender;
     }
 
