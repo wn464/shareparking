@@ -119,5 +119,7 @@
         <module>ShareParking-complaint-8011</module>
         <module>ShareParking-member-8002</module>
 
-    </modules>
+        <module>ShareParking-web-8080</module>
+        <module>ShareParking-html-8088</module>
+	</modules>
 </project>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div class="brand">
+				<a href="index.html"><img src="assets/img/logo-dark.png" class="img-responsive logo"></a>
+			</div>
+			<div class="container-fluid">
+				<div class="navbar-btn">
+					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+				</div>
+				<div id="navbar-menu">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="message.html" class="dropdown-toggle icon-menu" >
+								<i class="lnr lnr-alarm"></i>
+			<!--显示收到一条消息未处理，处理后将不显示1-->
+								<span class="badge bg-danger">1</span>
+							</a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<img src="assets/img/user.png" class="img-circle">
+								<span>Samuel</span><i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="user-change.html"><i class="lnr lnr-user"></i> <span>个人中心</span></a></li>
+								<li><a href="#"><i class="lnr lnr-exit"></i> <span>注销</span></a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>	
+	</body>
+	<script type="text/javascript">
+		$('.btn-toggle-fullwidth').on('click', function() {
+		if(!$('body').hasClass('layout-fullwidth')) {
+			$('body').addClass('layout-fullwidth');
+
+		} else {
+			$('body').removeClass('layout-fullwidth');
+			$('body').removeClass('layout-default'); // also remove default behaviour if set
+		}
+
+		$(this).find('.lnr').toggleClass('lnr-arrow-left-circle lnr-arrow-right-circle');
+
+		if($(window).innerWidth() < 1025) {
+			if(!$('body').hasClass('offcanvas-active')) {
+				$('body').addClass('offcanvas-active');
+			} else {
+				$('body').removeClass('offcanvas-active');
+			}
+		}
+	});
+	</script>
+</html>

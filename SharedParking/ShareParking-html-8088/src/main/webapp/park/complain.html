@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>投诉管理</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="assets/css/demo.css">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+</head>
+<style type="text/css">
+	th{
+		height: 46px;
+		line-height: 46px!important;
+		background-color: pink;
+		border-color: pink!important;
+		text-align: center;
+		padding: 0!important;
+	}
+	td{
+		height: 46px;
+		line-height: 46px!important;
+		text-align: center;
+		padding: 0!important;
+	}
+	.type{
+		background-color: pink;		
+	}
+	.modal-body th{
+		height: 38px;
+		line-height: 38px!important;
+		background-color: lightskyblue;
+		border-color: lightskyblue!important;
+		text-align: center;
+		padding: 0!important;
+	}
+	.modal-body td{
+		height: 38px;
+		line-height: 38px!important;
+		text-align: center;
+		padding: 0!important;
+	}
+</style>
+<body>
+	<div id="wrapper">
+		<nav class="navbar navbar-default navbar-fixed-top" id="toping"></nav>
+		<div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-scroll">
+				<nav>
+					<ul class="nav" >
+						<li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>共享车位主页</span></a></li>
+						<li><a href="order.html" class=""><i class="lnr lnr-map"></i> <span>订单中心</span></a></li>
+						<li><a href="car.html" class=""><i class="lnr lnr-map-marker"></i> <span>车位信息</span></a></li>
+						<li><a href="member.html" class=""><i class="lnr lnr-users"></i> <span>用户管理</span></a></li>
+						<li><a href="message.html" class=""><i class="lnr lnr-bookmark"></i> <span>用户车位审核</span></a></li>
+						<li><a href="money.html" class=""><i class="lnr lnr-linearicons"></i> <span>财务统计</span></a></li>
+						<li><a href="complain.html" class="active"><i class="lnr lnr-chart-bars"></i> <span>投诉管理</span></a></li>
+						<li><a href="user-change.html" class=""><i class="lnr lnr-user"></i> <span>个人信息管理</span></a></li>
+						<li><a href="authority.html" class=""><i class="lnr lnr-cog"></i><span>操作权限管理</span></a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<div class="main">
+			<div class="main-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-2">
+							<div class="panel" style="height: 630px;">
+								<div class="panel-heading">
+									<h3 class="panel-title">投诉处理</h3>
+								</div>
+								<div class="panel-body">
+									<div class="sidebar-scroll">
+										<nav>
+											<ul class="nav" id="change">
+					 <!--  默  认  显  示   待处理的投诉   --><li><a href="#" id="li1" class="type"><i class="lnr lnr-bullhorn"></i><span> &nbsp;待处理</span></a></li>
+												<li><a href="#" id="li2" class=""><i class="lnr lnr-bubble"></i><span> &nbsp;已处理</span></a></li>
+											</ul>
+										</nav>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-10">
+							<div class="panel" style="height: 630px; padding: 90px 80px 0;">
+								<div class="panel-body no-padding" >
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th style="width: 60px;">序号</th>
+												<th>投诉方</th>
+												<th>被投诉方</th>
+												<th>投诉时间</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>科加斯</td>
+												<td>提莫</td>
+												<td>2019-6-3 16:32:12</td>
+												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td>凯特琳</td>
+												<td>墨菲特</td>
+												<td>2019-6-2 16:32:12</td>
+												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
+											</tr>
+											<tr>
+												<td>3</td>
+												<td>卡萨丁</td>
+												<td>佐伊</td>
+												<td>2019-6-3 16:32:12</td>
+												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
+											</tr>
+											<tr>
+												<td>4</td>
+												<td>科加斯</td>
+												<td>提莫</td>
+												<td>2019-6-3 16:32:12</td>
+												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
+											</tr>
+											<tr>
+												<td>5</td>
+												<td>凯特琳</td>
+												<td>墨菲特</td>
+												<td>2019-6-2 16:32:12</td>
+												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
+											</tr>
+											<tr>
+												<td>6</td>
+												<td>卡萨丁</td>
+												<td>佐伊</td>
+												<td>2019-6-3 16:32:12</td>
+												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
+											</tr>
+										</tbody>
+									</table>
+									<nav style="margin-left:700px; margin-top: 40px;">
+									    <ul class="pagination">
+										    <li><a href="#">上一页</a></li>
+										    <li><a href="#">1/5</a></li>
+										    <li><a href="#">下一页</a></li>
+									    </ul>
+									</nav>
+								</div>
+							</div>
+						</div>
+			<!--模态框-->	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						        <div class="modal-header">
+						        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        	<h4 class="modal-title" id="myModalLabel">用户投诉审核</h4>
+						      	</div>
+						      	<div class="modal-body">
+				<!--模态框中的内容-->	<h4>事件记录</h4>
+						        	<table class="table table-bordered">
+						        		<thead>
+						        			<tr>
+						        				<th>车位小区地址</th>
+						        				<th>车位编号</th>
+						        				<th>租赁开始时间</th>
+						        				<th>租赁结束时间</th>
+						        			</tr>
+						        		</thead>
+						        		<tbody>
+						        			<tr>
+						        				<td></td>
+						        				<td></td>
+						        				<td></td>
+						        				<td></td>
+						        			</tr>
+						        		</tbody>
+						        	</table>	
+						        	
+									    <div class="btn-group">
+										  	<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: lightskyblue;margin-left: 410px;font-weight: 600;">
+											 	&nbsp;&nbsp; &nbsp;&nbsp;投 诉 凭 证  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+										  	</button>
+										  	<ul class="dropdown-menu no-padding" style="margin-left: 480px;">
+										    	<div class="panel-body no-padding bg-primary text-center" style="height: 260px; width: 360px;">
+							<!--显示投诉凭证图片的位置--><img src="assets/img/profile-bg.png" style="height: 100%;width: 100%;"/>
+												</div>
+										  	</ul>
+										</div>
+									
+						        	<h4>投诉方</h4>
+						        	<table class="table table-bordered">
+						        		<thead>
+						        			<tr>
+						        				<th>用户名</th>
+						        				<th>真实姓名</th>
+						        				<th>身份证号</th>
+						        				<th>职业</th>
+						        				<th>联系电话</th>
+						        				<th>信誉度</th>
+						        			</tr>
+						        		</thead>
+						        		<tbody>
+						        			<tr>
+						        				<td>root</td>
+						        				<td>小王</td>
+						        				<td>223442345324353564</td>
+						        				<td>程序员</td>
+						        				<td>12334563456</td>
+						        				<td>96%</td>
+						        			</tr>
+						        			<tr>
+						        				<th>投诉理由 :</th>
+						        				<td colspan="5">该用户的车位太脏了</td>
+						        			</tr>
+						        		</tbody>
+						        	</table>	
+						        	<h4>被投诉方</h4>
+						        	<table class="table table-bordered">
+						        		<thead>
+						        			<tr>
+						        				<th>用户名</th>
+						        				<th>真实姓名</th>
+						        				<th>身份证号</th>
+						        				<th>职业</th>
+						        				<th>联系电话</th>
+						        				<th>信誉度</th>
+						        			</tr>
+						        		</thead>
+						        		<tbody>
+						        			<tr>
+						        				<td>root</td>
+						        				<td>小王</td>
+						        				<td>223442345324353564</td>
+						        				<td>程序员</td>
+						        				<td>12334563456</td>
+						        				<td>96%</td>
+						        			</tr>
+						        		</tbody>
+						        	</table>	
+						      	</div>
+						      	<div class="modal-footer">
+						        	<button type="button" class="btn btn-danger">投诉成功</button>
+						        	<button type="button" class="btn btn-danger">投诉失败</button>
+						      	</div>
+						    </div>
+						</div>
+					</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<footer>
+			<div class="container-fluid">
+				<p class="copyright">Copyright &copy; 2017.Company name All rights reserved.More Templates </p>
+			</div>
+		</footer>
+	</div>
+	<script src="assets/vendor/jquery/jquery.min.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="assets/scripts/klorofil-common.js"></script>
+	<script>
+		/*加载公共页面*/
+		$(function(){
+			$("#toping").load("top.html");
+		})
+		$("#li1").click(function(){
+			$("#li1").css("background-color","pink");
+			$("#li2").css("background-color","white");
+		})
+		$("#li2").click(function(){
+			$("#li2").css("background-color","pink");
+			$("#li1").css("background-color","white");
+		})
+	</script>
+</body>
+</html>
