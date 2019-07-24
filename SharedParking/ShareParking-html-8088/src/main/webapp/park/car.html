@@ -205,6 +205,8 @@
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+	<script src="assets/js/vue.js"></script>
+	<script src="assets/js/axios.min.js"></script>
 	<script>
 		/*加载公共页面*/
 		$(function(){
@@ -225,7 +227,9 @@
 				data:[]
 			},
 			created(){
-				alert()
+				axios.get().then(res=>{
+					console.info(res)
+				}).catch();
 				/* axios.get("/findid?id="+id).then(res=>{
 					console.info(res)
 					let $this = this;
