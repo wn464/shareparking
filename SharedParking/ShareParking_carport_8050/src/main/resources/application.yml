@@ -7,12 +7,13 @@ mybatis:
 eureka:
   client:
     service-url:
-      defaultZone:  http://eurakeserver9000.com:9000/eureka
+      defaultZone:  http://eurakeserver9000.com:9000/eureka/
   instance:
     instance-id: ShareParking-carport8050
     prefer-ip-address: true
-      
 spring:
+  application:
+    name: ShareParking_carport
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource #当前数据源操作类型
     driver-class-name: com.mysql.jdbc.Driver #mysql驱动包

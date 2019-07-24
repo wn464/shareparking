@@ -24,6 +24,9 @@ zuul:
     user:
       service-id: park-user
       path: /**
+    carport:
+      service-id: SHAREPARKING_CARPORT
+      path:  /port/** 
 info: #监控信息 
   app.name: sharePark-zuul-9500 
   company.name: sharePark-zuul-9500 
