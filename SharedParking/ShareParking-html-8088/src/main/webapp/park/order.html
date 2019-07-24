@@ -92,7 +92,7 @@
 										</div>
 									</form>
 								</div>
-								<div class="panel-body no-padding" >
+								<div class="panel-body no-padding" id="order-tab">
 									<table class="table table-bordered table-striped">
 										<thead>
 											<tr>
@@ -222,6 +222,8 @@
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+	<script src="assets/js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="assets/js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 	<script>
 		/*加载公共页面*/
 		$(function(){
@@ -243,6 +245,26 @@
 			$("#li1").css("background-color","white");
 		})
 		
+
+	var vm = new Vue({
+				el:"#order-tab",
+				data:{
+					order:[]
+				},
+				created(){
+					alert()
+					axios.get("http://myzuul.com:9500/orders/order/1")
+					.then(res=>{
+						console.info(res)
+						this.product=res.data
+					})
+					.catch(res=>{
+						console.info(res)
+					})
+				}
+				
+			})
 	</script>
+
 </body>
 </html>
