@@ -75,7 +75,7 @@
 							</div>
 						</div>
 						<div class="col-md-10">
-							<div class="panel" style="height: 660px;">
+							<div class="panel" style="height: 660px;" id="app">
 								<div style="margin: 50px;">
 									<form class="form-inline">
 									  	<div class="form-group">
@@ -131,7 +131,8 @@
 												<td>lady</td>
 												<td>20/小时</td>
 												<td>2019-3-20</td>
-												<td>2019-4-20</td>										</tr>
+												<td>2019-4-20</td>										
+											</tr>
 											<tr>
 												<td>4</td>
 												<td>环球中心</td>
@@ -179,7 +180,7 @@
 											</tr>
 										</tbody>
 									</table>
-									<nav style="margin: -20px 0 0 800px;">
+									<nav style="margin: -20px 0 0 780px;">
 									    <ul class="pagination">
 										    <li><a href="#">上一页</a></li>
 										    <li><a href="#">1/5</a></li>
@@ -218,6 +219,38 @@
 			$("#li1").css("background-color","white");
 		})
 		
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				data:[]
+			},
+			created(){
+				alert()
+				/* axios.get("/findid?id="+id).then(res=>{
+					console.info(res)
+					let $this = this;
+					this.data = res.data;
+					$this.$nextTick(function() {
+						imgshow();
+					}); 
+				}).catch(); */
+			},
+			/* methods :{
+				buycar:function(id){
+					var num=$("#number").html();
+					var type = $(".fl").filter(".on").children().attr("alt");
+					var params = new URLSearchParams();
+					params.append("goodid",id);
+					params.append("num",num);
+					params.append("type",type);
+					axios.post("/buycar",params).then(res=>{
+						if(res.data==1){
+							alert("添加购物车成功！！！");
+						}
+					})
+				}
+			} */
+		})
 	</script>
 </body>
 </html>
