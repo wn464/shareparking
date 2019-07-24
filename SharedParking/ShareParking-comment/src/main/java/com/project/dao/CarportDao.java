@@ -37,7 +37,7 @@ public interface CarportDao {
 	 * @param mid
 	 * @return
 	 */
-	CarportBean findcarportbyMID(@Param("mid") int mid);
+	List<CarportBean> findcarportbyMID(@Param("mid") int mid,@Param("address")String address);
 
 	/**
 	 * 通过坐标查询坐标范围内的车位

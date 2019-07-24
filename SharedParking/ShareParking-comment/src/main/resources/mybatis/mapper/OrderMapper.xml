@@ -58,11 +58,11 @@
 		select * from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6 limit #{page},#{size}	
 	</select>
 	
-	<select id="selectOrderNumberByMem1"  resultMap="map">
-		select * from orders where mem_j_id = #{mid} and delStatus = 6
+	<select id="selectOrderNumberByMem1"  resultType="int">
+		select count(*) from orders where mem_j_id = #{mid} and delStatus = 6
 	</select>
-	<select id="selectOrderNumberByMem2"  resultMap="map">
-		select * from orders where mem_y_id = #{mid} and delStatus = 6
+	<select id="selectOrderNumberByMem2"  resultType="int">
+		select count(*) from orders where mem_y_id = #{mid} and delStatus = 6
 	</select>
 	<!-- 	修改订单属性 -->
 	<update id="updateOrderAttr" parameterType="OrderBean">

@@ -26,11 +26,11 @@ private CarportIService service;
 	 * @param mid
 	 * @return
 	 */
-	@GetMapping(value="/carport/mid/{mid}")
+	@GetMapping(value="/carport/mid/{mid}/{address}")
 	@ResponseBody
-public CarportBean findcarportbymid(@PathVariable("mid")int mid) {
-	CarportBean carport =service.findcarportbymid(mid);
-	return carport;
+public List<CarportBean> findcarportbymid(@PathVariable("mid")int mid,@PathVariable("address")String address) {
+		List<CarportBean> carports =service.findcarportbymid(mid,address);
+	return carports;
 			}
 	/**
 	 * 通过车位id查询车位

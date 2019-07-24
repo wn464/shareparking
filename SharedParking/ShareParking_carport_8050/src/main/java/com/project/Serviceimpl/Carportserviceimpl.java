@@ -30,10 +30,9 @@ private CarportDao dao;
 	 */
 	@Override
 	@Cacheable(value="findcarportbymid")
-	public CarportBean findcarportbymid(int mid) {
-		CarportBean  carport=new CarportBean();
-		carport=dao.findcarportbyMID(mid);
-		return carport;
+	public List<CarportBean> findcarportbymid(int mid,String address) {
+		List<CarportBean>  carports=dao.findcarportbyMID(mid,address);
+		return carports;
 	}
 	
 	/**
