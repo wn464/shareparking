@@ -2,7 +2,7 @@ server:
   port: 9500
   
 spring:
-  application:
+    application:
     name: sharePark-zuul
 
 eureka:
