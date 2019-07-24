@@ -144,5 +144,15 @@ public class OrderHandler {
 		return pageBean;
 		
 	}
+	
+	/*
+	 * 分页查询每日订单
+	 */
+	@GetMapping("/order/numOrder/{num}")
+	public OrderBean selsctOrderBynum(@PathVariable("num")String num){
+		OrderBean bean = orderService.selectOrderByOrderNumber(num);
+		return bean;
+		
+	}
 		
 }

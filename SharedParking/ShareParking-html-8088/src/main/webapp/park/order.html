@@ -76,23 +76,26 @@
 							</div>
 						</div>
 						<div class="col-md-10">
-							<div class="panel" style="height: 660px;">
+							<div class="panel" style="height: 660px;" id="order-tab">
 								<div style="margin: 50px;">
 									<form class="form-inline">
-									  	<div class="form-group">
+									  	<div class="form-group" style="margin-right:30px;">
 									    	<label for="exampleInputName2">订单编号： &nbsp;</label>
 									    	<input type="text" class="form-control">
 									 	</div>
-										<div class="form-group" style="margin:0 50px;">
+									 	<div class="form-group">
+											<button class="btn btn-primary" @click="number()"><i class="fa fa-search"></i> 查询</button>
+										</div>
+										<div class="form-group" style="margin:0 30px 0 80px;">
 									    	<label for="exampleInputEmail2">下单日期： &nbsp;</label>
-									    	<input type="date" class="form-control" style="width: 177px;">
+									    	<input type="date" id="datetime" class="form-control" style="width: 177px;">
 										</div>
 										<div class="form-group">
-											<button class="btn btn-primary" ><i class="fa fa-search"></i> 查询</button>
+											<button class="btn btn-primary" @click="find()"><i class="fa fa-search"></i> 查询</button>
 										</div>
 									</form>
 								</div>
-								<div class="panel-body no-padding" id="order-tab">
+								<div class="panel-body no-padding" >
 									<table class="table table-bordered table-striped">
 										<thead>
 											<tr>
@@ -102,98 +105,24 @@
 												<th>租用车位位置</th>
 												<th>车牌号</th>
 												<th>订单生成时间</th>
-												<th>租用时间</th>
+												<th>订单结束时间</th>
 												<th>成交金额</th>
 												<th>车位所属者</th>
+												<th>订单状态</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>123456789012345</td>
-												<td>小李子</td>
-												<td>孵化园地下一号停车场</td>
-												<td>JG736412</td>
-												<td>2019-3-20 14:12:31</td>
-												<td>4时39分</td>
-												<td>72</td>
-												<td>老刘头</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>123456789012345</td>
-												<td>root</td>
-												<td>环球中心</td>
-												<td>JG736412</td>
-												<td>2019-3-20 14:12:31</td>
-												<td>8时39分</td>
-												<td>72</td>
-												<td>老刘头</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>123456789012345</td>
-												<td>小李子</td>
-												<td>鑫安达卢</td>
-												<td>JG736412</td>
-												<td>2019-3-20 14:12:31</td>
-												<td>2时12分</td>
-												<td>72</td>
-												<td>lady</td>											</tr>
-											<tr>
-												<td>4</td>
-												<td>123456789012345</td>
-												<td>张三</td>
-												<td>青阳体育中心</td>
-												<td>JG736412</td>
-												<td>2019-3-20 14:12:31</td>
-												<td>8时39分</td>
-												<td>72</td>
-												<td>小王</td>
-											</tr>
-											<tr>
-												<td>5</td>
-												<td>123456789012345</td>
-												<td>孟子</td>
-												<td>西南大陆</td>
-												<td>JG736412</td>
-												<td>2019-3-20 14:12:31</td>
-												<td>8时39分</td>
-												<td>72</td>
-												<td>老子</td>
-											</tr>
-											<tr>
-												<td>6</td>
-												<td>123456789012345</td>
-												<td>卡特琳娜</td>
-												<td>召唤师峡谷</td>
-												<td>JG736412</td>
-												<td>2019-3-20 14:12:31</td>
-												<td>8时39分</td>
-												<td>72</td>
-												<td>维恩</td>
-											</tr>
-											<tr>
-												<td>7</td>
-												<td>123456789012345</td>
-												<td>佐伊</td>
-												<td>弗雷尔卓德</td>
-												<td>JG736412</td>
-												<td>2019-3-20 14:12:31</td>
-												<td>8时39分</td>
-												<td>72</td>
-												<td>伊泽瑞尔</td>
-											</tr>
-											<tr>
-												<td>8</td>
-												<td>123456789012345</td>
-												<td>德鲁伊</td>
-												<td>扭曲丛林</td>
-												<td>JG736412</td>
-												<td>2019-3-20 14:12:31</td>
-												<td>8时39分</td>
-												<td>72</td>
-												<td>塞恩</td>
+											<tr v-for="(item,index) in order.list">
+												<td>{{index+1}}</td>
+												<td>{{item.orderNumber}}</td>
+												<td>{{item.memberBean1.username}}</td>
+												<td>{{item.carportBean.address}}</td>
+												<td>{{item.carNumber}}</td>
+												<td>{{item.orderTime}}</td>
+												<td>{{item.endTime}}</td>
+												<td>{{item.price}}</td>
+												<td>{{item.memberBean2.username}}</td>
+												<td>{{item.statusBean.name}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -245,25 +174,40 @@
 			$("#li1").css("background-color","white");
 		})
 		
-
-	var vm = new Vue({
+			var date = new Date();
+			var year = date.getFullYear(); 	//获取年 
+			var month = date.getMonth()+1;	//获取月  
+			var day = date.getDate(); 		//获取当日
+			var time = year+"-0"+month+"-"+day; //组合时间  
+			var vm = new Vue({
 				el:"#order-tab",
 				data:{
 					order:[]
 				},
 				created(){
-					alert()
-					axios.get("http://myzuul.com:9500/orders/order/1")
+					/* 直接发送请求，查询今日的订单 */
+					axios.get("http://myzuul.com:9500/orders/order/dateOrder/"+time+"/1/8")
 					.then(res=>{
-						console.info(res)
-						this.product=res.data
+						this.order=res.data
 					})
-					.catch(res=>{
-						console.info(res)
-					})
+				},
+				methods :{
+					/* 通过日期查询订单 */
+					find:function(){
+						var tim = $("#datetime").val();
+						alert(tim)
+						/* axios.get("http://myzuul.com:9500/orders/order/dateOrder/"+tim+"/1/8")
+						.then(res=>{
+							console.info(res.data)
+							this.order=res.data
+						}) */
+					}
 				}
 				
+				
 			})
+			
+					
 	</script>
 
 </body>
