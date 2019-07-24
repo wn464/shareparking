@@ -96,6 +96,7 @@ select * from carport where sqrt(
   <result property="endtime" column="endtime"/>
   <result property="statusimage" column="statusimage" />
   <result property="price" column="price" />
+  <result property="message" column="message" />
   <association property="auditstatus" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="auditstatus" />
   <association property="status" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="status" />
   <association property="imgs_id" javaType="ImagesBean" select="com.project.dao.ImagesDao.findimagesbyid" column="imgs_id" />
