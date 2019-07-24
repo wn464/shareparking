@@ -18,11 +18,6 @@ public interface IMemberDao {
     MemberBean findByUserName(String username);
 
     /*
-        通过姓名查询
-     */
-    MemberBean findByName(String name);
-
-    /*
         修改手机号
      */
     @Update("update member set phonenumber = #{phone} where id=#{id}")

@@ -10,7 +10,5 @@ public interface IMessageDao {
      */
     MessageBean findByMid(int id);
 
-    /*
-        查询所有用户信息
-     */
+
 }

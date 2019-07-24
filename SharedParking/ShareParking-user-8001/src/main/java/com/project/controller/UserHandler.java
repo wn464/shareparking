@@ -98,10 +98,36 @@ public class UserHandler {
        ----------------------- 添加模块 -----------------------
      */
     //添加用户
+    //1：添加成功
+    //2：添加失败
     @PostMapping("/user/add")
-    public int add(UserBean user){
-        int i = service.addUser(user);
-        return i;
+    public int add(@Validated UserBean user,BindingResult result){
+        if(result.hasErrors()) {
+            System.out.println("----------出现错误----------");
+            List<FieldError> list =result.getFieldErrors();
+            for (FieldError error : list) {
+                System.out.println(error.getDefaultMessage());
+            }
+            return 2;
+        }else {
+            //判断是否存在这个用户
+            UserBean bean = service.findByUserName(user.getUsername());
+            if(bean==null) {
+
+                Object obj = new SimpleHash("MD5",user.getPassword(),user.getUsername(),1024);		//盐值
+
+                UserBean user1 = new UserBean();									//创建user对象 然后封装
+                user1.setUsername(user.getUsername());
+                user1.setPassword(obj.toString());
+                user1.setAuthority(user.getAuthority());
+                int i = service.addUser(user1);
+
+                return 1; // 注册成功  跳转注册成功页面
+            }else {
+                return 2;
+            }
+
+        }
     }
 
     //验证用户是否存在
@@ -124,12 +150,13 @@ public class UserHandler {
         修改密码
         1：修改成功
         2：修改失败
+        3：前台输入是密码长度不合格
      */
     @PutMapping("/user/updatePassword")
     public String updataPassword(String password, String repassword) {
 
         if(repassword.length()<6||repassword.length()>12) {
-            return "3";						//3前台输入是密码长度不合格
+            return "3";
         }else {
             Subject subject = SecurityUtils.getSubject();
             int id = (int) subject.getSession().getAttribute("id");	//获取当前登录的id
@@ -168,5 +195,15 @@ public class UserHandler {
         return 2;
     }
 
+    /*
+        修改管理员权限
+        id：管理员的id
+        a_id：级别的id
+     */
+    @PutMapping("/user/updateAuthority")
+    public int updateAuthority(Integer id,Integer a_id){
+        int i = service.update(id, a_id);
+        return i;
+    }
 
 }

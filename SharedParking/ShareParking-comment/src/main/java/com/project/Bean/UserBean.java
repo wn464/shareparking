@@ -88,4 +88,19 @@ public class UserBean {
     public void setAuthority(AuthorityBean authority) {
         this.authority = authority;
     }
+
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", img='" + img + '\'' +
+                ", gender=" + gender +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", email='" + email + '\'' +
+                ", authority=" + authority +
+                '}';
+    }
 }
