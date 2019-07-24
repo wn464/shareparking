@@ -1,6 +1,7 @@
 package com.project.util;
 
 import java.util.Random;
+
 /*
     生成验证码工具
  */
