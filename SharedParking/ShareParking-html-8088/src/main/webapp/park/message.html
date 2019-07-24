@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>资格审核</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="assets/css/demo.css">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+</head>
+<style>
+	tr td{
+		height: 60px!important;
+		line-height: 30px!important;
+		border-color: white!important;
+	}
+	.td1{
+		font-weight: 600;
+	}
+	.btn{
+		margin-top: 20px;
+		margin-left: 60px;
+	}
+</style>
+<body>
+	<div id="wrapper">
+		<nav class="navbar navbar-default navbar-fixed-top" id="toping"></nav>
+		<div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-scroll">
+				<nav>
+					<ul class="nav" >
+						<li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>共享车位主页</span></a></li>
+						<li><a href="order.html" class=""><i class="lnr lnr-map"></i> <span>订单中心</span></a></li>
+						<li><a href="car.html" class=""><i class="lnr lnr-map-marker"></i> <span>车位信息</span></a></li>
+						<li><a href="member.html" class=""><i class="lnr lnr-users"></i> <span>用户管理</span></a></li>
+						<li><a href="message.html" class="active"><i class="lnr lnr-bookmark"></i> <span>用户车位审核</span></a></li>
+						<li><a href="money.html" class=""><i class="lnr lnr-linearicons"></i> <span>财务统计</span></a></li>
+						<li><a href="complain.html" class=""><i class="lnr lnr-chart-bars"></i> <span>投诉管理</span></a></li>
+						<li><a href="user-change.html" class=""><i class="lnr lnr-user"></i> <span>个人信息管理</span></a></li>
+						<li><a href="authority.html" class=""><i class="lnr lnr-cog"></i><span>操作权限管理</span></a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<div class="main">
+			<div class="main-content">
+				<div class="container-fluid">
+					<div class="panel-heading" style="margin: 0 0 15px 0;">
+						<h3 class="panel-title" style="font-size: 20px;">待审核车位</h3>
+					</div>		
+<!--一条待审核的用户消息--><div class="row" style="border-bottom: 2px solid gainsboro; padding: 25px 10px;margin-bottom: 50px;">
+						<div class="col-md-8">
+							<div class="panel" style="padding: 20px 30px;">
+								<div class="panel-body">
+									<table class="table">
+										<tbody>
+											<tr>
+												<td class="td1">用户名：</td>
+												<td>小浣熊</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td class="td1">真实姓名：</td>
+												<td>张三</td>
+											</tr>
+											<tr>
+												<td class="td1">身份证号：</td>
+												<td>220822839287636372</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td class="td1">电话号：</td>
+												<td>13067482473</td>
+											</tr>
+											<tr>
+												<td class="td1">家庭住址：</td>
+												<td>天府三街</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td class="td1">车位地址：</td>
+												<td>天府五街停车场</td>
+											</tr>
+											<tr>
+												<td class="td1">车位编号：</td>
+												<td>A-243</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td class="td1">产权证编号：</td>
+												<td>AD54234</td>
+											</tr>
+											<tr>
+												<td class="td1">申请时间：</td>
+												<td>2019-3-22 12:32:22</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<td></td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+									<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="td1">描述信息：</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<span>车位处于小区地下停车场，停放安全，位置优越</span></p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title" style="font-size: 16px; color: darkgrey;">车位产权复印件</h3>
+									<div class="right">
+										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+									</div>
+								</div>
+								<div class="panel-body no-padding bg-primary text-center">
+		   <!--显示车位产权复印件图片的位置--><img src="assets/img/profile-bg.png" style="height: 100%;width: 100%;"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<button class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> &nbsp;审核通过</button>
+							<button class="btn btn-primary"><i class="glyphicon glyphicon-remove"></i> &nbsp;审核失败</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<footer>
+			<div class="container-fluid">
+				<p class="copyright">Copyright &copy; 2017.Company name All rights reserved.More Templates </p>
+			</div>
+		</footer>
+	</div>
+	<script src="assets/vendor/jquery/jquery.min.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="assets/scripts/klorofil-common.js"></script>
+	<script>
+		/*加载公共页面*/
+		$(function(){
+			$("#toping").load("top.html");
+		})
+	</script>
+</body>
+</html>

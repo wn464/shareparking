@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>车位信息</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="assets/css/demo.css">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+</head>
+<style type="text/css">
+	th{
+		height: 46px;
+		line-height: 46px!important;
+		background-color: #B2DBA1;
+		border-color: #B2DBA1!important;
+		text-align: center;
+		padding: 0!important;
+	}
+	td{
+		height: 46px;
+		line-height: 46px!important;
+		text-align: center;
+		padding: 0!important;
+	}
+	.type{
+		background-color: #B2DBA1;		
+	}
+</style>
+<body>
+	<div id="wrapper">
+		<nav class="navbar navbar-default navbar-fixed-top" id="toping"></nav>
+		<div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-scroll">
+				<nav>
+					<ul class="nav" >
+						<li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>共享车位主页</span></a></li>
+						<li><a href="order.html" class=""><i class="lnr lnr-map"></i> <span>订单中心</span></a></li>
+						<li><a href="car.html" class="active"><i class="lnr lnr-map-marker"></i> <span>车位信息</span></a></li>
+						<li><a href="member.html" class=""><i class="lnr lnr-users"></i> <span>用户管理</span></a></li>
+						<li><a href="message.html" class=""><i class="lnr lnr-bookmark"></i> <span>用户车位审核</span></a></li>
+						<li><a href="money.html" class=""><i class="lnr lnr-linearicons"></i> <span>财务统计</span></a></li>
+						<li><a href="complain.html" class=""><i class="lnr lnr-chart-bars"></i> <span>投诉管理</span></a></li>
+						<li><a href="user-change.html" class=""><i class="lnr lnr-user"></i> <span>个人信息管理</span></a></li>
+						<li><a href="authority.html" class=""><i class="lnr lnr-cog"></i><span>操作权限管理</span></a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<div class="main">
+			<div class="main-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-2">
+							<div class="panel" style="height: 660px;">
+								<div class="panel-heading">
+									<h3 class="panel-title">车位</h3>
+								</div>
+								<div class="panel-body">
+									<div class="sidebar-scroll">
+										<nav>
+											<ul class="nav" id="change">
+					 <!--  默  认  显  示   可   租  车   位   --><li><a href="#" id="li1" class="type"><i class="lnr lnr-layers"></i><span> &nbsp;可租车位</span></a></li>
+												<li><a href="#" id="li2" class=""><i class="lnr lnr-layers"></i><span> &nbsp;不可租车位</span></a></li>
+											</ul>
+										</nav>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-10">
+							<div class="panel" style="height: 660px;">
+								<div style="margin: 50px;">
+									<form class="form-inline">
+									  	<div class="form-group">
+									    	<label for="exampleInputName2">车位地址： &nbsp;</label>
+									    	<input type="text" class="form-control">
+									 	</div>
+										<div class="form-group" style="margin:0 50px;">
+									    	<label for="exampleInputEmail2">车位所属人： &nbsp;</label>
+									    	<input type="text" class="form-control" style="width: 177px;">
+										</div>
+										<div class="form-group">
+											<button class="btn btn-success" ><i class="fa fa-search"></i> 查询</button>
+										</div>
+									</form>
+								</div>
+								<div class="panel-body no-padding" >
+									<table class="table table-bordered table-striped">
+										<thead>
+											<tr>
+												<th style="width: 60px;">序号</th>
+												<th>车位地址</th>
+												<th>车位编号</th>
+												<th>所属人</th>
+												<th>金额</th>
+												<th>起租时间</th>
+												<th>截止时间</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>孵化园地下一号停车场</td>
+												<td>A-23</td>
+												<td>老周头</td>
+												<td>20/小时</td>
+												<td>2019-3-20</td>
+												<td>2019-4-20</td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td>召唤师峡谷</td>
+												<td>A-23</td>
+												<td>凯尔</td>
+												<td>20/小时</td>
+												<td>2019-3-20</td>
+												<td>2019-4-20</td>
+											</tr>
+											<tr>
+												<td>3</td>
+												<td>体育场地下</td>
+												<td>A-23</td>
+												<td>lady</td>
+												<td>20/小时</td>
+												<td>2019-3-20</td>
+												<td>2019-4-20</td>										</tr>
+											<tr>
+												<td>4</td>
+												<td>环球中心</td>
+												<td>A-23</td>
+												<td>卡兹克</td>
+												<td>20/小时</td>
+												<td>2019-3-20</td>
+												<td>2019-4-20</td>
+											</tr>
+											<tr>
+												<td>5</td>
+												<td>天府三街地铁站</td>
+												<td>A-23</td>
+												<td>佳沃</td>
+												<td>20/小时</td>
+												<td>2019-3-20</td>
+												<td>2019-4-20</td>	
+											</tr>
+											<tr>
+												<td>6</td>
+												<td>埃尔文防线</td>
+												<td>A-23</td>
+												<td>佐伊</td>
+												<td>20/小时</td>
+												<td>2019-3-20</td>
+												<td>2019-4-20</td>	
+											</tr>
+											<tr>
+												<td>7</td>
+												<td>体育场地下</td>
+												<td>A-23</td>
+												<td>lady</td>
+												<td>20/小时</td>
+												<td>2019-3-20</td>
+												<td>2019-4-20</td>	
+											</tr>
+											<tr>
+												<td>8</td>
+												<td>哈雷彗星</td>
+												<td>A-23</td>
+												<td>泽拉斯</td>
+												<td>20/小时</td>
+												<td>2019-3-20</td>
+												<td>2019-4-20</td>	
+											</tr>
+										</tbody>
+									</table>
+									<nav style="margin: -20px 0 0 800px;">
+									    <ul class="pagination">
+										    <li><a href="#">上一页</a></li>
+										    <li><a href="#">1/5</a></li>
+										    <li><a href="#">下一页</a></li>
+									    </ul>
+									</nav>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<footer>
+			<div class="container-fluid">
+				<p class="copyright">Copyright &copy; 2017.Company name All rights reserved.More Templates </p>
+			</div>
+		</footer>
+	</div>
+	<script src="assets/vendor/jquery/jquery.min.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="assets/scripts/klorofil-common.js"></script>
+	<script>
+		/*加载公共页面*/
+		$(function(){
+			$("#toping").load("top.html");
+		})
+		$("#li1").click(function(){
+			$("#li1").css("background-color","#B2DBA1");
+			$("#li2").css("background-color","white");
+		})
+		$("#li2").click(function(){
+			$("#li2").css("background-color","#B2DBA1");
+			$("#li1").css("background-color","white");
+		})
+		
+	</script>
+</body>
+</html>
