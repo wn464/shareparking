@@ -174,6 +174,22 @@ public class OrderServiceImp implements IOrderService{
 		return pageBean;
 		
 	}
+
+	//通过状态分页查询订单（后台）
+	@Override
+	public PageBean selectOrderByStatus(int status, int page, int size) {
+		PageBean pageBean = new PageBean();
+		pageBean.setPage(page);
+		page = (page-1)*size;
+		List<OrderBean> list = orderDao.selectOrderByStatus(status, page, size);
+		int totalNumber  = orderDao.selectNumberByStatus(status);
+		pageBean.setSize(size);
+		pageBean.setTotalNumber(totalNumber);
+		int totalPage = (totalNumber%size==0)?totalNumber/size:(totalNumber/size)+1;
+		pageBean.setTotalPage(totalPage);
+		pageBean.setList(list);
+		return pageBean;
+	}
 	
 
 }

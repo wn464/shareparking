@@ -17,6 +17,15 @@
 	<select id="selectOrderById" parameterType="int" resultMap="map">
 		select * from orders where id = #{oid} and delStatus = 6
 	</select>
+	<!-- 	后台通过支付状态分页查询订单 -->
+	<select id="selectOrderByStatus" parameterType="int" resultMap="map">
+		select * from orders where status = #{status} and delStatus = 6
+		limit #{page},#{size}	
+	</select>
+		<!-- 	查询支付数量 -->
+	<select id="selectNumberByStatus" resultType="int">
+		select count(*) from orders where status = #{status} and delStatus = 6
+	</select>
 	
 	<!-- 	通过支付状态分页查询订单 1-->
 	<select id="selectOrderByState1" parameterType="int" resultMap="map">

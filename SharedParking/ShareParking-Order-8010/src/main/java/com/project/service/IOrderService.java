@@ -43,7 +43,8 @@ public interface IOrderService {
 	//每日订单
 	public 	PageBean selcetOrderByDay(String date, int page, int size);
 
-	
+	//通过状态分页查询订单（后台）
+	public PageBean selectOrderByStatus(int status, int page, int size);
 
 	
 
