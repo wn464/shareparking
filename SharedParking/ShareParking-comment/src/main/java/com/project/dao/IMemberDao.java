@@ -1,7 +1,10 @@
 package com.project.dao;
 
-import com.project.Bean.MemberBean;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Update;
+
+import com.project.Bean.MemberBean;
 
 /*
     前台用户 dao
@@ -28,4 +31,9 @@ public interface IMemberDao {
      */
     @Update("update member set password=#{repassword} where id=#{id}")
     int updatePassword(int id,String repassword);
+    
+    /*
+     * 查找所有用户
+     */
+    List<MemberBean> findAll();
 }
