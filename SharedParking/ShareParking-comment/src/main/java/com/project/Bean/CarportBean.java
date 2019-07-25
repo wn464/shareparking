@@ -28,4 +28,6 @@ public class CarportBean  implements Serializable{
 	private MemberBean m_id;//车位所属人
 	private MarkBean auditstatus; //车位审核状态
 	private String message;//车位描述
+	private String auditnumber;//产权编号
+	private String addtime;//申请时间
 }
