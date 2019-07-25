@@ -185,4 +185,11 @@ private CarportDao dao;
 		return carports;
 	}
 
+	@Override
+	@Cacheable(value="findcarportbyauditstatus")
+	public List<CarportBean> findcarportbyauditstatus(){
+		List<CarportBean> carports=	dao.findcarportbyditstatus();
+		return carports;
+	}
+
 }

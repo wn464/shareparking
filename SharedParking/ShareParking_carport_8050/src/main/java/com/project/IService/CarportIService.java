@@ -81,4 +81,9 @@ boolean addcarport(CarportBean carport);
  * @return
  */
 PageBean findcarportbyday(int page,int size);
+/**
+ * 查询所有未审核的车辆
+ * @return
+ */
+List<CarportBean> findcarportbyauditstatus();
 }

@@ -3,6 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.project.dao.CarportDao">
+  <select id="" resultMap="onemap">
+  select * from carport where  auditstatus=8
+  </select>
   <select id="findcarportbydaynumber" resultType="int">
   select count(*) from carport where begintime&lt;=day
   </select>

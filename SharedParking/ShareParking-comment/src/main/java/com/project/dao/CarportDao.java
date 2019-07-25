@@ -1,6 +1,5 @@
 package com.project.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -108,4 +107,9 @@ int findcarportnumber(int status);
 	 * @return
 	 */
 	int findcarportbydaynumber(@Param("day")String day);
+	/**
+	 * 查询所有未审核的车位
+	 * @return
+	 */
+	List<CarportBean> findcarportbyditstatus();
 }

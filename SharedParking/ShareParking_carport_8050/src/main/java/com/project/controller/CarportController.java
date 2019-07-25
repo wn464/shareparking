@@ -146,4 +146,10 @@ public List<CarportBean> findcarportbymid(@PathVariable("mid")int mid,@PathVaria
 		PageBean pagebean=service.findcarportbyday(page, size);
 		return pagebean;
 	}
+	@GetMapping(value="/carport/auauditstatus")
+	@ResponseBody
+	public List<CarportBean> findcarportbyAuauditstatus(){
+		List<CarportBean> carports=service.findcarportbyauditstatus();
+		return carports;
+	}
 }
