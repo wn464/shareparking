@@ -45,7 +45,7 @@ public class UserHandler {
         2 ：密码输入错误
         1 ：登录成功
      */
-    @GetMapping("/user/login")
+    @PostMapping("/user/login")
     public int login(@Validated UserBean user, BindingResult result){
         if (result.hasErrors()){
             System.out.println("------------出现错误---------");
@@ -55,6 +55,8 @@ public class UserHandler {
             }
             return 0;
         }else{
+        	Object obj = new SimpleHash("MD5",user.getPassword(),user.getUsername(),1024);
+        	
             Subject subject = SecurityUtils.getSubject();
             UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
             if (!subject.isAuthenticated()){

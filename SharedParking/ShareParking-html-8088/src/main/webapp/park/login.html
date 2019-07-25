@@ -38,7 +38,7 @@
 										<span>Remember me</span>
 									</label>
 								</div>
-								<button  class="btn btn-primary btn-lg btn-block" id="login">登  录</button>
+								<button  class="btn btn-primary btn-lg btn-block" @click="login()">登  录</button>
 								<div class="bottom">
 									<!--忘记密码-->
 									<!--<span class="helper-text"><i class="fa fa-lock"></i> <a href="#">忘记密码</a></span>-->
@@ -59,47 +59,44 @@
 	</div>
 	<script src="assets/vendor/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/layui/layui.all.js" ></script>
+	<script src="assets/js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="assets/js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 	<script>
-		var name = $("#name").val();
-		var pwd =$("#password").val();
-		$("#login").click(function(){
-			if(name==""&&pwd==""){
-				layer.msg('请输入账号密码', {
-					icon: 5,
-					time: 1500
-				}, function(){});   
-			}else{
-				/*var vm = new Vue({
-					el:"#app",
-					data:{
-						data:[]
-					},
-					created(){
-						axios.get("/findid?id="+id).then(res=>{
-							console.info(res)
-							let $this = this;
-							this.data = res.data;
-							$this.$nextTick(function() {
-								imgshow();
-							}); 
-						}).catch();
-					},
-					methods :{
-						buycar:function(id){
-							var num=$("#number").html();
-							var type = $(".fl").filter(".on").children().attr("alt");
-							var params = new URLSearchParams();
-							params.append("goodid",id);
-							params.append("num",num);
-							params.append("type",type);
-							axios.post("/buycar",params).then(res=>{
-								if(res.data==1){
-									alert("添加购物车成功！！！");
-								}
-							})
+		
+			
+		var vm = new Vue({
+			el:"#wrapper",
+			data:{
+				data:[]
+			},
+			methods :{
+				login :function(){
+					var username = $("#name").val();
+					var password =$("#password").val();
+					var params = new URLSearchParams();
+					params.append("username",username);
+					params.append("password",password);
+					axios.post("http://myzuul.com:9500/user/login",params).then(res=>{
+						if(res.data==2){
+							layer.msg('密码输入错误 ', {
+								icon: 5,
+								time: 1500
+							}, function(){});   
+						}else if(res.data==1){
+							layer.msg('登陆成功', {
+								icon: 1,
+								time: 500
+							}, function(){
+								location.href="index.html"
+							});   
+						}else if(res.date==0){
+							layer.msg('格式不正确', {
+								icon: 5,
+								time: 1500
+							}, function(){});   
 						}
-					}
-				})*/
+					})
+				}
 			}
 		})
 	</script>
