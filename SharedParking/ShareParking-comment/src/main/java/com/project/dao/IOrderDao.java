@@ -41,4 +41,11 @@ public interface IOrderDao {
 
 	public int selectOrderNumberByMem1(int mem1);
 	public int selectOrderNumberByMem2(int mem2);
+	
+	//通过状态分页查询订单（后台）
+	public List<OrderBean> selectOrderByStatus(@Param("status")int status,@Param("page")int page,@Param("size")int size);
+	//根据状态查询订单总数量（后台）
+	public int selectNumberByStatus(@Param("status")int status);
+		
+	
 }

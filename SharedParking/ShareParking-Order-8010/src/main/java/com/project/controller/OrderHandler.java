@@ -160,5 +160,14 @@ public class OrderHandler {
 		return page;
 		
 	}
+	
+	/*
+	 * 后台根据订单状态分页查询订单
+	 */
+	@GetMapping("/order/status/{status}/{page}/{size}")
+	public PageBean selectOrderByStatus(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
+		PageBean pageBean = orderService.selectOrderByStatus(status, page, size);
+		return pageBean;
+	}
 		
 }
