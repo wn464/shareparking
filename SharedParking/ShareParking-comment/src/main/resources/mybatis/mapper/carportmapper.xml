@@ -15,8 +15,8 @@
   </select>
   <!-- 添加车位 -->
   <insert id="addcarport">
-  insert into carport (address,carportnumber,coordinate_x,coordinate_y,begintime,endtime,status,imgs_id,statusimage,price,m_id,auditstatus) 
-  values(#{carport.address},#{carport.carportnumber},#{carport.coordinate_x},#{carport.coordinate_y},#{carport.begintime},#{carport.endtime},11,#{carport.imgs_id.id},#{carport.statusimage},#{carport.price},#{carport.m_id.id},8)
+  insert into carport (address,carportnumber,coordinate_x,coordinate_y,begintime,endtime,status,imgs_id,statusimage,price,m_id,auditstatus,message,auditnumber,addtime) 
+  values(#{carport.address},#{carport.carportnumber},#{carport.coordinate_x},#{carport.coordinate_y},#{carport.begintime},#{carport.endtime},11,#{carport.imgs_id.id},#{carport.statusimage},#{carport.price},#{carport.m_id.id},8,#{carport.message},#{carport.auditnumber},#{carport.addtime})
   </insert>
   <!-- 修改车位信息 -->
   <update id="updatecarport">
@@ -101,6 +101,8 @@ select * from carport where sqrt(
   <result property="statusimage" column="statusimage" />
   <result property="price" column="price" />
   <result property="message" column="message" />
+  <result property="auditnumber" column="auditnumber"/>
+  <result property="addtime" column="addtime" />
   <association property="auditstatus" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="auditstatus" />
   <association property="status" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="status" />
   <association property="imgs_id" javaType="ImagesBean" select="com.project.dao.ImagesDao.findimagesbyid" column="imgs_id" />

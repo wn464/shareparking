@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Update;
@@ -133,6 +135,10 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	@PostMapping("/carport")
 	@ResponseBody
 	public boolean addcarport(@RequestBody CarportBean carport) {
+		SimpleDateFormat datafromat=new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
+		Date te =new Date();
+		String a=datafromat.format(te);
+		carport.setAddtime(a);
 		boolean l =service.addcarport(carport);
 		return l;
 	}

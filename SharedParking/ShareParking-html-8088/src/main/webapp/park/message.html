@@ -49,49 +49,49 @@
 				</nav>
 			</div>
 		</div>
-		<div class="main">
+		<div class="main"  id="app">
 			<div class="main-content">
 				<div class="container-fluid">
 					<div class="panel-heading" style="margin: 0 0 15px 0;">
 						<h3 class="panel-title" style="font-size: 20px;">待审核车位</h3>
 					</div>		
-<!--一条待审核的用户消息-->
-<div class="row" style="border-bottom: 2px solid gainsboro; padding: 25px 10px;margin-bottom: 50px;" id="app">
-						<div class="col-md-8">
+				<!--一条待审核的用户消息-->
+				<div class="row" style="border-bottom: 2px solid gainsboro; padding: 25px 10px;margin-bottom: 50px;" v-for="(item,index) in data">
+						<div class="col-md-8" >
 							<div class="panel" style="padding: 20px 30px;">
 								<div class="panel-body">
 									<table class="table">
 										<tbody>
 											<tr>
-												<td class="td1">用户名：</td>
-												<td>小浣熊</td>
+												<td class="td1">用户名:</td>
+												<td>{{item.m_id.username}}</td> 
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td class="td1">真实姓名：</td>
-												<td>张三</td>
+												   <td>{{item.m_id.message.name}}</td> 
 											</tr>
 											<tr>
 												<td class="td1">身份证号：</td>
-												<td>220822839287636372</td>
+											 	<!-- <td>{{item.m_id.message.idCard}}</td>  -->
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td class="td1">电话号：</td>
-												<td>13067482473</td>
+											 	<td>{{item.m_id.phonenumber}}</td> 
 											</tr>
 											<tr>
 												<td class="td1">家庭住址：</td>
-												<td>天府三街</td>
+												<!--  <td>{{item.m_id.message.address}}</td>  -->
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td class="td1">车位地址：</td>
-												<td>天府五街停车场</td>
+												 <td>{{item.address}}</td> 
 											</tr>
 											<tr>
 												<td class="td1">车位编号：</td>
-												<td>A-243</td>
+												 <td>{{item.carportnumber}}</td> 
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -161,9 +161,10 @@
 			data:[]
 		},
 		created(){
-			axios.get("http://localhost:9500/port/carport/auauditstatus")
+			axios.get("http://myzuul.com:9500/port/carport/auauditstatus")
 			.then(res=>{
 				console.info(res.data)
+				this.data=res.data
 			})
 			.cache(res=>{
 				console.info(res.data)
