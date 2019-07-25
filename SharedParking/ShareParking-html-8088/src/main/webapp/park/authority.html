@@ -42,7 +42,7 @@
 				</nav>
 			</div>
 		</div>
-		<div class="main">
+		<div class="main" id="app">
 			<div class="main-content">
 				<div class="container-fluid">
 					<div class="panel">
@@ -183,10 +183,51 @@
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+	<script src="assets/js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="assets/js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 	<script>
 		$(function(){
 				$("#toping").load("top.html");
 		})
+		
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					data:[]
+				},
+				created(){
+					/* 直接发送请求，查询所有管理员  不包括自己  */
+					axios.get("http://myzuul.com:9500/user/findall")
+					.then(res=>{
+						alert(res.data)
+						this.data=res.data
+					})
+				},
+				methods :{
+					/* 通过日期查询订单 */
+					find :function(){
+						var tim = $("#datetime").val();
+						alert(tim)
+						axios.get("http://myzuul.com:9500/orders/order/dateOrder/"+tim+"/1/8")
+						.then(res=>{
+							this.order=res.data
+						}) 
+					},
+					/* 通过订单号查询 */
+					number :function(){
+						var num = $("#num").val();
+						alert(num)
+						axios.get("http://myzuul.com:9500/orders/order/numOrder/"+num)
+						.then(res=>{
+							this.order=res.data
+						}) 
+					},
+				}
+				
+				
+			})
+		
+		
 	</script>
 </body>
 </html>
