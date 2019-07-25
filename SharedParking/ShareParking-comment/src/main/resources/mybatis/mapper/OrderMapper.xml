@@ -17,6 +17,15 @@
 	<select id="selectOrderById" parameterType="int" resultMap="map">
 		select * from orders where id = #{oid} and delStatus = 6
 	</select>
+	<!-- 	后台通过支付状态分页查询订单 -->
+	<select id="selectOrderByStatus" parameterType="int" resultMap="map">
+		select * from orders where status = #{status} and delStatus = 6
+		limit #{page},#{size}	
+	</select>
+		<!-- 	查询支付数量 -->
+	<select id="selectNumberByStatus" resultType="int">
+		select count(*) from orders where status = #{status} and delStatus = 6
+	</select>
 	
 	<!-- 	通过支付状态分页查询订单 1-->
 	<select id="selectOrderByState1" parameterType="int" resultMap="map">
@@ -40,17 +49,21 @@
 	
 	<!-- 	统计订单 -->
 	<select id="selectOrderByMonth"  resultType="Double">
-		select price from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6	
+		select price from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6	and status = 4
+	</select>
+	<!-- 	统计订单 次数-->
+	<select id="selectOrderCount"  resultType="int">
+		select count(*) from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6	and status = 4
 	</select>
 	
 		<!-- 	通过日期查询订单价格-->
 	<select id="selcetOrderByDate" resultType="Double">
-		select price from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6
+		select price from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6 and status = 4
 	</select>
 	
 		<!-- 	每日新增订单数 -->
 	<select id="selcetOrderNumberByDate" resultType="int">
-		select count(*) from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6
+		select count(*) from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6 
 	</select>
 	
 		<!-- 查询今日所有订单 -->

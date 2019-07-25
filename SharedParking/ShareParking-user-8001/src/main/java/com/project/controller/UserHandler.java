@@ -45,7 +45,7 @@ public class UserHandler {
         2 ：密码输入错误
         1 ：登录成功
      */
-    @GetMapping("/user/login")
+    @PostMapping("/user/login")
     public int login(@Validated UserBean user, BindingResult result){
         if (result.hasErrors()){
             System.out.println("------------出现错误---------");
@@ -55,18 +55,20 @@ public class UserHandler {
             }
             return 0;
         }else{
+        	Object obj = new SimpleHash("MD5",user.getPassword(),user.getUsername(),1024);
+        	
             Subject subject = SecurityUtils.getSubject();
             UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
             if (!subject.isAuthenticated()){
                 try {
                     subject.login(token);
                     System.out.println("------认证成功------");
-
+                    
                     //把id存到session
                     UserBean bean = service.findByUserName(user.getUsername());
                     Session session = subject.getSession();
                     session.setAttribute("id",bean.getId());
-
+                    System.out.println(session.getAttribute("id")+"==================="); 
                     return 1;
                 }catch (Exception e){
                     System.out.println("------认证失败------");
@@ -82,8 +84,13 @@ public class UserHandler {
      */
     //查询所有管理员
     @GetMapping("/user/findall")
-    public List<UserBean> findAll(Integer id){
-        List<UserBean> list = service.findAll(id);
+    public List<UserBean> findAll(){
+    	System.out.println("123123123123123");
+    	 Subject subject = SecurityUtils.getSubject();
+    	 Session session = subject.getSession(false);
+    	 int id = (int) session.getAttribute("id");	//获取当前登录的id
+    	 System.out.println("id======="+id);
+        List<UserBean> list = service.findAll(1);
         return list;
     }
     //通过id查询管理员

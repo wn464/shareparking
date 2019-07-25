@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Update;
@@ -26,10 +28,12 @@ private CarportIService service;
 	 * @param mid
 	 * @return
 	 */
-	@GetMapping(value="/carport/mid/{mid}/{address}")
+	@GetMapping(value="/carport/mid")
 	@ResponseBody
-public List<CarportBean> findcarportbymid(@PathVariable("mid")int mid,@PathVariable("address")String address) {
-		List<CarportBean> carports =service.findcarportbymid(mid,address);
+public List<CarportBean> findcarportbymid(String mid,String address) {
+		String key=mid+address;
+		
+		List<CarportBean> carports =service.findcarportbymid(mid,address,key);
 	return carports;
 			}
 	/**
@@ -117,10 +121,10 @@ public List<CarportBean> findcarportbymid(@PathVariable("mid")int mid,@PathVaria
 	 * @param cid
 	 * @return
 	 */
-	@PutMapping(value="/carport/audit/{cid}")
+	@PutMapping(value="/carport/audit/{cid}/{audit}")
 	@ResponseBody
-	public boolean updateauditstatus(@PathVariable("cid")int cid) {
-		boolean l=service.updatecarauditstatus(cid);
+	public boolean updateauditstatus(@PathVariable("cid")int cid,@PathVariable("audit")int audit) {
+		boolean l=service.updatecarauditstatus(cid,audit);
 		return l;
 	} 
 	/**
@@ -131,6 +135,10 @@ public List<CarportBean> findcarportbymid(@PathVariable("mid")int mid,@PathVaria
 	@PostMapping("/carport")
 	@ResponseBody
 	public boolean addcarport(@RequestBody CarportBean carport) {
+		SimpleDateFormat datafromat=new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
+		Date te =new Date();
+		String a=datafromat.format(te);
+		carport.setAddtime(a);
 		boolean l =service.addcarport(carport);
 		return l;
 	}
@@ -145,5 +153,11 @@ public List<CarportBean> findcarportbymid(@PathVariable("mid")int mid,@PathVaria
 	public PageBean findcarportbyday(@PathVariable("page")int page,@PathVariable("size")int size) {
 		PageBean pagebean=service.findcarportbyday(page, size);
 		return pagebean;
+	}
+	@GetMapping(value="/carport/auauditstatus")
+	@ResponseBody
+	public List<CarportBean> findcarportbyAuauditstatus(){
+		List<CarportBean> carports=service.findcarportbyauditstatus();
+		return carports;
 	}
 }

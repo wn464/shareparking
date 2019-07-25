@@ -3,6 +3,7 @@ package com.project.Serviceimpl;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -29,8 +30,8 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbymid")
-	public List<CarportBean> findcarportbymid(int mid,String address) {
+	@Cacheable(value="findcarportbymid",key="#key")
+	public List<CarportBean> findcarportbymid(String mid,String address,String key) {
 		List<CarportBean>  carports=dao.findcarportbyMID(mid,address);
 		return carports;
 	}
@@ -39,7 +40,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbycid")
+	@Cacheable(value="findcarportbycid",key="#cid")
 	public CarportBean findcarportbycid(int cid) {
 		CarportBean carport =dao.findcarportbycid(cid);
 		return carport;
@@ -48,7 +49,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbynumber")
+	@Cacheable(value="findcarportbynumber",key="#carportnumber")
 	public CarportBean findcarportbynumber(String carportnumber) {
 		CarportBean carport=dao.findcarportbycarportnumber(carportnumber);
 		return carport;
@@ -57,7 +58,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbycoordinate")
+	@Cacheable(value="findcarportbycoordinate",key="#coordinate_x")
 	public List<CarportBean> findcarportbycoordinate(double coordinate_x, double coordinate_y) {
 		List<CarportBean> carports=dao.findcarportbycoordinate(coordinate_x, coordinate_y);
 		return carports;
@@ -66,7 +67,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbykezu")
+	@Cacheable(value="findcarportbykezu",key="#page")
 	public PageBean findcarportbykezu(int page, int size) {
 		PageBean pagebean=new PageBean();
 		int totalsize=dao.findcarportnumber(10);
@@ -80,7 +81,7 @@ private CarportDao dao;
 		return pagebean;
 	}
 	@Override
-	@Cacheable("findcarportbyunkezu")
+	@Cacheable(value="findcarportbyunkezu",key="#page")
 	public PageBean findcarportbyunkezu(int page, int size) {
 		PageBean pagebean=new PageBean();
 		int totalsize=dao.findcarportnumber(11);
@@ -132,11 +133,11 @@ private CarportDao dao;
 	 */
 	@Override
 	@CacheEvict(value="updatecarauditstatus",allEntries = true)
-	public boolean updatecarauditstatus(int cid) {
+	public boolean updatecarauditstatus(int cid,int audit) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
 		MarkBean mark=new MarkBean();
-		mark.setId(9);
+		mark.setId(audit);
 		carport.setStatus(mark);
 		int s=dao.updatecarport(carport);
 		if(s>0) {
@@ -161,7 +162,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbyday")
+	@Cacheable(value="findcarportbyday",key="#page")
 	public PageBean findcarportbyday(int page, int size) {
 		PageBean pagebean=new PageBean();
 		SimpleDateFormat data=new SimpleDateFormat("yyy-mm-dd 23:00:00");
@@ -179,9 +180,16 @@ private CarportDao dao;
 	}
 
 	@Override
-	@Cacheable(value="findcarportbytime")
+	@Cacheable(value="findcarportbytime",key="#time")
 	public List<CarportBean> findcarportbytime(String time) {
 		List<CarportBean> carports=dao.findcarportbytime(time);
+		return carports;
+	}
+
+	@Override
+	@Cacheable(value="findcarportbyauditstatus")
+	public List<CarportBean> findcarportbyauditstatus(){
+		List<CarportBean> carports=	dao.findcarportbyditstatus();
 		return carports;
 	}
 

@@ -18,7 +18,7 @@ import com.project.dao.CarportDao;
 @Component
 public class timeutil {
 private static final Logger logger =LoggerFactory.getLogger(timeutil.class);
-private static final SimpleDateFormat datafromat=new SimpleDateFormat("yyy-mm-dd hh:mm:ss");
+private static final SimpleDateFormat datafromat=new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
 @Autowired
 private CarportIService service;
 

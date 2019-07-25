@@ -25,7 +25,7 @@ public interface IOrderDao {
 	//根据状态查询订单总数量（出租者）
 	public int selectNumberByState2(@Param("mid")int mid,@Param("status")int status);
 	
-	//统计订单
+	//统计一段时间的订单
 	public List<Double> selectOrderByMonth(@Param("beginTime")String beginTime,@Param("endTime")String endTime);
 	//统计订单（日期）
 	public List<Double> selcetOrderByDate(@Param("beginTime")String beginTime,@Param("endTime")String endTime);
@@ -41,4 +41,13 @@ public interface IOrderDao {
 
 	public int selectOrderNumberByMem1(int mem1);
 	public int selectOrderNumberByMem2(int mem2);
+	
+	//通过状态分页查询订单（后台）
+	public List<OrderBean> selectOrderByStatus(@Param("status")int status,@Param("page")int page,@Param("size")int size);
+	//根据状态查询订单总数量（后台）
+	public int selectNumberByStatus(@Param("status")int status);
+	//统计订单次数
+	public List<Integer> selectOrderCount(@Param("beginTime")String beginTime,@Param("endTime")String endTime);
+		
+	
 }
