@@ -1,6 +1,5 @@
 package com.project.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -37,7 +36,7 @@ public interface CarportDao {
 	 * @param mid
 	 * @return
 	 */
-	List<CarportBean> findcarportbyMID(@Param("mid") int mid,@Param("address")String address);
+	List<CarportBean> findcarportbyMID(@Param("mid") String mid,@Param("address")String address);
 
 	/**
 	 * 通过坐标查询坐标范围内的车位
@@ -108,4 +107,9 @@ int findcarportnumber(int status);
 	 * @return
 	 */
 	int findcarportbydaynumber(@Param("day")String day);
+	/**
+	 * 查询所有未审核的车位
+	 * @return
+	 */
+	List<CarportBean> findcarportbyditstatus();
 }

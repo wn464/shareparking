@@ -3,6 +3,7 @@ package com.project.Serviceimpl;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -29,8 +30,8 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbymid",key="#mid")
-	public List<CarportBean> findcarportbymid(int mid,String address) {
+	@Cacheable(value="findcarportbymid",key="#key")
+	public List<CarportBean> findcarportbymid(String mid,String address,String key) {
 		List<CarportBean>  carports=dao.findcarportbyMID(mid,address);
 		return carports;
 	}
@@ -182,6 +183,13 @@ private CarportDao dao;
 	@Cacheable(value="findcarportbytime",key="#time")
 	public List<CarportBean> findcarportbytime(String time) {
 		List<CarportBean> carports=dao.findcarportbytime(time);
+		return carports;
+	}
+
+	@Override
+	@Cacheable(value="findcarportbyauditstatus")
+	public List<CarportBean> findcarportbyauditstatus(){
+		List<CarportBean> carports=	dao.findcarportbyditstatus();
 		return carports;
 	}
 

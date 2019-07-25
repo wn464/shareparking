@@ -11,7 +11,7 @@ public interface CarportIService {
 	 * @param mid
 	 * @return
 	 */
-List<CarportBean> findcarportbymid(int mid,String address);
+List<CarportBean> findcarportbymid(String mid,String address,String key);
 /**
  * 通过车位id查询车位
  * @param cid
@@ -81,4 +81,9 @@ boolean addcarport(CarportBean carport);
  * @return
  */
 PageBean findcarportbyday(int page,int size);
+/**
+ * 查询所有未审核的车辆
+ * @return
+ */
+List<CarportBean> findcarportbyauditstatus();
 }

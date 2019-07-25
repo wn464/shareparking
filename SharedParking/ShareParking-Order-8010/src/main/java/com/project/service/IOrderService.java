@@ -46,6 +46,8 @@ public interface IOrderService {
 	//通过状态分页查询订单（后台）
 	public PageBean selectOrderByStatus(int status, int page, int size);
 
+	public List<Integer> selectOrderCount(int year, int startMonth, int endMonth);
+
 	
 
 

@@ -53,7 +53,7 @@
 				</nav>
 			</div>
 		</div>
-		<div class="main">
+		<div class="main" id="app">
 			<div class="main-content">
 				<div class="container-fluid">
 					<div class="row">
@@ -66,8 +66,8 @@
 									<div class="sidebar-scroll">
 										<nav>
 											<ul class="nav" id="change">
-					 <!--  默  认  显  示   可   租  车   位   --><li><a href="#" id="li1" class="type"><i class="lnr lnr-layers"></i><span> &nbsp;可租车位</span></a></li>
-												<li><a href="#" id="li2" class=""><i class="lnr lnr-layers"></i><span> &nbsp;不可租车位</span></a></li>
+					 <!--  默  认  显  示   可   租  车   位   --><li><a href="#" id="li1" class="type" @click=okk()><i class="lnr lnr-layers"></i><span> &nbsp;可租车位</span></a></li>
+												<li><a href="#" id="li2" class="" @click=noo()><i class="lnr lnr-layers"></i><span> &nbsp;不可租车位</span></a></li>
 											</ul>
 										</nav>
 									</div>
@@ -80,14 +80,14 @@
 									<form class="form-inline">
 									  	<div class="form-group">
 									    	<label for="exampleInputName2">车位地址： &nbsp;</label>
-									    	<input type="text" class="form-control">
+									    	<input type="text" class="form-control" id="caraddress">
 									 	</div>
 										<div class="form-group" style="margin:0 50px;">
 									    	<label for="exampleInputEmail2">车位所属人： &nbsp;</label>
-									    	<input type="text" class="form-control" style="width: 177px;">
+									    	<input type="text" class="form-control" id="people" style="width: 177px;">
 										</div>
 										<div class="form-group">
-											<button class="btn btn-success" ><i class="fa fa-search"></i> 查询</button>
+											<button class="btn btn-success" @click=find() ><i class="fa fa-search"></i> 查询</button>
 										</div>
 									</form>
 								</div>
@@ -106,87 +106,24 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>孵化园地下一号停车场</td>
-												<td>A-23</td>
-												<td>老周头</td>
-												<td>20/小时</td>
-												<td>2019-3-20</td>
-												<td>2019-4-20</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>召唤师峡谷</td>
-												<td>A-23</td>
-												<td>凯尔</td>
-												<td>20/小时</td>
-												<td>2019-3-20</td>
-												<td>2019-4-20</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>体育场地下</td>
-												<td>A-23</td>
-												<td>lady</td>
-												<td>20/小时</td>
-												<td>2019-3-20</td>
-												<td>2019-4-20</td>										
-											</tr>
-											<tr>
-												<td>4</td>
-												<td>环球中心</td>
-												<td>A-23</td>
-												<td>卡兹克</td>
-												<td>20/小时</td>
-												<td>2019-3-20</td>
-												<td>2019-4-20</td>
-											</tr>
-											<tr>
-												<td>5</td>
-												<td>天府三街地铁站</td>
-												<td>A-23</td>
-												<td>佳沃</td>
-												<td>20/小时</td>
-												<td>2019-3-20</td>
-												<td>2019-4-20</td>	
-											</tr>
-											<tr>
-												<td>6</td>
-												<td>埃尔文防线</td>
-												<td>A-23</td>
-												<td>佐伊</td>
-												<td>20/小时</td>
-												<td>2019-3-20</td>
-												<td>2019-4-20</td>	
-											</tr>
-											<tr>
-												<td>7</td>
-												<td>体育场地下</td>
-												<td>A-23</td>
-												<td>lady</td>
-												<td>20/小时</td>
-												<td>2019-3-20</td>
-												<td>2019-4-20</td>	
-											</tr>
-											<tr>
-												<td>8</td>
-												<td>哈雷彗星</td>
-												<td>A-23</td>
-												<td>泽拉斯</td>
-												<td>20/小时</td>
-												<td>2019-3-20</td>
-												<td>2019-4-20</td>	
+											<tr  v-for="(item,index) in data.list">
+												<td>{{index+1}}</td>
+												<td>{{item.address}}</td>
+												<td>{{item.carportnumber}}</td>
+												<td>{{item.m_id.username}}</td>
+												<td>{{item.price}}/小时</td>
+												<td>{{item.begintime}}</td>
+												<td>{{item.endtime}}</td>
 											</tr>
 										</tbody>
 									</table>
-									<nav style="margin: -20px 0 0 780px;">
+									<!-- <nav style="margin: -20px 0 0 780px;">
 									    <ul class="pagination">
 										    <li><a href="#">上一页</a></li>
 										    <li><a href="#">1/5</a></li>
 										    <li><a href="#">下一页</a></li>
 									    </ul>
-									</nav>
+									</nav> -->
 								</div>
 							</div>
 						</div>
@@ -227,33 +164,37 @@
 				data:[]
 			},
 			created(){
-				axios.get("").then(res=>{
-					console.info(res)
-				}).catch();
-				/* axios.get("/findid?id="+id).then(res=>{
-					console.info(res)
-					let $this = this;
-					this.data = res.data;
-					$this.$nextTick(function() {
-						imgshow();
-					}); 
-				}).catch(); */
+				axios.get("http://myzuul.com:9500/port/carport/statusy/1/100").then(res=>{
+					this.data=res.data
+				})
 			},
-			/* methods :{
-				buycar:function(id){
-					var num=$("#number").html();
-					var type = $(".fl").filter(".on").children().attr("alt");
-					var params = new URLSearchParams();
-					params.append("goodid",id);
-					params.append("num",num);
-					params.append("type",type);
-					axios.post("/buycar",params).then(res=>{
-						if(res.data==1){
-							alert("添加购物车成功！！！");
-						}
+			methods :{
+				/* 查询可租车位 */
+				okk:function(){
+					axios.get("http://myzuul.com:9500/port/carport/statusy/1/100").then(res=>{
+						this.data=res.data
+						$("#li1").css("background-color","#B2DBA1");
+						$("#li2").css("background-color","white");
 					})
-				}
-			} */
+				},
+				/* 查询不可租车位 */
+				noo:function(){
+					axios.get("http://myzuul.com:9500/port/carport/statusf/1/100").then(res=>{
+						this.data=res.data
+						$("#li2").css("background-color","#B2DBA1");
+						$("#li1").css("background-color","white");
+					})
+				},
+				/* 通过地址和所属人查询 */
+				find:function(){
+					var car = $("#caraddress").val();
+					/* axios.get("http://myzuul.com:9500/port/carport/mid/car").then(res=>{
+						this.data=res.data
+						$("#li2").css("background-color","white");
+						$("#li1").css("background-color","white");
+					}) */
+				},
+			} 
 		})
 	</script>
 </body>

@@ -49,17 +49,21 @@
 	
 	<!-- 	统计订单 -->
 	<select id="selectOrderByMonth"  resultType="Double">
-		select price from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6	
+		select price from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6	and status = 4
+	</select>
+	<!-- 	统计订单 次数-->
+	<select id="selectOrderCount"  resultType="int">
+		select count(*) from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6	and status = 4
 	</select>
 	
 		<!-- 	通过日期查询订单价格-->
 	<select id="selcetOrderByDate" resultType="Double">
-		select price from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6
+		select price from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6 and status = 4
 	</select>
 	
 		<!-- 	每日新增订单数 -->
 	<select id="selcetOrderNumberByDate" resultType="int">
-		select count(*) from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6
+		select count(*) from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6 
 	</select>
 	
 		<!-- 查询今日所有订单 -->

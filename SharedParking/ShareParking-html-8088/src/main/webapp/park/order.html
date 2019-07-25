@@ -53,7 +53,7 @@
 				</nav>
 			</div>
 		</div>
-		<div class="main">
+		<div class="main" id="order-tab">
 			<div class="main-content">
 				<div class="container-fluid">
 					<div class="row">
@@ -66,9 +66,9 @@
 									<div class="sidebar-scroll">
 										<nav>
 											<ul class="nav" id="change">
-					 <!--  默  认  显  示   今  日  订  单     --><li><a href="#" id="li1" class="type"><i class="lnr lnr-file-empty"></i><span> &nbsp;今日订单</span></a></li>
-												<li><a href="#" id="li2" class=""><i class="lnr lnr-file-empty"></i><span> &nbsp;已完成订单</span></a></li>
-												<li><a href="#" id="li3" class=""><i class="lnr lnr-file-empty"></i><span> &nbsp;失效订单</span></a></li>
+					 <!--  默  认  显  示   今  日  订  单     --><li><a href="#" id="li1" class="type" @click="day()"><i class="lnr lnr-file-empty"></i><span> &nbsp;今日订单</span></a></li>
+												<li><a href="#" id="li2" class="" @click="okk()"><i class="lnr lnr-file-empty"></i><span> &nbsp;已完成订单</span></a></li>
+												<li><a href="#" id="li3" class="" @click="noo()"><i class="lnr lnr-file-empty"></i><span> &nbsp;失效订单</span></a></li>
 											</ul>
 										</nav>
 									</div>
@@ -76,7 +76,7 @@
 							</div>
 						</div>
 						<div class="col-md-10">
-							<div class="panel" style="height: 660px;" id="order-tab">
+							<div class="panel" style="height: 660px;" >
 								<div style="margin: 50px;">
 									<form class="form-inline">
 									  	<div class="form-group" style="margin-right:30px;">
@@ -126,13 +126,13 @@
 											</tr>
 										</tbody>
 									</table>
-									<nav style="margin: -20px 0 0 800px;">
+									<!-- <nav style="margin: -20px 0 0 800px;">
 									    <ul class="pagination">
 										    <li><a href="#">上一页</a></li>
 										    <li><a href="#">1/5</a></li>
 										    <li><a href="#">下一页</a></li>
 									    </ul>
-									</nav>
+									</nav> -->
 								</div>
 							</div>
 						</div>
@@ -185,8 +185,8 @@
 					order:[]
 				},
 				created(){
-					/* 直接发送请求，查询今日的订单 */
-					axios.get("http://myzuul.com:9500/orders/order/dateOrder/"+time+"/1/8")
+					/* 直接发送请求  查询今日的订单 */
+					axios.get("http://myzuul.com:9500/orders/order/dateOrder/"+time+"/1/100")
 					.then(res=>{
 						this.order=res.data
 					})
@@ -195,20 +195,54 @@
 					/* 通过日期查询订单 */
 					find :function(){
 						var tim = $("#datetime").val();
-						alert(tim)
-						axios.get("http://myzuul.com:9500/orders/order/dateOrder/"+tim+"/1/8")
+						axios.get("http://myzuul.com:9500/orders/order/dateOrder/"+tim+"/1/100")
 						.then(res=>{
 							this.order=res.data
+							$("#li2").css("background-color","white");
+							$("#li1").css("background-color","white");
+							$("#li3").css("background-color","white");
 						}) 
 					},
 					/* 通过订单号查询 */
 					number :function(){
 						var num = $("#num").val();
-						alert(num)
 						axios.get("http://myzuul.com:9500/orders/order/numOrder/"+num)
 						.then(res=>{
 							this.order=res.data
+							$("#li2").css("background-color","white");
+							$("#li1").css("background-color","white");
+							$("#li3").css("background-color","white");
 						}) 
+					},
+					/* 查询已完成的订单 */
+					okk :function(){
+						axios.get("http://myzuul.com:9500/orders/order/status/4/1/100")
+						.then(res=>{
+							this.order=res.data
+							$("#li2").css("background-color","lightblue");
+							$("#li1").css("background-color","white");
+							$("#li3").css("background-color","white");
+						})
+					},
+					/* 查询失效的订单 */
+					noo :function(){
+						axios.get("http://myzuul.com:9500/orders/order/status/5/1/100")
+						.then(res=>{
+							this.order=res.data
+							$("#li3").css("background-color","lightblue");
+							$("#li2").css("background-color","white");
+							$("#li1").css("background-color","white");
+						})
+					},
+					/* 查询今日的订单 */
+					day :function(){
+						axios.get("http://myzuul.com:9500/orders/order/dateOrder/"+time+"/1/100")
+						.then(res=>{
+							this.order=res.data
+							$("#li1").css("background-color","lightblue");
+							$("#li2").css("background-color","white");
+							$("#li3").css("background-color","white");
+						})
 					},
 				}
 				
