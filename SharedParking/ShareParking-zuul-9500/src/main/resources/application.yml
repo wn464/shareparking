@@ -32,6 +32,14 @@ zuul:
     carport:
       service-id: SHAREPARKING_CARPORT
       path:  /port/** 
+      
+  host:
+    connect-timeout-millis: 15000 #HTTP连接超时要比Hystrix的大
+    socket-timeout-millis: 60000   #socket超时
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+    
 
 info: #监控信息 
   app.name: sharePark-zuul-9500 

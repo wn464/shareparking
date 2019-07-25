@@ -41,3 +41,4 @@ info: #监控信息
   company.name: park-order8010 
   build.artifactId: $project.artifactId$
   build.version: $project.version$
+  
