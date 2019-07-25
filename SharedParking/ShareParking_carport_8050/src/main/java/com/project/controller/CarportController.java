@@ -26,10 +26,12 @@ private CarportIService service;
 	 * @param mid
 	 * @return
 	 */
-	@GetMapping(value="/carport/mid/{mid}/{address}")
+	@GetMapping(value="/carport/mid")
 	@ResponseBody
-public List<CarportBean> findcarportbymid(@PathVariable("mid")int mid,@PathVariable("address")String address) {
-		List<CarportBean> carports =service.findcarportbymid(mid,address);
+public List<CarportBean> findcarportbymid(String mid,String address) {
+		String key=mid+address;
+		
+		List<CarportBean> carports =service.findcarportbymid(mid,address,key);
 	return carports;
 			}
 	/**

@@ -77,15 +77,16 @@ select * from carport where sqrt(
    select *from carport where id=#{cid}
   </select>
   <!--通过所属人查询车位  -->
+ <!--  select *from carport c where c.m_id=(select id from member where username='root') AND  c.address LIKE '%d%' -->
   <select id="findcarportbyMID" resultMap="onemap">
-      SELECT * FROM carport
+      SELECT * FROM carport c
         <where>
             <!--where标签自动去掉满足条件的第一个and -->
-            <if test="address!= null and address!= ''">
-                and address LIKE CONCAT('%',#{address},'%' )
-            </if>
             <if test="mid!= null and mid!= ''">
-                and m_id= #{mid}
+              c.m_id=(select id from member where username=#{mid})
+            </if>
+            <if test="address!= null and address!= ''">
+                and c.address LIKE CONCAT('%',#{address},'%' )
             </if>
         </where>
   </select>
