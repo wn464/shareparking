@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="assets/css/demo.css">
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 </head>
 <style>
@@ -54,7 +55,8 @@
 					<div class="panel-heading" style="margin: 0 0 15px 0;">
 						<h3 class="panel-title" style="font-size: 20px;">待审核车位</h3>
 					</div>		
-<!--一条待审核的用户消息--><div class="row" style="border-bottom: 2px solid gainsboro; padding: 25px 10px;margin-bottom: 50px;">
+<!--一条待审核的用户消息-->
+<div class="row" style="border-bottom: 2px solid gainsboro; padding: 25px 10px;margin-bottom: 50px;" id="app">
 						<div class="col-md-8">
 							<div class="panel" style="padding: 20px 30px;">
 								<div class="panel-body">
@@ -144,11 +146,31 @@
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+	<script src="assets/js/vue.js"></script>
+	<script src="assets/js/axios.min.js"></script>
 	<script>
 		/*加载公共页面*/
 		$(function(){
 			$("#toping").load("top.html");
 		})
+	</script>
+	<script>
+	var vm =new Vue({
+		el:"#app",
+		data:{
+			data:[]
+		},
+		created(){
+			axios.get("http://localhost:9500/port/carport/auauditstatus")
+			.then(res=>{
+				console.info(res.data)
+			})
+			.cache(res=>{
+				console.info(res.data)
+			});
+		},
+	})
+	
 	</script>
 </body>
 </html>
