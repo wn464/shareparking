@@ -67,7 +67,7 @@
 				</nav>
 			</div>
 		</div>
-		<div class="main">
+		<div class="main" id="app">
 			<div class="main-content">
 				<div class="container-fluid">
 					<div class="row">
@@ -80,8 +80,9 @@
 									<div class="sidebar-scroll">
 										<nav>
 											<ul class="nav" id="change">
-					 <!--  默  认  显  示   待处理的投诉   --><li><a href="#" id="li1" class="type"><i class="lnr lnr-bullhorn"></i><span> &nbsp;待处理</span></a></li>
-												<li><a href="#" id="li2" class=""><i class="lnr lnr-bubble"></i><span> &nbsp;已处理</span></a></li>
+					 <!--  默  认  显  示   待处理的投诉   --><li><a href="#" id="li1" class="type"><i class="lnr lnr-bullhorn"></i><span @click="wei()"> &nbsp;未处理</span></a></li>
+												<li><a href="#" id="li2" class=""><i class="lnr lnr-bubble"></i><span @click="yi()"> &nbsp;已处理</span></a></li>
+												<li><a href="#" id="li3" class=""><i class="lnr lnr-bubble"></i><span @click="today()"> &nbsp;今日订单</span></a></li>
 											</ul>
 										</nav>
 									</div>
@@ -101,56 +102,21 @@
 												<th>操作</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody v-for="(value,index) in complaint.list">
 											<tr>
-												<td>1</td>
-												<td>科加斯</td>
-												<td>提莫</td>
-												<td>2019-6-3 16:32:12</td>
-												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>凯特琳</td>
-												<td>墨菲特</td>
-												<td>2019-6-2 16:32:12</td>
-												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>卡萨丁</td>
-												<td>佐伊</td>
-												<td>2019-6-3 16:32:12</td>
-												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
-											</tr>
-											<tr>
-												<td>4</td>
-												<td>科加斯</td>
-												<td>提莫</td>
-												<td>2019-6-3 16:32:12</td>
-												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
-											</tr>
-											<tr>
-												<td>5</td>
-												<td>凯特琳</td>
-												<td>墨菲特</td>
-												<td>2019-6-2 16:32:12</td>
-												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
-											</tr>
-											<tr>
-												<td>6</td>
-												<td>卡萨丁</td>
-												<td>佐伊</td>
-												<td>2019-6-3 16:32:12</td>
+												<td>{{index+1}}</td>
+												<td>{{value.mem_j_id.username}}</td>
+												<td>{{value.mem_y_id.username}}</td>
+												<td>{{value.comtime}}</td>
 												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
 											</tr>
 										</tbody>
 									</table>
 									<nav style="margin-left:700px; margin-top: 40px;">
-									    <ul class="pagination">
-										    <li><a href="#">上一页</a></li>
-										    <li><a href="#">1/5</a></li>
-										    <li><a href="#">下一页</a></li>
+									    <ul class="pagination" >
+										    <li><button @click="shangPage()">上一页</button></li>
+										    <li><button >{{complaint.page}}/{{complaint.totalPage}}</button></li>
+										    <li><button @click="xiaPage()">下一页</button></li>
 									    </ul>
 									</nav>
 								</div>
@@ -268,6 +234,9 @@
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+	<script src="assets/js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="assets/js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+	
 	<script>
 		/*加载公共页面*/
 		$(function(){
@@ -276,11 +245,139 @@
 		$("#li1").click(function(){
 			$("#li1").css("background-color","pink");
 			$("#li2").css("background-color","white");
+			$("#li3").css("background-color","white");
 		})
 		$("#li2").click(function(){
 			$("#li2").css("background-color","pink");
 			$("#li1").css("background-color","white");
+			$("#li3").css("background-color","white");
 		})
+		$("#li3").click(function(){
+			$("#li2").css("background-color","white");
+			$("#li1").css("background-color","white");
+			$("#li3").css("background-color","pink");
+		})
+// 		***********************前后端交互******************************
+// 		url:"http://myzuul.com:9500/complaint/complaint/12/1/2",
+//      网页初始页面
+	    var vm = new Vue({
+	    	el:"#app",
+	    	data:{
+	    		complaint:[],
+	    	},
+	    	
+	    	created(){
+	    		axios.get("http://myzuul.com:9500/complaint/complaint/12/1/4")
+	    		.then(res=>{
+	    			this.complaint=res.data;
+	    			console.info(res)
+	    		});
+	    	},
+	    	
+	    	methods:{
+//	          上一页
+	            shangPage:function(){
+	 	    		var page = this.complaint.page-1;
+	 	    		var totalPage = this.complaint.totalPage;
+	 	    		var list = this.complaint.list;
+	 	    		var status =list[0].status.id;
+// 	 	    		for(var i=0;i<list.size;i++){
+// 	 	    			status = list[i].status;
+// 	 	    		}
+	 	    		if(page==0){
+	 	    			alert("这已是首页")
+	 	    		}else{
+	 	    			axios.get("http://myzuul.com:9500/complaint/complaint/"+status+"/"+page+"/4")
+	 		    		.then(res=>{
+	 		    			this.complaint=res.data;
+	 		    		});
+	 	    		}	    		
+	 	    	},
+//	       下一页
+	 	    	xiaPage:function(){
+	 	    		var page = this.complaint.page+1;
+	 	    		var totalPage = this.complaint.totalPage;
+	 	    		var list = this.complaint.list;
+	 	    		var status =list[0].status.id;
+// 	 	    		for(var i=0;i<list.size;i++){
+// 	 	    			status = list[i].status;
+// 	 	    		}
+	 	    		if(page>totalPage){
+	 	    			alert("这已是末页")
+	 	    		}else{
+	 	    			axios.get("http://myzuul.com:9500/complaint/complaint/"+status+"/"+page+"/4")
+	 		    		.then(res=>{
+	 		    			this.complaint=res.data;
+	 		    		});
+	 	    		}	    		
+	 	    	},
+// 	      点击未处理页面       
+	    		yi:function(){
+         		   axios.get("http://myzuul.com:9500/complaint/complaint/13/1/4")
+         		   .then(res=>{
+         			  this.complaint=res.data;
+         			 $("#li2").css("background-color","pink");
+         			 $("#li1").css("background-color","white");
+         			$("#li3").css("background-color","white");
+         		   })
+         		   
+         	   },
+//      点击已处理页面    
+         	  wei:function(){
+        		   axios.get("http://myzuul.com:9500/complaint/complaint/12/1/4")
+        		   .then(res=>{
+        			  this.complaint=res.data;
+        			  $("#li1").css("background-color","pink");
+        			  $("#li2").css("background-color","white");
+        			  $("#li3").css("background-color","white");
+        		   })
+        	   },
+//             今日订单  
+        	   today:function(){
+        		   var now = getNowFormatDate();
+        		   var tommory = getTomFormatDate();
+        		   axios.get("http://myzuul.com:9500/complaint/complaint/"+now+"/"+tommory+"/1/4")
+        		   .then(res=>{
+        			  this.complaint=res.data;
+        			  $("#li1").css("background-color","white");
+        			  $("#li2").css("background-color","white");
+        			  $("#li3").css("background-color","pink");
+        		   })
+        	   },
+	    	}
+	    });
+	  //获取当前时间
+		 function getNowFormatDate() {
+		      var date = new Date();
+		      var seperator1 = "-";
+		      var year = date.getFullYear();
+		      var month = date.getMonth() + 1;
+		      var strDate = date.getDate();
+		      if (month >= 1 && month <= 9) {
+		          month = "0" + month;
+		      }
+		      if (strDate >= 0 && strDate <= 9) {
+		          strDate = "0" + strDate;
+		      }
+		      var currentdate = year + seperator1 + month + seperator1 + strDate;
+		      return currentdate;
+		  }
+		//获取明日时间
+		 function getTomFormatDate() {
+		      var date = new Date();
+		      var seperator1 = "-";
+		      var year = date.getFullYear();
+		      var month = date.getMonth() + 1;
+		      var strDate = date.getDate()+1;
+		      if (month >= 1 && month <= 9) {
+		          month = "0" + month;
+		      }
+		      if (strDate >= 0 && strDate <= 9) {
+		          strDate = "0" + strDate;
+		      }
+		      var currentdate = year + seperator1 + month + seperator1 + strDate;
+		      return currentdate;
+		  }
 	</script>
 </body>
 </html>
