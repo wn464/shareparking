@@ -36,7 +36,7 @@ public class UserRealm extends AuthorizingRealm {
         if(bean!=null){
             //通过用户名加密
             ByteSource bytes = ByteSource.Util.bytes(username);
-
+            
             info = new SimpleAuthenticationInfo(bean.getUsername(),bean.getPassword(),bytes,getName());
         }
         return info;
