@@ -67,7 +67,7 @@ boolean updatecarportstatusf(int cid);
  * @param cid
  * @return
  */
-boolean updatecarauditstatus(int cid);
+boolean updatecarauditstatus(int cid,int audit);
 /**
  * 添加车位
  * @param carport

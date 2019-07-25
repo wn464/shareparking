@@ -121,10 +121,10 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	 * @param cid
 	 * @return
 	 */
-	@PutMapping(value="/carport/audit/{cid}")
+	@PutMapping(value="/carport/audit/{cid}/{audit}")
 	@ResponseBody
-	public boolean updateauditstatus(@PathVariable("cid")int cid) {
-		boolean l=service.updatecarauditstatus(cid);
+	public boolean updateauditstatus(@PathVariable("cid")int cid,@PathVariable("audit")int audit) {
+		boolean l=service.updatecarauditstatus(cid,audit);
 		return l;
 	} 
 	/**

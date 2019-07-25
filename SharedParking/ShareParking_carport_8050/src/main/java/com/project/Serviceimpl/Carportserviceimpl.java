@@ -133,11 +133,11 @@ private CarportDao dao;
 	 */
 	@Override
 	@CacheEvict(value="updatecarauditstatus",allEntries = true)
-	public boolean updatecarauditstatus(int cid) {
+	public boolean updatecarauditstatus(int cid,int audit) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
 		MarkBean mark=new MarkBean();
-		mark.setId(9);
+		mark.setId(audit);
 		carport.setStatus(mark);
 		int s=dao.updatecarport(carport);
 		if(s>0) {

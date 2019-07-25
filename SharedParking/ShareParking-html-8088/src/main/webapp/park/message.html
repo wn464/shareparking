@@ -73,7 +73,7 @@
 											</tr>
 											<tr>
 												<td class="td1">身份证号：</td>
-											 	<!-- <td>{{item.m_id.message.idCard}}</td>  -->
+											 	 <td>{{item.m_id.message.idCard}}</td> 
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -82,7 +82,7 @@
 											</tr>
 											<tr>
 												<td class="td1">家庭住址：</td>
-												<!--  <td>{{item.m_id.message.address}}</td>  -->
+												  <td>{{item.m_id.message.address}}</td> 
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -96,11 +96,11 @@
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td class="td1">产权证编号：</td>
-												<td>AD54234</td>
+												<td>{{item.auditnumber}}</td>
 											</tr>
 											<tr>
 												<td class="td1">申请时间：</td>
-												<td>2019-3-22 12:32:22</td>
+												<td>{{item.addtime}}</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -110,7 +110,7 @@
 										</tbody>
 									</table>
 									<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="td1">描述信息：</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>车位处于小区地下停车场，停放安全，位置优越</span></p>
+										<span>{{item.message}}</span></p>
 								</div>
 							</div>
 						</div>
@@ -128,8 +128,8 @@
 							</div>
 						</div>
 						<div class="col-md-4">
-							<button class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> &nbsp;审核通过</button>
-							<button class="btn btn-primary"><i class="glyphicon glyphicon-remove"></i> &nbsp;审核失败</button>
+							<button class="btn btn-primary" @click="pass(item.id)"><i class="glyphicon glyphicon-ok"></i> &nbsp;审核通过</button>
+							<button class="btn btn-primary" @click="back(item.id)"><i class="glyphicon glyphicon-remove"></i> &nbsp;审核失败</button>
 						</div>
 					</div>
 				</div>
@@ -160,15 +160,37 @@
 		data:{
 			data:[]
 		},
+		methods:{
+			pass:function(id){
+				axios.put("http://myzuul.com:9500/port/carport/audit/"+id+"/9")
+				.then(res=>{
+					if(res.data==true){
+						alert("审核通过")
+					}
+				})
+				.cache(res=>{
+					console.info(res.data)
+				});
+			},
+			back:function(id){
+				axios.put("http://myzuul.com:9500/port/carport/audit/"+id+"/15")
+				.then(res=>{
+					if(res=>true){
+						alert("信息有误，审核失败")
+					}
+				})
+				.cache(res=>{
+					console.info(res.data)
+				});
+			}
+		},
 		created(){
 			axios.get("http://myzuul.com:9500/port/carport/auauditstatus")
 			.then(res=>{
 				console.info(res.data)
 				this.data=res.data
 			})
-			.cache(res=>{
-				console.info(res.data)
-			});
+			
 		},
 	})
 	
