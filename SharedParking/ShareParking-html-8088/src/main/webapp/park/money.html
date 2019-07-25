@@ -109,21 +109,21 @@
 									<div class="metric" style="height: 85px;width: 440px;margin-bottom: 5px;">
 										<span class="icon"><i class="fa fa-money"></i></span>
 										<p>
-											<span class="number" style="color: #5bc0de;">10000000</span>
+											<span class="number" style="color: #5bc0de;" id="s-year">￥0</span>
 											<span class="title">年营业额</span>
 										</p>
 									</div>
 									<div class="metric" style="height: 85px;width: 440px;margin-bottom: 5px;">
 										<span class="icon"><i class="fa fa-money"></i></span>
 										<p>
-											<span class="number" style="color: #5bc0de;">1000</span>
+											<span class="number" style="color: #5bc0de;" id="s-month">￥0</span>
 											<span class="title">月营业额</span>
 										</p>
 									</div>
 									<div class="metric" style="height: 85px;width: 440px;margin-bottom: 5px;">
 										<span class="icon"><i class="fa fa-money"></i></span>
 										<p>
-											<span class="number" style="color: #5bc0de;">100</span>
+											<span class="number" style="color: #5bc0de;" id="s-date">￥0</span>
 											<span class="title"  >日营业额</span>
 										</p>
 									</div>
@@ -184,7 +184,7 @@
 											  <option value="11"> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;11月 &nbsp; &nbsp;&nbsp;</option>
 											  <option value="12"> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;12月 &nbsp; &nbsp;&nbsp;</option>
 											</select>
-					    					<input type="button" value="查询" class="btn btn-danger" onclick="change()"/>
+					    					<input type="button" value="查询" class="btn btn-info" onclick="change()"/>
 					  					</div>
 					         		</form>
 					         	</div>
@@ -215,76 +215,46 @@
 	<script src="assets/scripts/klorofil-common.js"></script>
 	<script type="text/javascript" src="assets/js/echarts.min.js" ></script>
 	<script>
-		var dom = document.getElementById("container");
-var myChart = echarts.init(dom);
-var app = {};
-option = null;
-option = {
-    
-    tooltip : {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross',
-            label: {
-                backgroundColor: '#6a7985'
-            }
-        }
-    },
-    legend: {
-        data:['2019','2018','2017']
-    },
-    toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis : [
-        {
-            type : 'category',
-            boundaryGap : false,
-            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value'
-        }
-    ],
-    series : [
-        {
-            name:'2019',
-            type:'line',
-            stack: '总量',
-            areaStyle: {},
-            data:[120, 132, 101, 134, 90, 230, 210,101, 134, 90, 230, 210]
-        },
-        {
-            name:'2018',
-            type:'line',
-            stack: '总量',
-            areaStyle: {},
-            data:[220, 182, 191, 234, 290, 330, 310,101, 134, 90, 230, 210]
-        },
-        {
-            name:'2017',
-            type:'line',
-            stack: '总量',
-            areaStyle: {},
-            data:[150, 232, 201, 154, 190, 330, 410,101, 134, 90, 230, 210]
-        }
-    
-    ]
-};
-;
-if (option && typeof option === "object") {
-    myChart.setOption(option, true);
-}
+	//查询某年的总收入
+	function year() {
+		var year = $("#sel1 option:selected").val();
+		$.ajax({
+			url:"http://myzuul.com:9500/orders/order/year/"+year,
+			type:"get",
+			success:function(mes){
+				console.info(mes)
+				$("#s-year").html("￥"+mes)
+			}
+		})
+	}
+	//查询某月的总收入
+	function month() {
+		var str = $("#month-inpt").val()
+			var year = str.substring(0,4)
+			var month = str.substring(6,7)
+			$.ajax({
+				url:"http://myzuul.com:9500/orders/order/mth/"+year+"/"+month,
+				type:"get",
+				success:function(mes){
+					console.info(mes)
+					$("#s-month").html("￥"+mes)
+				}
+			})
+		
+	}
+	//查询某天的总收入
+	function date() {
+			var date = $("#date-inpt").val()
+			$.ajax({
+				url:"http://myzuul.com:9500/orders/order/dates/"+date,
+				type:"get",
+				success:function(mes){
+					console.info(mes)
+					$("#s-date").html("￥"+mes)
+				}
+			})
+		
+	}
 		
 
 		/*加载公共页面*/
@@ -292,7 +262,126 @@ if (option && typeof option === "object") {
 			$("#toping").load("top.html");
 		})
 
-		
+			//根据月份段查询收入
+	function change() {
+			var year = $("#y-sel option:selected").val();
+			var smonth = $("#m1-sel option:selected").val();
+			var emonth = $("#m2-sel option:selected").val();
+			console.info(year)
+	$.ajax({
+		url:"http://myzuul.com:9500/orders/order/money/"+year+"/"+smonth+"/"+emonth,
+		type:"get",
+		success:function(mes){
+			console.info(mes)
+
+			var a = mes.double1[0]
+			var	b = mes.double1[1]
+			var	c = mes.double1[2]
+			var	d = mes.double1[3]
+			var	e = mes.double1[4]
+			var f = mes.double1[5]
+			var g = mes.double1[6]
+			var h = mes.double1[7]
+			var i = mes.double1[8]
+			var j = mes.double1[9]
+			var k = mes.double1[10]
+			var l = mes.double1[11]
+			
+			var dom = document.getElementById("container");
+			var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+			    
+			    tooltip : {
+			        trigger: 'axis',
+			        axisPointer: {
+			            type: 'cross',
+			            label: {
+			                backgroundColor: '#6a7985'
+			            }
+			        }
+			    },
+			    legend: {
+			        data:['2019','2018','2017']
+			    },
+			    toolbox: {
+			        feature: {
+			            saveAsImage: {}
+			        }
+			    },
+			    grid: {
+			        left: '3%',
+			        right: '4%',
+			        bottom: '3%',
+			        containLabel: true
+			    },
+			    xAxis : [
+			        {
+			            type : 'category',
+			            boundaryGap : false,
+			            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+			        }
+			    ],
+			    yAxis : [
+			        {
+			        	name: "营业额", 
+			            type : 'value',
+			            axisLabel:{formatter:'{value}元'}
+			        }
+			    ],
+			    series : [
+			        {
+			            name:year,
+			            type:'line',
+			            stack: '总量',
+			            areaStyle: {},
+			            data:[a, b, c, d, e, f, g, h, i, j, k, l],
+			            itemStyle: {   
+			                //通常情况下：
+			                normal:{  
+			　　　　　　　　　　　　//每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+			                    	
+			                    lineStyle:{
+									color:'#5bc0de'
+								}
+
+			                },
+			                //鼠标悬停时：
+			                emphasis: {
+			                        shadowBlur: 10,
+			                        shadowOffsetX: 0,
+			                        shadowColor: 'red'
+			                }
+			            },
+			            
+			        }
+// 			        ,
+// 			        {
+// 			            name:y2,
+// 			            type:'line',
+// 			            stack: '总量',
+// 			            areaStyle: {},
+// 			            data:[a1, b1, c1, d1, e1, f1, g1, h1, i1, j1, k1, l1]
+// 			        },
+// 			        {
+// 			            name:y3,
+// 			            type:'line',
+// 			            stack: '总量',
+// 			            areaStyle: {},
+// 			            data:[a2, b2, c2, d2, e2, f2, g2, h2, i2, j2, k2, l2]
+// 			        }
+			    
+			    ]
+			};
+			;
+			if (option && typeof option === "object") {
+			    myChart.setOption(option, true);
+			}
+		}
+	})
+	}
+	change();
 	
 	</script>
 </body>
