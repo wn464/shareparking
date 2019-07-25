@@ -136,6 +136,45 @@ public class OrderServiceImp implements IOrderService{
 		return list;
 
 	}
+	@Override
+	@Cacheable(value = "selectOrderCount")
+	public List<Integer> selectOrderCount(int year, int startMonth, int endMonth) {
+		//存放每月总金额
+		List<Integer> list = new ArrayList<Integer>();
+		for (int i = startMonth; i <= endMonth; i++) {
+			//1-10月
+			if (i<10) {
+				Integer count = 0;
+				String startTime = year+"-"+"0"+i+"-01"+" "+"00:00:00";
+				String endTime = year+"-"+"0"+i+"-31"+" "+"00:00:00";
+				List<Integer> list1 = orderDao.selectOrderCount(startTime, endTime);
+				System.out.println(list1);
+				for (Integer in : list1) {
+					count+=in;
+				}
+				list.add(count);
+			}
+			//11-12月
+			else {
+				Integer count = 0;
+				String startTime = year+"-"+i+"-01"+" "+"00:00:00";
+				String endTime = year+"-"+i+"-31"+" "+"00:00:00";
+				System.out.println(endTime);
+				List<Integer> list1 = orderDao.selectOrderCount(startTime, endTime);
+				System.out.println(list1);
+				for (Integer in : list1) {
+					count+=in;
+				}
+				list.add(count);
+			}
+			
+		}
+		System.out.println("-----------"+list);
+		return list;
+
+	}
+	
+	
 	//统计某日订单金额
 	@Override
 	@Cacheable(value = "selcetOrderByDate")
@@ -192,4 +231,6 @@ public class OrderServiceImp implements IOrderService{
 	}
 	
 
+	
+	
 }

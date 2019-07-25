@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.Bean.MemberBean;
 import com.project.Bean.OrderBean;
+import com.project.Bean.OrderDTO;
 import com.project.Bean.PageBean;
 import com.project.service.IOrderService;
 @RestController
@@ -72,6 +73,36 @@ public class OrderHandler {
 		return num;
 	}
 	
+	//按时间段统计订单
+	@GetMapping("/order/money/{year}/{smonth}/{emonth}")
+	public OrderDTO countMoney(@PathVariable("year")int year,@PathVariable("smonth")int smonth,@PathVariable("emonth")int emonth) {
+		OrderDTO orderDTO = new OrderDTO();
+		double m[] = new double[12];
+		List<Double> list = new ArrayList<Double>();
+		list = orderService.selectOrderByMonth(year, smonth, emonth);
+		System.out.println(list);
+		int a = 0;
+		for (int i = smonth-1; i < emonth; i++) {
+			m[i] = list.get(a);
+			a++;
+			System.out.println("---------"+m[i]);
+		}	
+		orderDTO.setDouble1(m);
+		
+		int m1[] = new int[12];
+		List<Integer> list1 = new ArrayList<Integer>();
+		list1 = orderService.selectOrderCount(year, smonth, emonth);
+		System.out.println(list);
+		int a1 = 0;
+		for (int i = smonth-1; i < emonth; i++) {
+			m1[i] = list1.get(a1);
+			a1++;
+			System.out.println("---------"+m1[i]);
+		}	
+		orderDTO.setTimes(m1);
+		
+		return orderDTO;
+	}
 	
 	//按时间段统计订单
 	@GetMapping("/order/month/{year}/{smonth}/{emonth}")
@@ -79,6 +110,23 @@ public class OrderHandler {
 		double m[] = new double[12];
 		List<Double> list = new ArrayList<Double>();
 		list = orderService.selectOrderByMonth(year, smonth, emonth);
+		System.out.println(list);
+		int a = 0;
+		for (int i = smonth-1; i < emonth; i++) {
+			m[i] = list.get(a);
+			a++;
+			System.out.println("---------"+m[i]);
+		}	
+		
+		return m;
+	}
+
+	//按时间段统计订单次数
+	@GetMapping("/order/count/{year}/{smonth}/{emonth}")
+	public Integer[] selcetOrderCount(@PathVariable("year")int year,@PathVariable("smonth")int smonth,@PathVariable("emonth")int emonth) {
+		Integer m[] = new Integer[12];
+		List<Integer> list = new ArrayList<Integer>();
+		list = orderService.selectOrderCount(year, smonth, emonth);
 		System.out.println(list);
 		int a = 0;
 		for (int i = smonth-1; i < emonth; i++) {
