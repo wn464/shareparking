@@ -29,7 +29,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbymid")
+	@Cacheable(value="findcarportbymid",key="#mid")
 	public List<CarportBean> findcarportbymid(int mid,String address) {
 		List<CarportBean>  carports=dao.findcarportbyMID(mid,address);
 		return carports;
@@ -39,7 +39,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbycid")
+	@Cacheable(value="findcarportbycid",key="#cid")
 	public CarportBean findcarportbycid(int cid) {
 		CarportBean carport =dao.findcarportbycid(cid);
 		return carport;
@@ -48,7 +48,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbynumber")
+	@Cacheable(value="findcarportbynumber",key="#carportnumber")
 	public CarportBean findcarportbynumber(String carportnumber) {
 		CarportBean carport=dao.findcarportbycarportnumber(carportnumber);
 		return carport;
@@ -57,7 +57,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbycoordinate")
+	@Cacheable(value="findcarportbycoordinate",key="#coordinate_x")
 	public List<CarportBean> findcarportbycoordinate(double coordinate_x, double coordinate_y) {
 		List<CarportBean> carports=dao.findcarportbycoordinate(coordinate_x, coordinate_y);
 		return carports;
@@ -66,7 +66,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbykezu")
+	@Cacheable(value="findcarportbykezu",key="#page")
 	public PageBean findcarportbykezu(int page, int size) {
 		PageBean pagebean=new PageBean();
 		int totalsize=dao.findcarportnumber(10);
@@ -80,7 +80,7 @@ private CarportDao dao;
 		return pagebean;
 	}
 	@Override
-	@Cacheable("findcarportbyunkezu")
+	@Cacheable(value="findcarportbyunkezu",key="#page")
 	public PageBean findcarportbyunkezu(int page, int size) {
 		PageBean pagebean=new PageBean();
 		int totalsize=dao.findcarportnumber(11);
@@ -161,7 +161,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbyday")
+	@Cacheable(value="findcarportbyday",key="#page")
 	public PageBean findcarportbyday(int page, int size) {
 		PageBean pagebean=new PageBean();
 		SimpleDateFormat data=new SimpleDateFormat("yyy-mm-dd 23:00:00");
@@ -179,7 +179,7 @@ private CarportDao dao;
 	}
 
 	@Override
-	@Cacheable(value="findcarportbytime")
+	@Cacheable(value="findcarportbytime",key="#time")
 	public List<CarportBean> findcarportbytime(String time) {
 		List<CarportBean> carports=dao.findcarportbytime(time);
 		return carports;
