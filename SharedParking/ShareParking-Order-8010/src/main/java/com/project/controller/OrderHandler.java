@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.project.Bean.MemberBean;
 import com.project.Bean.OrderBean;
 import com.project.Bean.PageBean;
@@ -22,6 +20,7 @@ public class OrderHandler {
 
 	@Autowired
 	private IOrderService orderService;
+	
 	
 	/*
 	 * 添加订单
@@ -140,19 +139,25 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/dateOrder/{date}/{page}/{size}")
 	public PageBean selcetOrderByDay(@PathVariable("date")String date,@PathVariable("page")int page,@PathVariable("size")int size){
-		System.out.println("=============================="+date);
 		PageBean pageBean = orderService.selcetOrderByDay(date, page, size);
 		return pageBean;
 		
 	}
 	
 	/*
-	 * 分页查询每日订单
+	 * 通过订单号查询订单
 	 */
 	@GetMapping("/order/numOrder/{num}")
-	public OrderBean selsctOrderBynum(@PathVariable("num")String num){
+	public PageBean selsctOrderBynum(@PathVariable("num")String num){
+		
 		OrderBean bean = orderService.selectOrderByOrderNumber(num);
-		return bean;
+		
+		List<OrderBean> list = new ArrayList<OrderBean>();
+		list.add(bean);
+		PageBean page =new PageBean();
+		page.setList(list);
+		
+		return page;
 		
 	}
 		
