@@ -166,6 +166,7 @@
 				.then(res=>{
 					if(res.data==true){
 						alert("审核通过")
+						location.reload()
 					}
 				})
 				.cache(res=>{
@@ -177,6 +178,7 @@
 				.then(res=>{
 					if(res=>true){
 						alert("信息有误，审核失败")
+						location.reload()
 					}
 				})
 				.cache(res=>{
