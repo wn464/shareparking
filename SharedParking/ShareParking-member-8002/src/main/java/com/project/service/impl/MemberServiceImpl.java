@@ -3,6 +3,8 @@ package com.project.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.project.Bean.MemberBean;
@@ -22,6 +24,7 @@ public class MemberServiceImpl implements IMemberService {
 	/*
 	 * 通过id查找
 	 */
+	@Cacheable("findById")
 	@Override
 	public MemberBean findById(int id) {
 		// TODO Auto-generated method stub
@@ -40,6 +43,7 @@ public class MemberServiceImpl implements IMemberService {
 	/*
 	 * 修改手机号
 	 */
+	@CacheEvict(value= {"updatePhone"},allEntries = true)
 	@Override
 	public int updatePhone(int id, String phone) {
 		// TODO Auto-generated method stub
@@ -49,6 +53,7 @@ public class MemberServiceImpl implements IMemberService {
 	/*
 	 * 修改密码
 	 */
+	@CacheEvict(value= {"updatePassword"},allEntries = true)
 	@Override
 	public int updatePassword(int id, String repassword) {
 		// TODO Auto-generated method stub
@@ -58,6 +63,7 @@ public class MemberServiceImpl implements IMemberService {
 	/*
 	 * 查询所有
 	 */
+	@Cacheable("findAll")
 	@Override
 	public List<MemberBean> findAll() {
 		// TODO Auto-generated method stub

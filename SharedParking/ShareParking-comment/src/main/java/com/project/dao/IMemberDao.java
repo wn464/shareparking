@@ -3,6 +3,8 @@ package com.project.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Update;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 
 import com.project.Bean.MemberBean;
 
