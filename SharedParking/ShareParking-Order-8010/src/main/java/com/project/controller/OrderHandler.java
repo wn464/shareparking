@@ -51,7 +51,8 @@ public class OrderHandler {
 	@GetMapping("/order/status1/{status}/{page}/{size}")
 	public PageBean selectOrderByState1(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
 		 int mid = 1;//测试数据
-		PageBean pageBean = orderService.selectOrderByState1(mid, status, page, size);
+		 String str = mid+""+page+"";
+		PageBean pageBean = orderService.selectOrderByState1(mid, status, page, size,str);
 		return pageBean;
 	}
 	/*
@@ -60,7 +61,8 @@ public class OrderHandler {
 	@GetMapping("/order/status2/{status}/{page}/{size}")
 	public PageBean selectOrderByState2(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
 		 int mid = 2;//测试数据
-		PageBean pageBean = orderService.selectOrderByState2(mid, status, page, size);
+		 String str = mid+""+page+"";
+		PageBean pageBean = orderService.selectOrderByState2(mid, status, page, size,str);
 		return pageBean;
 	}
 	
@@ -76,28 +78,33 @@ public class OrderHandler {
 	//按时间段统计订单
 	@GetMapping("/order/money/{year}/{smonth}/{emonth}")
 	public OrderDTO countMoney(@PathVariable("year")int year,@PathVariable("smonth")int smonth,@PathVariable("emonth")int emonth) {
+		System.out.println("handler"+year);
 		OrderDTO orderDTO = new OrderDTO();
 		double m[] = new double[12];
 		List<Double> list = new ArrayList<Double>();
-		list = orderService.selectOrderByMonth(year, smonth, emonth);
-		System.out.println("=============0000"+list);
+		String str = year+""+smonth+""+emonth+"";
+		System.out.println("str---------"+str);
+		list = orderService.selectOrderByMonth(year, smonth, emonth,str);
+		for (Double double1 : list) {
+			System.out.println(double1);
+		}
+		
 		int a = 0;
 		for (int i = smonth-1; i < emonth; i++) {
+			System.out.println(list.get(a));
 			m[i] = list.get(a);
 			a++;
-			System.out.println("---------"+m[i]);
 		}	
 		orderDTO.setDouble1(m);
 		
 		int m1[] = new int[12];
 		List<Integer> list1 = new ArrayList<Integer>();
-		list1 = orderService.selectOrderCount(year, smonth, emonth);
+		list1 = orderService.selectOrderCount(year, smonth, emonth,str);
 		System.out.println(list);
 		int a1 = 0;
 		for (int i = smonth-1; i < emonth; i++) {
 			m1[i] = list1.get(a1);
 			a1++;
-			System.out.println("++++++++++++"+m1[i]);
 		}	
 		orderDTO.setTimes(m1);
 		
@@ -110,7 +117,8 @@ public class OrderHandler {
 		System.out.println(year);
 		double m[] = new double[12];
 		List<Double> list = new ArrayList<Double>();
-		list = orderService.selectOrderByMonth(year, smonth, emonth);
+		String str = year+""+smonth+""+emonth+"";
+		list = orderService.selectOrderByMonth(year, smonth, emonth,str);
 		System.out.println(list);
 		int a = 0;
 		for (int i = smonth-1; i < emonth; i++) {
@@ -127,7 +135,8 @@ public class OrderHandler {
 	public Integer[] selcetOrderCount(@PathVariable("year")int year,@PathVariable("smonth")int smonth,@PathVariable("emonth")int emonth) {
 		Integer m[] = new Integer[12];
 		List<Integer> list = new ArrayList<Integer>();
-		list = orderService.selectOrderCount(year, smonth, emonth);
+		String str = year+""+smonth+""+emonth+"";
+		list = orderService.selectOrderCount(year, smonth, emonth,str);
 		System.out.println(list);
 		int a = 0;
 		for (int i = smonth-1; i < emonth; i++) {
@@ -142,7 +151,8 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/mth/{year}/{month}")
 	public double selcetOrderByDate(@PathVariable("year")Integer year,@PathVariable("month")Integer month) {
-		List<Double> list = orderService.selectOrderByMonth(year, month, month);
+		String str = year+"";
+		List<Double> list = orderService.selectOrderByMonth(year, month, month,str);
 		double mprice = 0;
 		for (Double double1 : list) {
 			mprice+=double1;
@@ -154,6 +164,7 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/dates/{date}")
 	public double selcetOrderByDate(@PathVariable("date")String date) {
+		String str = date+"";
 		List<Double> list = orderService.selcetOrderByDate(date);
 		double dprice = 0;
 		for (Double double1 : list) {
@@ -167,7 +178,8 @@ public class OrderHandler {
 	@GetMapping("/order/year/{year}")
 	@ResponseBody
 	public double selcetOrderByYear(@PathVariable("year")int year) {
-		List<Double> list = orderService.selectOrderByMonth(year, 1, 12);
+		String str = year+"";
+		List<Double> list = orderService.selectOrderByMonth(year, 1, 12,str);
 		System.out.println(list);
 		double yprice = 0;
 		for (Double double1 : list) {
@@ -188,7 +200,8 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/dateOrder/{date}/{page}/{size}")
 	public PageBean selcetOrderByDay(@PathVariable("date")String date,@PathVariable("page")int page,@PathVariable("size")int size){
-		PageBean pageBean = orderService.selcetOrderByDay(date, page, size);
+		String str = date+""+page+"";
+		PageBean pageBean = orderService.selcetOrderByDay(date, page, size,str);
 		return pageBean;
 		
 	}
@@ -198,9 +211,7 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/numOrder/{num}")
 	public PageBean selsctOrderBynum(@PathVariable("num")String num){
-		
 		OrderBean bean = orderService.selectOrderByOrderNumber(num);
-		
 		List<OrderBean> list = new ArrayList<OrderBean>();
 		list.add(bean);
 		PageBean page =new PageBean();
@@ -215,7 +226,8 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/status/{status}/{page}/{size}")
 	public PageBean selectOrderByStatus(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
-		PageBean pageBean = orderService.selectOrderByStatus(status, page, size);
+		String str = status+""+page+"";
+		PageBean pageBean = orderService.selectOrderByStatus(status, page, size,str);
 		return pageBean;
 	}
 		
