@@ -80,11 +80,11 @@
 									<div class="sidebar-scroll">
 										<nav>
 											<ul class="nav" id="change">
-											
-					 <!--  默  认  显  示   待处理的投诉   --><li><a href="#" id="li1" class="type"><i class="lnr lnr-bullhorn"></i><span @click="wei()"> &nbsp;未处理</span></a></li>
+											<li><a href="#" id="li3" class="type"><i class="lnr lnr-users"></i><span @click="today()"> &nbsp;今日投诉</span></a></li>
+							
+					 <!--  默  认  显  示   待处理的投诉   --><li><a href="#" id="li1" class=""><i class="lnr lnr-bullhorn"></i><span @click="wei()"> &nbsp;未处理</span></a></li>
 												<li><a href="#" id="li2" class=""><i class="lnr lnr-bubble"></i><span @click="yi()"> &nbsp;已处理</span></a></li>
-												<li><a href="#" id="li3" class=""><i class="lnr lnr-users"></i><span @click="today()"> &nbsp;今日投诉</span></a></li>
-											
+																
 												</ul>
 										</nav>
 									</div>
@@ -245,7 +245,7 @@
 			$("#toping").load("top.html");
 		})
 		$("#li1").click(function(){
-			$("#li1").css("background-color","pink");
+			$("#li1").css("background-color","");
 			$("#li2").css("background-color","white");
 			$("#li3").css("background-color","white");
 		})
@@ -279,10 +279,11 @@
 	    	},
 	    	
 	    	created(){
-	    		axios.get("http://myzuul.com:9500/complaint/complaint/12/1/4")
-	    		.then(res=>{
-	    			this.complaint=res.data;
-// 	    			console.info(res)
+	    		var now = getNowFormatDate();
+     		   var tommory = getTomFormatDate();
+     		   axios.get("http://myzuul.com:9500/complaint/complaint/"+now+"/"+tommory+"/1/4")
+     		   .then(res=>{
+     			  this.complaint=res.data;
 	    		});
 	    	},
 	    	
@@ -335,7 +336,6 @@
          			$("#li3").css("background-color","white");
          			$("#res").html("处理结果");
          			var str = $(".ch").html();
-         			alert(str)
     				var all = "已处理 "
     					$(".ch").html(all);
          		   })
