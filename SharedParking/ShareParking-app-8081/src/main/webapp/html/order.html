@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.css"/>
+		<script src="../js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-3.4.1.js"></script>
+		<script src="../js/vue.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">订单</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-card">
+				<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-collapse">
+					<a class="mui-navigate-right" href="#">我是租客</a>
+					<div class="mui-collapse-content ">
+						<div class="mui-row mui-table-view-cell">
+							<a href="order/renterorders.html" class="mui-navigate-right ">正在处理的订单</a>
+						</div>
+						<div class="mui-row mui-table-view-cell">
+							<a href="order/renterorderssuc.html" class="mui-navigate-right">已完成的订单</a>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-collapse">
+					<a class="mui-navigate-right" href="#">我是包租婆</a>
+						<div class="mui-collapse-content">
+						<div class="mui-row mui-table-view-cell">
+							<a href="order/ownerorders.html" class="mui-navigate-right ">正在处理的订单</a>
+						</div>
+						<div class="mui-row mui-table-view-cell">
+							<a href="order/ownerorderssuc.html" class="mui-navigate-right">已完成的订单</a>
+						</div>
+					</div>
+				</li>
+			</ul>
+			
+			</div>
+			<div class="mui-card">
+				<div class="mui-row mui-table-view-cell">
+					<a href="complaint/complaints.html" class="mui-navigate-right">投诉受理</a>
+				</div>
+				
+			</div>
+		</div>
+		<!-- mtab -->
+		<nav class="mui-bar mui-bar-tab" id="tab">
+			<a class="mui-tab-item " href='../index.html'>
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item " href="find.html">
+				<span class="mui-icon mui-icon-phone"></span>
+				<span class="mui-tab-label">找车位</span>
+			</a>
+			<a class="mui-tab-item mui-active">
+				<span class="mui-icon mui-icon-email"></span>
+				<span class="mui-tab-label">订单</span>
+			</a>
+			<a class="mui-tab-item" href="my/myhome.html">
+				<span class="mui-icon mui-icon-gear"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		
+		
+		<script>
+			mui('body').on('tap','a',function(){
+			       window.top.location.href=this.href;
+			});
+			document.addEventListener('plusready', function(){
+				
+			})
+			
+		</script>
+	</body>
+
+</html>

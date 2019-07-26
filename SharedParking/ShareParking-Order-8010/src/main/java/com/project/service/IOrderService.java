@@ -27,12 +27,12 @@ public interface IOrderService {
 	public OrderBean selectOrderById(int oid);
 			
 	//通过状态分页查询订单（租客）
-	public PageBean selectOrderByState1(int mid, int status, int page, int size);
+	public PageBean selectOrderByState1(int mid, int status, int page, int size,String str);
 	//通过状态分页查询订单（出租者）
-	public PageBean selectOrderByState2(int mid, int status, int page, int size);
+	public PageBean selectOrderByState2(int mid, int status, int page, int size,String str);
 	
 	//统计订单
-	public List<Double> selectOrderByMonth(int year, int startMonth, int endMonth);
+	public List<Double> selectOrderByMonth(int year, int startMonth, int endMonth,String str);
 	//统计订单（日期）
 	public List<Double> selcetOrderByDate(String date);
 	
@@ -41,12 +41,18 @@ public interface IOrderService {
 	//查询每日新增订单数
 	public int selectOrderNumberByDate(String date);
 	//每日订单
-	public 	PageBean selcetOrderByDay(String date, int page, int size);
+	public 	PageBean selcetOrderByDay(String date, int page, int size,String str);
 
 	//通过状态分页查询订单（后台）
-	public PageBean selectOrderByStatus(int status, int page, int size);
+	public PageBean selectOrderByStatus(int status, int page, int size,String str);
 
-	public List<Integer> selectOrderCount(int year, int startMonth, int endMonth);
+	public List<Integer> selectOrderCount(int year, int startMonth, int endMonth,String str);
+
+
+
+
+
+
 
 	
 

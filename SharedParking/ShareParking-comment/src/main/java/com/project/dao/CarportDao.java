@@ -100,13 +100,13 @@ int findcarportnumber(int status);
 	 * @param day
 	 * @return
 	 */
-	List<CarportBean> findcarportdaybytime(@Param("day")String day,int page,int size);
+	List<CarportBean> findcarportdaybytime(@Param("day")String day,@Param("endtime")String endtime,@Param("page")int page,@Param("size")int size);
 	/**
 	 * 查询今日新增车位的数量
 	 * @param day
 	 * @return
 	 */
-	int findcarportbydaynumber(@Param("day")String day);
+	int findcarportbydaynumber(@Param("day")String day,@Param("endtime")String endtime);
 	/**
 	 * 查询所有未审核的车位
 	 * @return

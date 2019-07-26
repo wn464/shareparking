@@ -98,7 +98,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value="updatecarportstatusy",allEntries = true)
+	@CacheEvict(value= {"*"},allEntries = true)
 	public boolean updatecarportstatusy(int cid) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
@@ -115,7 +115,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value="updatecarportstatusf",allEntries = true)
+	@CacheEvict(value= {"*"},allEntries = true)
 	public boolean updatecarportstatusf(int cid) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
@@ -132,13 +132,18 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value="updatecarauditstatus",allEntries = true)
+	@CacheEvict(value= {"*"},allEntries = true)
 	public boolean updatecarauditstatus(int cid,int audit) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
+		if(audit==9) {
+			MarkBean status=new MarkBean();
+			status.setId(10);
+			carport.setStatus(status);
+		}
 		MarkBean mark=new MarkBean();
 		mark.setId(audit);
-		carport.setStatus(mark);
+		carport.setAuditstatus(mark);
 		int s=dao.updatecarport(carport);
 		if(s>0) {
 			return true;
@@ -165,12 +170,14 @@ private CarportDao dao;
 	@Cacheable(value="findcarportbyday",key="#page")
 	public PageBean findcarportbyday(int page, int size) {
 		PageBean pagebean=new PageBean();
-		SimpleDateFormat data=new SimpleDateFormat("yyy-mm-dd 23:00:00");
+		SimpleDateFormat data=new SimpleDateFormat("yyy-MM-dd 23:00:00");
 		Date da=new Date();
 		String a=data.format(da);
-		int totalsize=dao.findcarportbydaynumber(a);
+		SimpleDateFormat data1=new SimpleDateFormat("yyy-MM-dd 01:00:00");
+		String b=data1.format(da);
+		int totalsize=dao.findcarportbydaynumber(a,b);
 		int totalpage=(totalsize%size)==0?totalsize/size:(totalsize/size)+1;
-		List<CarportBean> carports=dao.findcarportdaybytime(a, (page-1)*size,size);
+		List<CarportBean> carports=dao.findcarportdaybytime(a,b, (page-1)*size,size);
 		pagebean.setList(carports);
 		pagebean.setPage(page);
 		pagebean.setTotalNumber(totalsize);

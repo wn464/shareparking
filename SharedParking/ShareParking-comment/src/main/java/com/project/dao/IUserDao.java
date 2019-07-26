@@ -20,6 +20,7 @@ public interface IUserDao {
      查询所有管理员
      id是为了 超级管理员查询所有管理员时 不显示自己
     */
+    
     List<UserBean> findAll(@Param("id") int id);
 
     /*
