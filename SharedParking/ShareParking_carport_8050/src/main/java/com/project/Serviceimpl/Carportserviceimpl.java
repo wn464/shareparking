@@ -136,6 +136,11 @@ private CarportDao dao;
 	public boolean updatecarauditstatus(int cid,int audit) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
+		if(audit==9) {
+			MarkBean status=new MarkBean();
+			status.setId(10);
+			carport.setStatus(status);
+		}
 		MarkBean mark=new MarkBean();
 		mark.setId(audit);
 		carport.setAuditstatus(mark);
