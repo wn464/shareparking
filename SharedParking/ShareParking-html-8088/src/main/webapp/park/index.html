@@ -44,20 +44,20 @@
 							<p class="panel-subtitle">&nbsp;</p>
 							<h3 class="panel-title">&nbsp;&nbsp;今日信息</h3>
 						</div>
-						<div class="panel-body">
+						<div class="panel-body" id="newinfo">
 							<div class="row">
 								<div class="col-md-3">
-									<div class="metric">
-										<span class="icon"><i class="fa fa-eject"></i></span>
+									<div class="metric" onclick="location.href='http://localhost:8088/park/order.html#';"  style="cursor:pointer">
+										<span class="icon" style="background-color: #dbd292"><i class="fa fa-eject" ></i></span>
 										<p>
-											<span class="number">6</span>
+											<span class="number">{{order}}</span>
 											<span class="title">今日日新增订单</span>
 										</p>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="metric">
-										<span class="icon"><i class="fa fa-navicon"></i></span>
+										<span class="icon" style="background-color: #27727b"><i class="fa fa-navicon"></i></span>
 										<p>
 											<span class="number">6</span>
 											<span class="title">今日新增车位</span>
@@ -66,7 +66,7 @@
 								</div>
 								<div class="col-md-3">
 									<div class="metric">
-										<span class="icon"><i class="fa fa-archive"></i></span>
+										<span class="icon" style="background-color: #fe8463"><i class="fa fa-archive"></i></span>
 										<p>
 											<span class="number">8</span>
 											<span class="title">今日新增投诉</span>
@@ -75,7 +75,7 @@
 								</div>
 								<div class="col-md-3">
 									<div class="metric">
-										<span class="icon"><i class="fa fa-user"></i></span>
+										<span class="icon" style="background-color: #a4c879"><i class="fa fa-user"></i></span>
 										<p>
 											<span class="number">10000</span>
 											<span class="title">总计用户数</span>
@@ -126,13 +126,32 @@
 	<script src="assets/js/vue.js" type="text/javascript" charset="utf-8"></script>
 	<script src="assets/js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 	<script>
-	
-
 	/*加载公共页面*/
 	$(function(){
 		$("#toping").load("top.html");
 	})
 
+	var date = new Date();
+			var year = date.getFullYear(); 	//获取年 
+			var month = date.getMonth()+1;	//获取月  
+			var day = date.getDate(); 		//获取当日
+			var time = year+"-0"+month+"-"+day; //组合时间  
+	var vm = new Vue({
+				el:"#newinfo",
+				data:{
+					order:[]
+				},
+				created(){
+					/* 直接发送请求  查询今日的订单 */
+					axios.get("http://myzuul.com:9500/orders/order/dayNumber/"+time)
+					.then(res=>{
+						console.info(res.data)
+						this.order=res.data
+					})
+				}
+				
+				
+			})
 		
 	//根据月份段查询收入
 	function tab() {
@@ -153,18 +172,18 @@
 			var j = mes.times[9]
 			var k = mes.times[10]
 			var l = mes.times[11]
-			var a1 = mes[0]
-			var	b1 = mes[1]
-			var	c1 = mes[2]
-			var	d1 = mes[3]
-			var	e1 = mes[4]
-			var f1 = mes[5]
-			var g1 = mes[6]
-			var h1 = mes[7]
-			var i1 = mes[8]
-			var j1 = mes[9]
-			var k1 = mes[10]
-			var l1 = mes[11]
+			var a1 = mes.double1[0]
+			var	b1 = mes.double1[1]
+			var	c1 = mes.double1[2]
+			var	d1 = mes.double1[3]
+			var	e1 = mes.double1[4]
+			var f1 = mes.double1[5]
+			var g1 = mes.double1[6]
+			var h1 = mes.double1[7]
+			var i1 = mes.double1[8]
+			var j1 = mes.double1[9]
+			var k1 = mes.double1[10]
+			var l1 = mes.double1[11]
 			
 			var dom = document.getElementById("container");
 			var myChart = echarts.init(dom);
@@ -227,14 +246,54 @@
 		        {
 		            name:'销售金额',
 		            type:'bar',
-		            data:[a, b, c, d, e, f, g, h, i, j, k, l]
+		            data:[a1, b1, c1, d1, e1, f1, g1, h1, i1, j1, k1, l1],
+		            itemStyle: {   
+		                //通常情况下：
+		                normal:{  
+		　　　　　　　　　　　　//每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+		                    color: function (params){
+		                        var colorList = [ '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+		                               '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+		                               '#D7504B','#C6E579'];
+		                        return colorList[params.dataIndex];
+		                    }
+		                },
+		                //鼠标悬停时：
+		                emphasis: {
+		                        shadowBlur: 10,
+		                        shadowOffsetX: 0,
+		                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                }
+		            },
 		       		
 		        },
 		        {
 		            name:'下单次数',
 		            type:'line',
 		            yAxisIndex: 1,
-		            data:[a1, b1, c1, d1, e1, f1, g1, h1, i1, j1, k1, l1]
+		            data:[a, b, c, d, e, f, g, h, i, j, k, l],
+		            itemStyle: {   
+		                //通常情况下：
+		                normal:{  
+		　　　　　　　　　　　　//每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+		                    color: function (params){
+		                        var colorList = [ '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+		                               '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+		                               '#D7504B','#C6E579'];
+		                        return colorList[params.dataIndex];
+		                    },
+		                    lineStyle:{
+								color:'#0081c2'
+							}
+
+		                },
+		                //鼠标悬停时：
+		                emphasis: {
+		                        shadowBlur: 10,
+		                        shadowOffsetX: 0,
+		                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                }
+		            },
 		        }
 		    ]};
 			if (option && typeof option === "object") {

@@ -80,7 +80,7 @@ public class OrderHandler {
 		double m[] = new double[12];
 		List<Double> list = new ArrayList<Double>();
 		list = orderService.selectOrderByMonth(year, smonth, emonth);
-		System.out.println(list);
+		System.out.println("=============0000"+list);
 		int a = 0;
 		for (int i = smonth-1; i < emonth; i++) {
 			m[i] = list.get(a);
@@ -97,7 +97,7 @@ public class OrderHandler {
 		for (int i = smonth-1; i < emonth; i++) {
 			m1[i] = list1.get(a1);
 			a1++;
-			System.out.println("---------"+m1[i]);
+			System.out.println("++++++++++++"+m1[i]);
 		}	
 		orderDTO.setTimes(m1);
 		
@@ -107,6 +107,7 @@ public class OrderHandler {
 	//按时间段统计订单
 	@GetMapping("/order/month/{year}/{smonth}/{emonth}")
 	public double[] selcetOrderByMonth(@PathVariable("year")int year,@PathVariable("smonth")int smonth,@PathVariable("emonth")int emonth) {
+		System.out.println(year);
 		double m[] = new double[12];
 		List<Double> list = new ArrayList<Double>();
 		list = orderService.selectOrderByMonth(year, smonth, emonth);

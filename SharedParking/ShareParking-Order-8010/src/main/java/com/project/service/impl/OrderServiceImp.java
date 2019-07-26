@@ -112,6 +112,8 @@ public class OrderServiceImp implements IOrderService{
 				double mprice = 0;
 				String startTime = year+"-"+"0"+i+"-01"+" "+"00:00:00";
 				String endTime = year+"-"+"0"+i+"-31"+" "+"00:00:00";
+				System.out.println("st"+startTime);
+				System.out.println("ed"+endTime);
 				List<Double> list1 = orderDao.selectOrderByMonth(startTime, endTime);
 				for (Double double1 : list1) {
 					mprice+=double1;

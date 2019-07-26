@@ -3,6 +3,7 @@ package com.project.Serviceimpl;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -29,8 +30,8 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbymid",key="#mid")
-	public List<CarportBean> findcarportbymid(int mid,String address) {
+	@Cacheable(value="findcarportbymid",key="#key")
+	public List<CarportBean> findcarportbymid(String mid,String address,String key) {
 		List<CarportBean>  carports=dao.findcarportbyMID(mid,address);
 		return carports;
 	}
@@ -97,7 +98,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value="updatecarportstatusy",allEntries = true)
+	@CacheEvict(value= {"updatecarportstatusy"},allEntries = true)
 	public boolean updatecarportstatusy(int cid) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
@@ -114,7 +115,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value="updatecarportstatusf",allEntries = true)
+	@CacheEvict(value= {"updatecarportstatusf"},allEntries = true)
 	public boolean updatecarportstatusf(int cid) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
@@ -131,13 +132,13 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value="updatecarauditstatus",allEntries = true)
-	public boolean updatecarauditstatus(int cid) {
+	@CacheEvict(value= {"updatecarauditstatus"},allEntries = true)
+	public boolean updatecarauditstatus(int cid,int audit) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
 		MarkBean mark=new MarkBean();
-		mark.setId(9);
-		carport.setStatus(mark);
+		mark.setId(audit);
+		carport.setAuditstatus(mark);
 		int s=dao.updatecarport(carport);
 		if(s>0) {
 			return true;

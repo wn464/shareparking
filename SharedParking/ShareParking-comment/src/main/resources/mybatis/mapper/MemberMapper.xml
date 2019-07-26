@@ -11,7 +11,9 @@
         select * from member where username=#{username}
     </select>
 
-    
+    <select id="findAll" resultMap="map">
+    	select * from member
+    </select>
     <resultMap id="map" type="MemberBean">
         <id property="id" column="id"/>
         <result property="username" column="username"/>

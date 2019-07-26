@@ -29,6 +29,10 @@ zuul:
     user:
       service-id: park-user
       path: /**
+    member:
+      service-id: park-member
+      path: /**
+      
     carport:
       service-id: SHAREPARKING_CARPORT
       path:  /port/** 
