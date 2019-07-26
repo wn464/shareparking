@@ -3,15 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.project.dao.CarportDao">
+  <!-- 查询审核中的车位 -->
   <select id="findcarportbyditstatus" resultMap="onemap">
   select * from carport where  auditstatus=8
   </select>
+  <!-- 查询今日新增可租车位数量 -->
   <select id="findcarportbydaynumber" resultType="int">
-  select count(*) from carport where begintime&lt;=day
+  select count(*) from carport where status=10 and begintime&gt;=#{endtime} and begintime&lt;=#{day}
   </select>
   <!-- 查询今日新增车位 -->
   <select id="findcarportdaybytime" resultMap="onemap">
-  select * from carport where begintime&lt;=day limit #{page},#{size}
+  select * from carport where  status=10 and begintime&gt;=#{endtime} and begintime&lt;=#{day} limit #{page},#{size}
   </select>
   <!-- 添加车位 -->
   <insert id="addcarport">
@@ -34,13 +36,13 @@
   <if test="carport.endtime!=null">
   endtime=#{carport.endtime},
   </if>
-  <if test="carport.price!=null">
+  <if test="carport.price!=null and carport.price!=0.0">
   price=#{carport.price}
   </if>
   </set>
   where id =#{carport.id}
   </update>
-  <!-- 查询所有可出租的状态 -->
+  <!-- 查询所有可出租的状态车位的数量 -->
  <select id="findcarportnumber" resultType="int">
  select count(*) from carport where status=#{status}
  </select>
@@ -81,9 +83,10 @@ select * from carport where sqrt(
   <select id="findcarportbyMID" resultMap="onemap">
       SELECT * FROM carport c
         <where>
+        c.tatus=10
             <!--where标签自动去掉满足条件的第一个and -->
             <if test="mid!= null and mid!= ''">
-              c.m_id=(select id from member where username=#{mid})
+            and  c.m_id=(select id from member where username=#{mid})
             </if>
             <if test="address!= null and address!= ''">
                 and c.address LIKE CONCAT('%',#{address},'%' )
