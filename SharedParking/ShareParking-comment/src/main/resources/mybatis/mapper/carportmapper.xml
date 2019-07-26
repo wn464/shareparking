@@ -7,11 +7,11 @@
   select * from carport where  auditstatus=8
   </select>
   <select id="findcarportbydaynumber" resultType="int">
-  select count(*) from carport where begintime&lt;=day
+  select count(*) from carport where begintime=#{day}
   </select>
   <!-- 查询今日新增车位 -->
   <select id="findcarportdaybytime" resultMap="onemap">
-  select * from carport where begintime&lt;=day limit #{page},#{size}
+  select * from carport where begintime=#{day} limit #{page},#{size}
   </select>
   <!-- 添加车位 -->
   <insert id="addcarport">

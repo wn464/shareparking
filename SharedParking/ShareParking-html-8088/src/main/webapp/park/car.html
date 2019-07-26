@@ -66,7 +66,8 @@
 									<div class="sidebar-scroll">
 										<nav>
 											<ul class="nav" id="change">
-					 <!--  默  认  显  示   可   租  车   位   --><li><a href="#" id="li1" class="type" @click=okk()><i class="lnr lnr-layers"></i><span> &nbsp;可租车位</span></a></li>
+												<li><a href="#" id="li3" class="type" @click=day()><i class="lnr lnr-layers"></i><span> &nbsp;今日车位</span></a></li>											
+	<!--  默  认  显  示   可   租  车   位   --><li><a href="#" id="li1" class="" @click=okk()><i class="lnr lnr-layers"></i><span> &nbsp;可租车位</span></a></li>
 												<li><a href="#" id="li2" class="" @click=noo()><i class="lnr lnr-layers"></i><span> &nbsp;不可租车位</span></a></li>
 											</ul>
 										</nav>
@@ -152,10 +153,12 @@
 		$("#li1").click(function(){
 			$("#li1").css("background-color","#B2DBA1");
 			$("#li2").css("background-color","white");
+			$("#li3").css("background-color","white");
 		})
 		$("#li2").click(function(){
 			$("#li2").css("background-color","#B2DBA1");
 			$("#li1").css("background-color","white");
+			$("#li3").css("background-color","white");
 		})
 		
 		var vm = new Vue({
@@ -164,17 +167,27 @@
 				data:[]
 			},
 			created(){
-				axios.get("http://myzuul.com:9500/port/carport/statusy/1/100").then(res=>{
+				/* axios.get("http://myzuul.com:9500/port/carport/time/1/100").then(res=>{
 					this.data=res.data
-				})
+				}) */
 			},
 			methods :{
+				/* 查询今日新增车位 */
+				day:function(){
+					axios.get("http://myzuul.com:9500/port/carport/time/1/100").then(res=>{
+						this.data=res.data
+						$("#li3").css("background-color","#B2DBA1");
+						$("#li2").css("background-color","white");
+						$("#li1").css("background-color","white");
+					})
+				},
 				/* 查询可租车位 */
 				okk:function(){
 					axios.get("http://myzuul.com:9500/port/carport/statusy/1/100").then(res=>{
 						this.data=res.data
 						$("#li1").css("background-color","#B2DBA1");
 						$("#li2").css("background-color","white");
+						$("#li3").css("background-color","white");
 					})
 				},
 				/* 查询不可租车位 */
