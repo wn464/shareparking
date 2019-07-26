@@ -80,10 +80,12 @@
 									<div class="sidebar-scroll">
 										<nav>
 											<ul class="nav" id="change">
+											
 					 <!--  默  认  显  示   待处理的投诉   --><li><a href="#" id="li1" class="type"><i class="lnr lnr-bullhorn"></i><span @click="wei()"> &nbsp;未处理</span></a></li>
 												<li><a href="#" id="li2" class=""><i class="lnr lnr-bubble"></i><span @click="yi()"> &nbsp;已处理</span></a></li>
-												<li><a href="#" id="li3" class=""><i class="lnr lnr-bubble"></i><span @click="today()"> &nbsp;今日订单</span></a></li>
-											</ul>
+												<li><a href="#" id="li3" class=""><i class="lnr lnr-users"></i><span @click="today()"> &nbsp;今日投诉</span></a></li>
+											
+												</ul>
 										</nav>
 									</div>
 								</div>
@@ -108,15 +110,15 @@
 												<td>{{value.mem_j_id.username}}</td>
 												<td>{{value.mem_y_id.username}}</td>
 												<td>{{value.comtime}}</td>
-												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" @click="shouli(value.id)">受 理</button></td>
+												<td class="ch"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" @click="shouli(value.id)">受 理</button></td>
 											</tr>
 										</tbody>
 									</table>
 									<nav style="margin-left:700px; margin-top: 40px;">
 									    <ul class="pagination" >
-										    <li><button @click="shangPage()">上一页</button></li>
-										    <li><button >{{complaint.page}}/{{complaint.totalPage}}</button></li>
-										    <li><button @click="xiaPage()">下一页</button></li>
+										    <li><a href="#" @click="shangPage()">上一页</a></li>
+										    <li><a href="#">{{complaint.page}}/{{complaint.totalPage}}</a></li>
+										    <li><a href="#" @click="xiaPage()">下一页</a></li>
 									    </ul>
 									</nav>
 								</div>
@@ -184,7 +186,7 @@
 						        			</tr>
 						        			<tr>
 						        				<th>投诉理由 :</th>
-						        				<td colspan="5">该用户的车位太脏了</td>
+						        				<td colspan="5">{{mess.message}}</td>
 						        			</tr>
 						        		</tbody>
 						        	</table>	
@@ -272,6 +274,8 @@
 	    		credibility1:"",
 	    		credibility2:"",
 	    		comid:"",
+	    		mess:"",
+	    		sta:"",
 	    	},
 	    	
 	    	created(){
@@ -330,7 +334,10 @@
          			 $("#li1").css("background-color","white");
          			$("#li3").css("background-color","white");
          			$("#res").html("处理结果");
-//          			$("#li2").html(name);
+         			var str = $(".ch").html();
+         			alert(str)
+    				var all = "已处理 "
+    					$(".ch").html(all);
          		   })
          		   
          	   },
@@ -342,7 +349,8 @@
         			  $("#li1").css("background-color","pink");
         			  $("#li2").css("background-color","white");
         			  $("#li3").css("background-color","white");
-        			  $("#res").html("操作");        			  
+        			  $("#res").html("操作");   
+        			  
         		   })
         	   },
 //             今日订单  
@@ -363,6 +371,8 @@
              shouli:function(id){
             	 axios.get("http://myzuul.com:9500/complaint/complaint/"+id)
       		   .then(res=>{
+      			   console.info(res)
+      			  this.mess = res.data;
       			  this.compl=res.data.o_id.carportBean;
       			  this.complaintbean1=res.data.mem_j_id;
       			  this.message1 = res.data.mem_j_id.message;
@@ -371,6 +381,8 @@
       			  this.message2 = res.data.mem_y_id.message;
       			  this.credibility2=res.data.mem_y_id.credibility;
       			  this.comid=res.data.id;
+      			  this.sta=res.data.status.name;
+      			  
       		   })
              },
 //投诉成功
@@ -423,6 +435,12 @@
 		      var currentdate = year + seperator1 + month + seperator1 + strDate;
 		      return currentdate;
 		  }
+		
+		
+			
+		
+		
+		
 	</script>
 </body>
 </html>
