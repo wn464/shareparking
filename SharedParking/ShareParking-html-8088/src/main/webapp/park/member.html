@@ -60,7 +60,7 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">用户信息</h3>
 						</div>
-						<div class="panel-body" style="padding:40px 80px;">
+						<div class="panel-body" style="padding:40px 80px;" id="app">
 							<table class="table table-bordered table-striped">
 								<thead>
 									<tr>
@@ -68,29 +68,16 @@
 										<th>姓名</th>
 										<th>身份证号码</th>
 										<th>电话号码</th>
-										<th>车位地址</th>
-										<th>车位编号</th>
 										<th>信誉度</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody v-for="(item,index) in currentPageData" :key="index">
 									<tr>
-										<td>1</td>
-										<td>小李子</td>
-										<td>220822399134353464</td>
-										<td>14234214352</td>
-										<td>孵化园地下一号停车场</td>
-										<td>A-34</td>
-										<td>72</td>
-									</tr>
-									<tr>
-										<td>2</td>
-										<td>root</td>
-										<td>220837264374627384</td>
-										<td>18392748374</td>
-										<td>环球中心</td>
-										<td>C-34</td>
-										<td>95</td>
+										<td>{{item.id}}</td>
+										<td>{{item.message.name}}</td>
+										<td>{{item.message.idCard}}</td>
+										<td>{{item.phonenumber}}</td>
+										<td>{{item.credibility.credibility*100}}%</td>
 									</tr>
 								</tbody>
 							</table>
@@ -107,9 +94,9 @@
 								</div>
 							<nav style="margin: -100px 0 0 800px;">
 							    <ul class="pagination">
-								    <li><a href="#">上一页</a></li>
-								    <li><a href="#">1/5</a></li>
-								    <li><a href="#">下一页</a></li>
+								    <li><a @click="prevPage()">上一页</a></li>
+								    <li><a href="#">{{currentPage}}/{{totalPage}}</a></li>
+								    <li><a href="#" @click="nextPage()">下一页</a></li>
 							    </ul>
 							</nav>
 						</div>
@@ -128,10 +115,66 @@
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+		<script src="assets/js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="assets/js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 	<script>
 		/*加载公共页面*/
 		$(function(){
 			$("#toping").load("top.html");
+		})
+		
+		var vm = new Vue({
+			el:"#app",
+			data() {
+		        return {
+		            productList: [], //所有数据
+		            totalPage: 3, // 统共页数，默认为1
+		            currentPage: 1, //当前页数 ，默认为1
+		            pageSize: 5, // 每页显示数量
+		            currentPageData: [] //当前页显示内容
+		        };
+		    },
+		    created(){
+		    	axios.get("http://127.0.0.1:9500/member/findAll")
+				.then(res=>{
+					this.productList=res.data
+					 // 计算一共有几页
+			        this.totalPage = Math.ceil(this.productList.length / this.pageSize);
+			        // 计算得0时设置为1
+			        this.totalPage = this.totalPage == 0 ? 1 : this.totalPage;
+			        this.getCurrentPageData();
+				})
+		    },
+		    methods: {
+		        // 设置当前页面数据，对数组操作的截取规则为[0~9],[10~20]...,
+		        // 当currentPage为1时，我们显示(0*pageSize+1)-1*pageSize，当currentPage为2时，我们显示(1*pageSize+1)-2*pageSize...
+		        getCurrentPageData() {
+		            let begin = (this.currentPage - 1) * this.pageSize;
+		            let end = this.currentPage * this.pageSize;
+		            this.currentPageData = this.productList.slice(
+		                begin,
+		                end
+		            );
+		        },
+		        //上一页
+		        prevPage() {
+		            if (this.currentPage == 1) {
+		                return false;
+		            } else {
+		                this.currentPage--;
+		                this.getCurrentPageData();
+		            }
+		        },
+		        // 下一页
+		        nextPage() {
+		            if (this.currentPage == this.totalPage) {
+		                return false;
+		            } else {
+		                this.currentPage++;
+		                this.getCurrentPageData();
+		            }
+		        }
+		    }
 		})
 	</script>
 </body>
