@@ -200,4 +200,19 @@ private CarportDao dao;
 		return carports;
 	}
 
+	@Override
+	public boolean updatacarport(CarportBean carport) {
+		int s=dao.updatecarport(carport);
+		if(s>0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public List<CarportBean> findcarportbymemid(int memid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

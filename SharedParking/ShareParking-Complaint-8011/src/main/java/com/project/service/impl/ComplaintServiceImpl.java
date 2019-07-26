@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.project.Bean.ComplaintBean;
@@ -25,12 +27,14 @@ public class ComplaintServiceImpl implements IComplaintService{
     @Autowired
     private CredibilityDao dao2;
 	@Override
+	@CacheEvict(value="*",allEntries = true)
 	public void addComplaint(ComplaintBean bean) {
 		dao.addComplaint(bean);
 		
 	}
 
 	@Override
+	@Cacheable(value = "findByStatus",key = "#str")
 	public PageBean findByStatus(int status, int page, int size) {
 		PageBean bean = new PageBean();
 		List<ComplaintBean> list = new ArrayList<ComplaintBean>();
@@ -46,8 +50,10 @@ public class ComplaintServiceImpl implements IComplaintService{
 	}
 
 	@Override
-	public void updateComplaint(int id) {
+	@CacheEvict(value="*",allEntries = true)
+	public void updateComplaint(int id,int type) {
 		dao.updateComplaint(id);
+		dao.updateType(id, type);
 		ComplaintBean bean3 = dao.findById(id);
 //		*******************************************
 		int c_mem_y_id = bean3.getMem_y_id().getId();
@@ -57,23 +63,27 @@ public class ComplaintServiceImpl implements IComplaintService{
 		int ordersum=0;
 		int accusesum=0;
 		if(c_mem_y_id==mem_j_id) {
+			if(type==16) {
 			ordersum = dao1.selectOrderNumberByMem2(mem_j_id);
 			int ordersum1 = dao1.selectOrderNumberByMem1(mem_j_id);
 			ordersum = ordersum+ordersum1;
 			accusesum = dao.findCreNum(mem_j_id);
 			double order = ordersum;
 			double accuse = accusesum;
-			Double credibility = (double) (accuse/order);
+			Double credibility = 1-(double) (accuse/order);
 			dao2.updateCredibility(credibility, mem_j_id);
+			}
 		}else {
+			if(type==16) {
 			ordersum = dao1.selectOrderNumberByMem2(mem_y_id);
 			int ordersum1 = dao1.selectOrderNumberByMem1(mem_y_id);
 			ordersum = ordersum+ordersum1;
 			accusesum = dao.findCreNum(mem_y_id);
 			double order = ordersum;
 			double accuse = accusesum;
-			Double credibility = (double) (accuse/order);
+			Double credibility = 1-(double) (accuse/order);
 			dao2.updateCredibility(credibility, mem_y_id);
+			}
 		}
 //		*******************************************
 //		MemberBean mem_y_id = bean3.getMem_y_id();
@@ -86,18 +96,21 @@ public class ComplaintServiceImpl implements IComplaintService{
 	}
 
 	@Override
+	@CacheEvict(value="*",allEntries = true)
 	public void deleteComplaint(int id) {
 		dao.deleteComplaint(id);
 		
 	}
 
 	@Override
+	@Cacheable(value = "findComNum",key = "#status")
 	public int findComNum(int status) {
 		int i = dao.findComNum(status);
 		return i;
 	}
 
 	@Override
+	@Cacheable(value = "findByDate",key = "#str")
 	public PageBean findByDate(String begintime, String endtime, int page, int size) {
 		PageBean bean = new PageBean();
 		List<ComplaintBean> list = new ArrayList<ComplaintBean>();
@@ -113,9 +126,17 @@ public class ComplaintServiceImpl implements IComplaintService{
 	}
 
 	@Override
+	@Cacheable(value = "findDateNum",key = "#str")
 	public int findDateNum(String begintime, String endtime) {
 		int i = dao.findDateNum(begintime, endtime);
 		return i;
+	}
+
+	@Override
+	@Cacheable(value = "findById",key = "#id")
+	public ComplaintBean findById(int id) {
+		ComplaintBean bean = dao.findById(id);
+		return bean;
 	}
 	
 
