@@ -138,7 +138,7 @@ private CarportDao dao;
 		carport.setId(cid);
 		MarkBean mark=new MarkBean();
 		mark.setId(audit);
-		carport.setStatus(mark);
+		carport.setAuditstatus(mark);
 		int s=dao.updatecarport(carport);
 		if(s>0) {
 			return true;
