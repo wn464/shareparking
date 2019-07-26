@@ -1,0 +1,253 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script src="../js/jquery-3.4.1.js"></script>
+		<link href="../css/mui.css" rel="stylesheet"/>
+		<script src="../js/mui.js"></script>
+		
+		<script type="text/javascript" charset="utf-8">
+		  	mui.init({
+				beforeback: function() {
+					map.close();
+		//... //窗口关闭前处理其他业务详情点击 ↑ "关闭页面"链接查看
+			},
+			});
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav mui-media">
+			<h1 class="mui-title mui-media-body">
+				<span>查询车位</span> 
+			</h1>
+		</header>
+		
+	<div class="mui-content" id="app">
+   
+		
+		
+		<div >
+			<div id="map" >
+				
+			</div>
+		</div>
+		<div class="mui-card" >定位:{{adress}}</div>
+		<div style="position:static;height: 300px;overflow: auto;" id="list">
+			<div class= >
+				<ul class="mui-table-view">
+					
+					<li class="mui-table-view-cell mui-media" v-for="(item , index) in locationport">
+						<a href="carport/shows.html">
+							<img class="mui-media-object mui-pull-left" src="">
+							<div class="mui-media-body">
+								{{item.title}}
+								<p class="mui-ellipsis">{{item.message}}</p>
+							</div>
+						</a>
+					</li>
+					
+				</ul>
+				<div class="mui-bar-tab">
+					
+				</div>
+			</div>
+		</div>
+		
+	</div>
+		<!-- mtab -->
+		<nav class="mui-bar mui-bar-tab" id="tab">
+			<a class="mui-tab-item " href='../index.html'>
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item mui-active">
+				<span class="mui-icon mui-icon-phone"></span>
+				<span class="mui-tab-label">找车位</span>
+			</a>
+			<a class="mui-tab-item" href="order.html">
+				<span class="mui-icon mui-icon-email"></span>
+				<span class="mui-tab-label">订单</span>
+			</a>
+			<a class="mui-tab-item" href="my/myhome.html">
+				<span class="mui-icon mui-icon-gear"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		
+	
+		<script >
+		var map, center, address;
+		function showMap(){
+			plus.nativeUI.showWaiting();
+			//创建地图
+			map = new plus.maps.Map('map');
+			//设置缩放级别
+			map.setZoom(18);
+			
+			//开启用户位置显示
+			map.showUserLocation(true);
+			//获取用户位置信息
+			map.getUserLocation( function(state, point){
+				console.log(JSON.stringify(point));
+				locationPos = point;
+				center = new plus.maps.Point(point.longitude, point.latitude);
+				
+				
+				//设置地图中心点
+				map.setCenter(center);
+			});
+			//获取用户地址信息
+			plus.geolocation.getCurrentPosition(function(p){
+				plus.nativeUI.closeWaiting();
+				console.log(JSON.stringify(p));
+				address =  p.address.poiName;
+				app.adress=p.addresses;
+				console.log(address)
+			}, function(){
+				
+			});
+			
+		}
+		var center;
+		var centerpoint;
+		document.addEventListener('plusready', function(){
+			var winHeight = document.documentElement.clientHeight;
+			showMap();
+			map.onclick = function( point ){
+				map.removeOverlay(centerpoint)
+				centerpoint = new plus.maps.Marker(point);
+				centerpoint.setIcon('img/bike.png');
+				var bubble = new plus.maps.Bubble("目标地点");
+				centerpoint.setBubble(bubble);
+				map.addOverlay(centerpoint);
+				console.log(JSON.stringify(point));
+				getadress(point)
+				
+				// map.onGeocodeSuccess(event ) {
+				// 	var address = event.address;  // 转换后的地理位置
+				// 	var point = event.coord;  // 转换后的坐标信息
+				// 	var coordType = event.coordType;	// 转换后的坐标系类型
+				// 	console.log(JSON.stringify(event));
+				// }
+				//var posObj = new plus.maps.Position( point );
+				//console.log(JSON.stringify(posObj));
+			}
+		});
+		function getadress(point){
+			plus.maps.Map.reverseGeocode(point,{},function(event){
+				var address = event.address;  // 转换后的地理位置
+				var point = event.coord;  // 转换后的坐标信息
+				var coordType = event.coordType;	// 转换后的坐标系类型
+				app.adress=event.address;
+				
+			},function(e){
+				//报错
+				alert("Failed:"+JSON.stringify(e));
+			});
+		}
+
+		function goto(){
+			plus.maps.openSysMap(center, address, center);
+		}
+		</script>
+	
+			<script type="text/javascript">
+			var app = new Vue({
+				el:"#app",
+				mounted() {
+					mui('body').on('tap','a',function(){
+						map.close();
+					    window.top.location.href=this.href;
+						   
+					});
+					mui('body').on('list','a',function(){
+						map.close();
+					    window.top.location.href=this.href;
+						   
+					});
+					
+					document.addEventListener('plusready', function(){
+						
+						console.info(app.locationport.length);
+						for (var i = 0; i < app.locationport.length; i++) {
+							app.createmark(app.locationport[i]);
+						}
+						//清除所有
+						//map.clearOverlays()
+					})
+					
+				},
+				methods:{
+					//清除map的标记 
+					//生成标记
+					createmark:function(mes){
+						var bike1 = new plus.maps.Point(mes.x, mes.y);
+						var bike1Icon = new plus.maps.Marker(bike1);
+						bike1Icon.setIcon('img/bike.png');
+						var bubble = new plus.maps.Bubble(mes.message);
+						bike1Icon.setBubble(bubble);
+						map.addOverlay(bike1Icon);
+						console.info("ok")
+					}
+					//触发标记
+				},
+				data:{
+					adress:"",
+					locationport:[
+					{
+						x:"104.062325",
+						y:"30.573202",
+						id:"1",
+						title:"财富中心停车场",
+						message:"四川省成都市武侯区桂溪街道科技财富中心B座成都高新孵化园"
+					},
+					{
+						x:"104.064796",
+						y:"30.572817",
+						id:"2",
+						title:"财富中心停车场",
+						message:"四川省成都市武侯区桂溪街道天府大道北段1653成都市人民政府"
+					},{
+						x:"104.064796",
+						y:"30.572817",
+						id:"2",
+						title:"财富中心停车场",
+						message:"四川省成都市武侯区桂溪街道天府大道北段1653成都市人民政府"
+					},{
+						x:"104.064796",
+						y:"30.572817",
+						id:"2",
+						title:"财富中心停车场",
+						message:"四川省成都市武侯区桂溪街道天府大道北段1653成都市人民政府"
+					},{
+						x:"104.064796",
+						y:"30.572817",
+						id:"2",
+						title:"财富中心停车场",
+						message:"四川省成都市武侯区桂溪街道天府大道北段1653成都市人民政府"
+					},
+				]
+				},
+				created() {
+					
+				}
+			})
+		</script>
+		
+		
+	</body>
+<style>
+	#map {
+	width: 100%;
+	height: 300px;
+	text-align: center;
+	background: #FFFFFF;
+	position: static;
+}
+</style>
+</html>

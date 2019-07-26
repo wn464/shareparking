@@ -1,0 +1,14 @@
+server:
+  port: 8081
+  
+  
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://eurakeserver9000.com:9000/eureka/
+  instance:
+    instance-id: ShareParking-app8081
+    prefer-ip-address: true
+spring:
+   application:
+    name: park-app   #当前服务的名字，后面会用到   

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>车位信息</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<style type="text/css">
+		.mui-slider img{
+			border-radius:3px;
+			height: 200px;
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="../../css/mui.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css"/>
+	<script src="../../js/mui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	mui.init()
+	</script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">车位信息</h1>
+	</header>
+	
+	
+	<div class="mui-content" id="app">
+		<div class="mui-card">
+				<div id="slider" class="mui-slider" >
+		  <div class="mui-slider-group mui-slider-loop">
+			<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+			  <a href="#">
+				<img src="../../img/1-4.png">
+			  </a>
+			</div>
+			<!-- 第一张 -->
+			<div class="mui-slider-item">
+			  <a href="#">
+				<img src="../../img/1-1.png">
+			  </a>
+			</div>
+			<!-- 第二张 -->
+			<div class="mui-slider-item">
+			  <a href="#">
+				<img src="../../img/1-2.png">
+			  </a>
+			</div>
+			<!-- 第三张 -->
+			<div class="mui-slider-item">
+			  <a href="#">
+				<img src="../../img/1-3.png">
+			  </a>
+			</div>
+			<!-- 第四张 -->
+			<div class="mui-slider-item">
+			  <a href="#">
+				<img src="../../img/1-4.png">
+			  </a>
+			</div>
+			<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+			  <a href="#">
+				<img src="../../img/1-1.png">
+			  </a>
+			</div>
+		  </div>
+		  
+		  <ul class="mui-table-view">
+		  		<li class="mui-table-view-cell">
+		  			<a >
+		  				{{carport.name}}
+		  			</a>
+		  		</li>
+		  		<li class="mui-table-view-cell">
+		  			<a >
+		  				 地址：
+						 <span class="mui-icon mui-icon-location"></span>
+						 {{carport.adress}}
+		  			</a>
+		  		</li>
+		  		<li class="mui-table-view-cell">
+		  			<a >
+		  				 可租日期： {{carport.begintime}}至{{carport.endtime}}
+		  			</a>
+		  		</li>
+				
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right mui-row" href="../user/othermessage.html">
+						<div class="mui-col-sm-6">
+							 出租者：{{carport.owner.name}}
+						</div>
+						<div class="mui-col-sm-4"style="margin-left: 3rem;">
+							信誉度：{{(1-carport.owner.badnum/carport.owner.ordernum)*100}}%
+						</div>
+					</a>
+				</li>
+				
+				
+		  	</ul>
+		</div>
+			
+		
+		
+			
+		</div>
+		<!-- 名字 -->
+		<!-- 地址 -->
+		<!-- 可住时间 -->
+		<!-- 店家 -->
+		<!-- 描述信息 -->
+		
+		
+		
+			<div class="mui-card">
+			
+				<div class="mui-input-row" >
+					<label>租车位时间：</label>
+					<input type="text" placeholder="开始时间" readonly  @click="getbegintime" v-model="begintime">
+					<input type="text" placeholder="结束时间" readonly @click="getendtime" v-model="endtime">
+				</div>
+			
+		</div>
+		<div class="mui-card">
+			<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a >
+							车位信息：<br>
+							{{carport.message}}
+						</a>
+					</li>
+					
+				</ul>
+		</div>
+	<div class="mui-bar-tab">
+		
+	</div>
+	</div>
+	
+	<nav class="mui-bar mui-bar-tab" >
+		<a class="mui-tab-item " href="../order/neworder.html">
+			<div style="margin-bottom: 1rem;">
+				<button type="button" @click="neworder" class="mui-btn mui-btn-danger">停车</button>
+			</div>
+			
+		</a>
+		<a class="mui-tab-item" >
+			
+			<div style="margin-bottom: 1rem;">
+				
+				
+				<button type="button" class="mui-btn ">加入购物车</button>
+			</div>
+			
+		</a>
+		
+	</nav>
+	
+	
+	<script type="text/javascript">
+		
+		var dtpicker;
+		var app = new Vue({
+			el:"#app",
+			data:{
+				begintime:"",
+				endtime:"",
+				carport:{
+					id:1,
+					name:"25仔停车场25号",
+					adress:"我是个好人",
+					owner:{
+						name:"25仔",
+						ordernum:10,
+						badnum:1,
+						car:[
+							{
+								id:"川A8888"
+							}
+						]
+					},
+					message:"曾经我也是一个好人",
+					begintime:"2019-08-01",
+					endtime:"2019-08-02"
+				}
+			},
+			mounted() {
+				mui('body').on('tap','a',function(){
+				       window.top.location.href=this.href;
+				});
+				dtpicker = new mui.DtPicker({
+				type:'datetime',
+				beginDate:new Date(this.carport.begintime),
+				endDate:new Date(this.carport.endtime)
+				})
+				var gallery = mui('.mui-slider');
+				gallery.slider({
+				  interval:1000//自动轮播周期，若为0则不自动播放，默认为0；
+				});
+				
+			},created() {
+				
+			},
+			methods:{
+				getbegintime:function(){
+					dtpicker.show(function(e) { 
+					    console.log(e.value); 
+						app.begintime=e.value;
+					})
+				},
+				getendtime:function(){
+					dtpicker.show(function(e) { 
+					    console.log(e); 
+						app.endtime=e.value;
+					})
+				},
+				getcar:function(){
+					
+				},
+				neworder:function(){
+					//判断用户是否登录
+					//如果开始时间为空
+					if(this.begintime == ""){
+						mui.toast('选择开始时间',{ duration:'long', type:'div' }) 
+						this.getbegintime;
+					}
+					//如果结束时间为空
+					if(this.endtime == ""){
+						mui.toast('选择结束时间',{ duration:'long', type:'div' }) 
+						this.getendtime;
+					}
+					//判断时间是否符合要求
+					if(this.endtime<=this.begintime){
+						mui.toast('时间选择错误，请重新选择时间',{ duration:'long', type:'div' }) 
+						this.endtime="";
+						this.begintime="";
+					}
+					//选择车辆
+					//判断数据是否全部符合要求
+					//生成订单
+				}
+			}
+		})
+	
+
+
+		
+	</script>
+</body>
+</html>
