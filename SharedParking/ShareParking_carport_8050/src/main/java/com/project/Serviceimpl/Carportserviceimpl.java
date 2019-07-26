@@ -209,4 +209,10 @@ private CarportDao dao;
 		return false;
 	}
 
+	@Override
+	public List<CarportBean> findcarportbymemid(int memid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

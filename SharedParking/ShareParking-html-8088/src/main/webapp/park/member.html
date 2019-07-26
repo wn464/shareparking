@@ -52,14 +52,14 @@
 				</nav>
 			</div>
 		</div>
-		<div class="main">
+		<div class="main" id="app">
 			<div class="main-content">
 				<div class="container-fluid">
 					<div class="panel" style="height: 660px;">
 						<div class="panel-heading">
 							<h3 class="panel-title">用户信息</h3>
 						</div>
-						<div class="panel-body" style="padding:40px 80px;" id="app">
+						<div class="panel-body" style="padding:40px 80px;" >
 							<table class="table table-bordered table-striped">
 								<thead>
 									<tr>
@@ -73,23 +73,23 @@
 								<tbody v-for="(item,index) in currentPageData" :key="index">
 									<tr>
 										<td>{{item.id}}</td>
-										<td>{{item.message.name}}</td>
-										<td>{{item.message.idCard}}</td>
-										<td>{{item.phonenumber}}</td>
-										<td>{{item.credibility.credibility*100}}%</td>
+										<td>{{item.name}}</td>
+										<td>{{item.idCard}}</td>
+										<td>{{item.member.phonenumber}}</td>
+										<td>{{item.member.credibility.credibility*100}}%</td>
 									</tr>
 								</tbody>
 							</table>
 							<div style="margin: 50px;">
-									<form class="form-inline">
+									
 									  	<div class="form-group" style="margin-right:50px;">
 									    	<label for="exampleInputEmail2">姓名： &nbsp;</label>
-									    	<input type="text" class="form-control" style="width: 177px;">
+									    	<input type="text" class="form-control" style="width: 177px;" id="name">
 										</div>
-										<div class="form-group">
+										<div class="form-group" @click="find()">
 											<button class="btn" ><i class="fa fa-search"></i> 查询</button>
 										</div>
-									</form>
+									
 								</div>
 							<nav style="margin: -100px 0 0 800px;">
 							    <ul class="pagination">
@@ -133,8 +133,8 @@
 		            currentPageData: [] //当前页显示内容
 		        };
 		    },
-		    created(){
-		    	axios.get("http://127.0.0.1:9500/member/findAll")
+		  created(){
+		    	 axios.get("http://127.0.0.1:9500/member/findAll")
 				.then(res=>{
 					this.productList=res.data
 					 // 计算一共有几页
@@ -142,9 +142,26 @@
 			        // 计算得0时设置为1
 			        this.totalPage = this.totalPage == 0 ? 1 : this.totalPage;
 			        this.getCurrentPageData();
-				})
-		    },
+				}) 
+		    }, 
 		    methods: {
+		 		//模糊查询
+		        find:function(){
+		        	var name = $("#name").val();
+		        	 axios.get("http://127.0.0.1:9500/member/findMohu?name="+name)
+						.then(res=>{
+							
+							this.productList=res.data
+							console.info(this.productList)
+							 // 计算一共有几页
+					        this.totalPage = Math.ceil(this.productList.length / this.pageSize);
+					        // 计算得0时设置为1
+					        this.totalPage = this.totalPage == 0 ? 1 : this.totalPage;
+					        this.getCurrentPageData();
+						}) 
+		        },
+		    	 
+		    	
 		        // 设置当前页面数据，对数组操作的截取规则为[0~9],[10~20]...,
 		        // 当currentPage为1时，我们显示(0*pageSize+1)-1*pageSize，当currentPage为2时，我们显示(1*pageSize+1)-2*pageSize...
 		        getCurrentPageData() {
@@ -153,7 +170,7 @@
 		            this.currentPageData = this.productList.slice(
 		                begin,
 		                end
-		            );
+		            )
 		        },
 		        //上一页
 		        prevPage() {
@@ -173,6 +190,9 @@
 		                this.getCurrentPageData();
 		            }
 		        }
+		       
+		       
+		       
 		    }
 		})
 	</script>
