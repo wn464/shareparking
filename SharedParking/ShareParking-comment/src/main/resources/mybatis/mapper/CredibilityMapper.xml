@@ -5,7 +5,7 @@
 <!-- 		insert into reliable(m_id,ordersum,accusesum,credibility)values(#{m_id.id},#{ordersum},#{accusesum},#{credibility}) -->
 <!-- 	</insert> -->
 	<update id="updateCredibility" >
-	    update reliable set credibility =#{credibility} where m_id =#{id}
+	    update reliable set credibility =#{credibility},accusesum = accusesum+1 where m_id =#{id}
 	</update>
     <select id="findById" parameterType="int" resultType="CredibilityBean">
         select * from reliable where m_id =#{id}

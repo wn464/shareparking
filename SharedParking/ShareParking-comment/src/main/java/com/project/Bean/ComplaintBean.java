@@ -18,4 +18,5 @@ public class ComplaintBean implements Serializable{
 	private MemberBean mem_j_id;
 	private MemberBean mem_y_id;
     private MarkBean status;
+    private MarkBean type;
 }

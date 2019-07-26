@@ -47,10 +47,10 @@ public class ComplaintTest {
 	public void test3() {
 		service.deleteComplaint(2);
 	}
-	@Test
-	public void test4() {
-		service.updateComplaint(2);
-	}
+//	@Test
+//	public void test4() {
+//		service.updateComplaint(2);
+//	}
 	@Test
 	public void test5() {
 		PageBean bean = service.findByStatus(12, 1, 2);

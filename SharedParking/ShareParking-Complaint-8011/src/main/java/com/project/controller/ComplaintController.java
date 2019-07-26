@@ -36,9 +36,15 @@ public class ComplaintController {
 		return bean;
 	}
 	
-	@PutMapping("/complaint/{id}")
-	public int updateComplaint(@PathVariable("id")int id) {
-		service.updateComplaint(id);
+	@GetMapping("/complaint/{id}")
+	public ComplaintBean findById(@PathVariable("id")int id) {
+		ComplaintBean bean = service.findById(id);
+		return bean;
+	}
+	
+	@PutMapping("/complaint/{id}/{type}")
+	public int updateComplaint(@PathVariable("id")int id,@PathVariable("type")int type) {
+		service.updateComplaint(id,type);
 		return 1;
 		
 	}
