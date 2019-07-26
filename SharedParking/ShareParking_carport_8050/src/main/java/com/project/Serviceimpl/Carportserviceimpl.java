@@ -98,7 +98,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value="updatecarportstatusy",allEntries = true)
+	@CacheEvict(value= {"updatecarportstatusy"},allEntries = true)
 	public boolean updatecarportstatusy(int cid) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
@@ -115,7 +115,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value="updatecarportstatusf",allEntries = true)
+	@CacheEvict(value= {"updatecarportstatusf"},allEntries = true)
 	public boolean updatecarportstatusf(int cid) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
@@ -132,7 +132,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value="updatecarauditstatus",allEntries = true)
+	@CacheEvict(value= {"updatecarauditstatus"},allEntries = true)
 	public boolean updatecarauditstatus(int cid,int audit) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
