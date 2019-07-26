@@ -8,7 +8,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.project.Bean.MemberBean;
+import com.project.Bean.MessageBean;
 import com.project.dao.IMemberDao;
+import com.project.dao.IMessageDao;
 import com.project.service.IMemberService;
 /**
  * member service
@@ -21,6 +23,8 @@ public class MemberServiceImpl implements IMemberService {
 	@Autowired
 	private IMemberDao dao;
 	
+	@Autowired
+	private IMessageDao dao1;
 	/*
 	 * 通过id查找
 	 */
@@ -65,9 +69,22 @@ public class MemberServiceImpl implements IMemberService {
 	 */
 	@Cacheable("findAll")
 	@Override
-	public List<MemberBean> findAll() {
+	public List<MessageBean> findAll() {
 		// TODO Auto-generated method stub
-		return dao.findAll();
+		return dao1.findAll();
 	}
+
+	/*
+	 * 模糊查找
+	 */
+	@Cacheable(value="findByMohu",key="#name")
+	@Override
+	public List<MessageBean> findByMohu(String name) {
+		// TODO Auto-generated method stub
+		
+		return dao1.findByMohu(name);
+	}
+	
+	
 
 }

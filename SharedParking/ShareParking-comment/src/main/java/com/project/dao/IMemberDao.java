@@ -34,8 +34,7 @@ public interface IMemberDao {
     @Update("update member set password=#{repassword} where id=#{id}")
     int updatePassword(int id,String repassword);
     
-    /*
-     * 查找所有用户
-     */
-    List<MemberBean> findAll();
+    
+    //message 查询用到的
+    MemberBean findByMemberId(int id);
 }
