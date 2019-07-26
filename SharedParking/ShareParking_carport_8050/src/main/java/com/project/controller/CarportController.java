@@ -154,6 +154,10 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 		PageBean pagebean=service.findcarportbyday(page, size);
 		return pagebean;
 	}
+	/**
+	 * 查询未审核车辆
+	 * @return
+	 */
 	@GetMapping(value="/carport/auauditstatus")
 	@ResponseBody
 	public List<CarportBean> findcarportbyAuauditstatus(){

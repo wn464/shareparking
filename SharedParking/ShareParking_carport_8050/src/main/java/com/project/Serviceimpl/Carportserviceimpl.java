@@ -165,12 +165,14 @@ private CarportDao dao;
 	@Cacheable(value="findcarportbyday",key="#page")
 	public PageBean findcarportbyday(int page, int size) {
 		PageBean pagebean=new PageBean();
-		SimpleDateFormat data=new SimpleDateFormat("yyy-mm-dd 23:00:00");
+		SimpleDateFormat data=new SimpleDateFormat("yyy-MM-dd 23:00:00");
 		Date da=new Date();
 		String a=data.format(da);
-		int totalsize=dao.findcarportbydaynumber(a);
+		SimpleDateFormat data1=new SimpleDateFormat("yyy-MM-dd 01:00:00");
+		String b=data1.format(da);
+		int totalsize=dao.findcarportbydaynumber(a,b);
 		int totalpage=(totalsize%size)==0?totalsize/size:(totalsize/size)+1;
-		List<CarportBean> carports=dao.findcarportdaybytime(a, (page-1)*size,size);
+		List<CarportBean> carports=dao.findcarportdaybytime(a,b, (page-1)*size,size);
 		pagebean.setList(carports);
 		pagebean.setPage(page);
 		pagebean.setTotalNumber(totalsize);
