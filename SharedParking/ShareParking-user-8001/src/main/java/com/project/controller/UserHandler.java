@@ -85,11 +85,11 @@ public class UserHandler {
     //查询所有管理员
     @GetMapping("/user/findall")
     public List<UserBean> findAll(){
-    	System.out.println("123123123123123");
-    	 Subject subject = SecurityUtils.getSubject();
-    	 Session session = subject.getSession(false);
-    	 int id = (int) session.getAttribute("id");	//获取当前登录的id
-    	 System.out.println("id======="+id);
+//    	System.out.println("123123123123123");
+//    	 Subject subject = SecurityUtils.getSubject();
+//    	 Session session = subject.getSession(false);
+//    	 int id = (int) session.getAttribute("id");	//获取当前登录的id
+//    	 System.out.println("id======="+id);
         List<UserBean> list = service.findAll(1);
         return list;
     }
