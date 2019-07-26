@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.jws.HandlerChain;
+
 import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.project.Bean.CarportBean;
 import com.project.Bean.PageBean;
 import com.project.IService.CarportIService;
@@ -76,11 +79,16 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	 * @param size
 	 * @return
 	 */
+	@HystrixCommand(fallbackMethod = "fallback")
 	@GetMapping(value="/carport/statusy/{page}/{size}")
 	@ResponseBody
 	public PageBean findcarporty(@PathVariable("page")int page,@PathVariable("size")int size) {
 		PageBean pagebean=service.findcarportbykezu(page, size);
 		return pagebean;
+	}
+	public PageBean fallback(@PathVariable("page")int page,@PathVariable("size")int size) {
+		PageBean pa=new PageBean().setMessage("兄弟你的网络开小差了");
+		return pa;
 	}
 	/****
 	 * 查询不可租车位
