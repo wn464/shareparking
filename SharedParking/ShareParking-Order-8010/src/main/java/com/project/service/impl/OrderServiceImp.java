@@ -27,7 +27,7 @@ public class OrderServiceImp implements IOrderService{
 	
 	//添加订单
 	@Override
-	@CacheEvict(value="insertOrder",allEntries = true)
+	@CacheEvict(value="*",allEntries = true)
 	public int insertOrder(OrderBean orderBean) {
 	//生成订单时间
 	String orderTime= CreateOrderInfo.getCreateTime();
@@ -44,7 +44,7 @@ public class OrderServiceImp implements IOrderService{
 	
 	//通过订单号查询
 	@Override
-	@Cacheable(value = "selectOrderByOrderNumber")
+	@Cacheable(value = "selectOrderByOrderNumber",key = "#orderNumber")
 	public OrderBean selectOrderByOrderNumber(String orderNumber) {
 		OrderBean orderBean = orderDao.selectOrderByOrderNumber(orderNumber);
 		return orderBean;
@@ -52,7 +52,7 @@ public class OrderServiceImp implements IOrderService{
 	
 	//通过订单id查询
 	@Override
-	@Cacheable(value = "selectOrderById")
+	@Cacheable(value = "selectOrderById",key = "#oid")
 	public OrderBean selectOrderById(int oid) {
 		OrderBean orderBean = orderDao.selectOrderById(oid);
 		return orderBean;
@@ -60,8 +60,8 @@ public class OrderServiceImp implements IOrderService{
 	
 	//租客分页查询
 	@Override
-	@Cacheable(value = "selectOrderByState1")
-	public PageBean selectOrderByState1(int mid, int status, int page, int size) {
+	@Cacheable(value = "selectOrderByState1",key = "#str")
+	public PageBean selectOrderByState1(int mid, int status, int page, int size,String str) {
 		PageBean pageBean = new PageBean();
 		pageBean.setPage(page);
 		page = (page-1)*size;
@@ -77,8 +77,8 @@ public class OrderServiceImp implements IOrderService{
 	
 	//出租客分页查询
 	@Override
-	@Cacheable(value = "selectOrderByState2")
-	public PageBean selectOrderByState2(int mid, int status, int page, int size) {
+	@Cacheable(value = "selectOrderByState2",key = "#str")
+	public PageBean selectOrderByState2(int mid, int status, int page, int size,String str) {
 		PageBean pageBean = new PageBean();
 		pageBean.setPage(page);
 		page = (page-1)*size;
@@ -94,7 +94,7 @@ public class OrderServiceImp implements IOrderService{
 	
 	//修改订单属性
 	@Override
-	@CacheEvict(value="updateOrderAttr",allEntries = true)
+	@CacheEvict(value="*",allEntries = true)
 	public int updateOrderAttr(OrderBean orderBean) {
 		int num = orderDao.updateOrderAttr(orderBean);
 		return num;
@@ -102,8 +102,9 @@ public class OrderServiceImp implements IOrderService{
 
 	//按月份统计一段时间的订单-------------------------------------
 	@Override
-	@Cacheable(value = "selectOrderByMonth")
-	public List<Double> selectOrderByMonth(int year, int startMonth, int endMonth) {
+	@Cacheable(value = "selectOrderByMonth",key = "#str")
+	public List<Double> selectOrderByMonth(int year, int startMonth, int endMonth,String str) {
+		System.out.println("---------"+year);
 		//存放每月总金额
 		List<Double> list = new ArrayList<Double>();
 		for (int i = startMonth; i <= endMonth; i++) {
@@ -139,8 +140,8 @@ public class OrderServiceImp implements IOrderService{
 
 	}
 	@Override
-	@Cacheable(value = "selectOrderCount")
-	public List<Integer> selectOrderCount(int year, int startMonth, int endMonth) {
+	@Cacheable(value = "selectOrderCount",key = "#str")
+	public List<Integer> selectOrderCount(int year, int startMonth, int endMonth,String str) {
 		//存放每月总金额
 		List<Integer> list = new ArrayList<Integer>();
 		for (int i = startMonth; i <= endMonth; i++) {
@@ -179,7 +180,7 @@ public class OrderServiceImp implements IOrderService{
 	
 	//统计某日订单金额
 	@Override
-	@Cacheable(value = "selcetOrderByDate")
+	@Cacheable(value = "selcetOrderByDate",key = "#date")
 	public List<Double> selcetOrderByDate(String date) {
 		String startTime = date+" 00:00:00";
 		String endTime = date+" 23:59:59";
@@ -189,7 +190,7 @@ public class OrderServiceImp implements IOrderService{
 
 	//统计每日新增订单数
 	@Override
-	@Cacheable(value = "selectOrderNumberByDate")
+	@Cacheable(value = "selectOrderNumberByDate",key = "#date")
 	public int selectOrderNumberByDate(String date) {
 		String startTime = date+" 00:00:00";
 		String endTime = date+" 23:59:59";
@@ -198,8 +199,8 @@ public class OrderServiceImp implements IOrderService{
 	}
 	//分页查询每日订单
 	@Override
-	@Cacheable(value = "selcetOrderByDay")
-	public PageBean selcetOrderByDay(String date,int page,int size){
+	@Cacheable(value = "selcetOrderByDay",key = "#str")
+	public PageBean selcetOrderByDay(String date,int page,int size,String str){
 		String startTime = date+" 00:00:00";
 		String endTime = date+" 23:59:59";
 		PageBean pageBean = new PageBean();
@@ -218,7 +219,8 @@ public class OrderServiceImp implements IOrderService{
 
 	//通过状态分页查询订单（后台）
 	@Override
-	public PageBean selectOrderByStatus(int status, int page, int size) {
+	@Cacheable(value = "selectOrderByStatus",key = "#str")
+	public PageBean selectOrderByStatus(int status, int page, int size,String str) {
 		PageBean pageBean = new PageBean();
 		pageBean.setPage(page);
 		page = (page-1)*size;
