@@ -83,7 +83,6 @@ select * from carport where sqrt(
   <select id="findcarportbyMID" resultMap="onemap">
       SELECT * FROM carport c
         <where>
-        c.tatus=10
             <!--where标签自动去掉满足条件的第一个and -->
             <if test="mid!= null and mid!= ''">
             and  c.m_id=(select id from member where username=#{mid})

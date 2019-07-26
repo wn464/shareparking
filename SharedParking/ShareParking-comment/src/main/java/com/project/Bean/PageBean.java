@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PageBean implements Serializable{
-
+	private String message;
 	private int page;
 	private int size;
 	private int totalNumber;
