@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.project.Bean.ComplaintBean;
 import com.project.Bean.CredibilityBean;
 import com.project.Bean.MemberBean;
+import com.project.Bean.OrderBean;
 import com.project.Bean.PageBean;
 import com.project.dao.ComplaintDao;
 import com.project.dao.CredibilityDao;
@@ -48,13 +49,40 @@ public class ComplaintServiceImpl implements IComplaintService{
 	public void updateComplaint(int id) {
 		dao.updateComplaint(id);
 		ComplaintBean bean3 = dao.findById(id);
-		MemberBean mem_y_id = bean3.getMem_y_id();
-		int ordersum = dao1.selectOrderNumberByMem2(mem_y_id.getId());
-		int accusesum = dao.findCreNum(mem_y_id.getId());
-		double order = ordersum;
-		double accuse = accusesum;
-		Double credibility = (double) (accuse/order);
-		dao2.updateCredibility(credibility, mem_y_id.getId());
+//		*******************************************
+		int c_mem_y_id = bean3.getMem_y_id().getId();
+		OrderBean o_id = bean3.getO_id();
+		int mem_j_id = o_id.getMemberBean1().getId();
+		int mem_y_id = o_id.getMemberBean2().getId();
+		int ordersum=0;
+		int accusesum=0;
+		if(c_mem_y_id==mem_j_id) {
+			ordersum = dao1.selectOrderNumberByMem2(mem_j_id);
+			int ordersum1 = dao1.selectOrderNumberByMem1(mem_j_id);
+			ordersum = ordersum+ordersum1;
+			accusesum = dao.findCreNum(mem_j_id);
+			double order = ordersum;
+			double accuse = accusesum;
+			Double credibility = (double) (accuse/order);
+			dao2.updateCredibility(credibility, mem_j_id);
+		}else {
+			ordersum = dao1.selectOrderNumberByMem2(mem_y_id);
+			int ordersum1 = dao1.selectOrderNumberByMem1(mem_y_id);
+			ordersum = ordersum+ordersum1;
+			accusesum = dao.findCreNum(mem_y_id);
+			double order = ordersum;
+			double accuse = accusesum;
+			Double credibility = (double) (accuse/order);
+			dao2.updateCredibility(credibility, mem_y_id);
+		}
+//		*******************************************
+//		MemberBean mem_y_id = bean3.getMem_y_id();
+//		int ordersum = dao1.selectOrderNumberByMem2(mem_y_id.getId());
+//		int accusesum = dao.findCreNum(mem_y_id.getId());
+//		double order = ordersum;
+//		double accuse = accusesum;
+//		Double credibility = (double) (accuse/order);
+//		dao2.updateCredibility(credibility, mem_y_id.getId());
 	}
 
 	@Override

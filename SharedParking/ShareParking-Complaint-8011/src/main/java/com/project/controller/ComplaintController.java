@@ -30,8 +30,8 @@ public class ComplaintController {
 		return bean;
 	}
 	
-	@GetMapping("/complaint")
-    public PageBean findComplaintbydate(String begintime, String endtime, int page, int size){
+	@GetMapping("/complaint/{begintime}/{endtime}/{page}/{size}")
+    public PageBean findComplaintbydate(@PathVariable("begintime")String begintime, @PathVariable("endtime")String endtime, @PathVariable("page")int page, @PathVariable("size")int size){
 		PageBean bean =service.findByDate(begintime,endtime, page, size);
 		return bean;
 	}
