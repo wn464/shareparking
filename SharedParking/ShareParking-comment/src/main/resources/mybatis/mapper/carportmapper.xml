@@ -34,7 +34,7 @@
   <if test="carport.endtime!=null">
   endtime=#{carport.endtime},
   </if>
-  <if test="carport.price!=null">
+  <if test="carport.price!=null and carport.price!=0.0">
   price=#{carport.price}
   </if>
   </set>
