@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan("com.project.dao")
 @ComponentScan("com.project.controller")
 @ComponentScan("com.project.service")
+@ComponentScan("com.project.config")
 public class Application8002Demo {
     public static void main(String[] args) {
         SpringApplication.run(Application8002Demo.class,args);
