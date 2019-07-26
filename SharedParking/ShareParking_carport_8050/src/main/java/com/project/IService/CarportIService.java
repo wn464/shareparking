@@ -86,4 +86,10 @@ PageBean findcarportbyday(int page,int size);
  * @return
  */
 List<CarportBean> findcarportbyauditstatus();
+/**
+ * 修改已有车位再出租
+ * @param carport
+ * @return
+ */
+boolean updatacarport(CarportBean carport);
 }
