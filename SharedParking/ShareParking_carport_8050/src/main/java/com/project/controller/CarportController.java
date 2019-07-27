@@ -67,6 +67,7 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	@GetMapping(value="/carport/coordinate/{x}/{y}")
 	@ResponseBody
 	public List<CarportBean> findcarportbycoordinate(@PathVariable("x")double coordinate_x,@PathVariable("y")double coordinate_y) {
+		System.out.println(coordinate_x);
 		List<CarportBean> page=service.findcarportbycoordinate(coordinate_x, coordinate_y);
 		return page;
 	}

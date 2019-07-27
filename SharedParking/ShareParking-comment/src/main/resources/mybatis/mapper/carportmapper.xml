@@ -71,7 +71,7 @@ select * from carport where sqrt(
      *  
      ((22.50128-#{y})*PI()*12656/180)  
     )  
-)&lt;10 and status=10 limit #{page},#{size}
+)&lt;10 and status=10 
   </select>
   <!-- 通过车位编号查询车位 -->
   <select id="findcarportbycarportnumber" resultMap="onemap">
