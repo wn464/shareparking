@@ -13,6 +13,7 @@ eureka:
     prefer-ip-address: true
 
 spring:
+  profiles: member8002
   application:
     name: park-member   #当前服务的名字，后面会用到
   datasource:
@@ -38,8 +39,8 @@ spring:
         min-idle: 0 #最小连接数
         
         
-spring: 
-  profiles: member8002
+
+  
   #info: #监控信息
   app.name: ShareParking8002
   company.name: www.zcz.com

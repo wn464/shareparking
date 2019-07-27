@@ -58,9 +58,11 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@Cacheable(value="findcarportbycoordinate",key="#coordinate_x")
-	public List<CarportBean> findcarportbycoordinate(double coordinate_x, double coordinate_y) {
+	//@Cacheable(value="findcarportbycoordinate",key="#key")
+	public List<CarportBean> findcarportbycoordinate(double coordinate_x, double coordinate_y,String key) {
+		System.out.println("12211");
 		List<CarportBean> carports=dao.findcarportbycoordinate(coordinate_x, coordinate_y);
+		
 		return carports;
 	}
 	/**
@@ -210,9 +212,10 @@ private CarportDao dao;
 	}
 
 	@Override
+	@Cacheable(value="findcarportbymemid",key="#memid")
 	public List<CarportBean> findcarportbymemid(int memid) {
-		// TODO Auto-generated method stub
-		return null;
+		List<CarportBean> pos=dao.findcarportbymemid(memid);
+		return pos;
 	}
 
 }
