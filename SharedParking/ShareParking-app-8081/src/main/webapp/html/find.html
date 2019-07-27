@@ -48,7 +48,7 @@
 								<p class="mui-ellipsis">{{item.message}}</p>
 							</div>
 						</a>
-						<a :href="'html/carport/show.html?id='+item.id" v-if="item.id!=0">
+						<a :href="'carport/show.html?id='+item.id" v-if="item.id!=0">
 							<img class="mui-media-object mui-pull-left" >
 							<div class="mui-media-body">
 								{{item.address}}
@@ -103,7 +103,7 @@
 			//创建地图
 			map = new plus.maps.Map('map');
 			//设置缩放级别
-			map.setZoom(18);
+			map.setZoom(16);
 			
 			//开启用户位置显示
 			map.showUserLocation(true);
@@ -153,7 +153,7 @@
 			map.onclick = function( point ){
 				map.removeOverlay(centerpoint)
 				centerpoint = new plus.maps.Marker(point);
-				centerpoint.setIcon('img/bike.png');
+				centerpoint.setIcon('../img/map/map-marker-red.png');
 				var bubble = new plus.maps.Bubble("目标地点");
 				centerpoint.setBubble(bubble);
 				map.addOverlay(centerpoint);
@@ -209,17 +209,21 @@
 				methods:{
 					//清除map的标记 
 					clear:function(){
-						map.clearOverlays()
+						for (var i = 0; i < this.points.length; i++) {
+							map.removeOverlay( this.points[i]);
+						}
 					},
 					//生成标记
 					createmark:function(mes){
+						console.log(JSON.stringify(mes));
 						var bike1 = new plus.maps.Point(mes.coordinate_x, mes.coordinate_y);
 						var bike1Icon = new plus.maps.Marker(bike1);
-						bike1Icon.setIcon('img/bike.png');
+						bike1Icon.setIcon('../img/map/map-marker-green.png');
 						var bubble = new plus.maps.Bubble(mes.address);
 						bike1Icon.setBubble(bubble);
 						map.addOverlay(bike1Icon);
-						console.info(mes.address);
+						this.points.push(bike1Icon);
+						//console.info(mes.address);
 					},
 					//生成所有标记
 					creatallmark:function(){
@@ -238,7 +242,8 @@
 							address:"等待加载",
 							message:"等待加载"
 						}
-					]
+					],
+					points:[]
 				},
 				created() {
 					
