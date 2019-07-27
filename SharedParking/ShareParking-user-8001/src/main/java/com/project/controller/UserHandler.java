@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.jayway.jsonpath.internal.function.json.Append;
 import com.project.Bean.MemberBean;
 import com.project.Bean.UserBean;
 import com.project.service.IUserService;
@@ -35,8 +36,8 @@ public class UserHandler {
     public  boolean Send(String phone) {
         generateCode = CodeUtil.generateCode();
         System.out.println("--------"+generateCode.toString());
-        boolean mobileQuery = JuHeDemo.mobileQuery(phone, 169209, generateCode);
-        return mobileQuery;
+       // boolean mobileQuery = JuHeDemo.mobileQuery(phone, 169209, generateCode);
+        return false;
     }
 
     /*
@@ -95,8 +96,8 @@ public class UserHandler {
     }
     //通过id查询管理员
     @GetMapping("/user/findById")
-    public UserBean findById(Integer id){
-        UserBean user = service.findById(id);
+    public UserBean findById(){
+        UserBean user = service.findById(1);
         return user;
     }
 
@@ -159,16 +160,16 @@ public class UserHandler {
         2：修改失败
         3：前台输入是密码长度不合格
      */
-    @PutMapping("/user/updatePassword")
+    @PostMapping("/user/updatePassword")
     public String updataPassword(String password, String repassword) {
-
+    	
         if(repassword.length()<6||repassword.length()>12) {
             return "3";
         }else {
             Subject subject = SecurityUtils.getSubject();
-            int id = (int) subject.getSession().getAttribute("id");	//获取当前登录的id
+            //int id = (int) subject.getSession().getAttribute("id");	//获取当前登录的id
 
-            UserBean user = service.findById(id);
+            UserBean user = service.findById(1);
 
             //将输入的原密码加密
             Object obj = new SimpleHash("MD5",password,user.getUsername(),1024);
@@ -191,12 +192,15 @@ public class UserHandler {
         1:修改成功
         2：修改失败
      */
-    @PutMapping("/user/updatePhone")
-    public int updatePhone(StringBuffer code,String phone){
-        if(code.equals(generateCode)){
+    @GetMapping("/user/updatePhone")
+    public int updatePhone(String code,String phone){
+    	System.out.println(code);
+    	System.out.println(generateCode.toString()+"================");
+    	
+        if(code.equals(generateCode.toString())){
             Subject subject = SecurityUtils.getSubject();
-            int id = (int) subject.getSession().getAttribute("id");
-            int i = service.updatePhone(id, phone);
+            //int id = (int) subject.getSession().getAttribute("id");
+            int i = service.updatePhone(1, phone);
             return 1;
         }
         return 2;

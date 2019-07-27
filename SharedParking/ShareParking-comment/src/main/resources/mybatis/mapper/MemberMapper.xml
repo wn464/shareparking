@@ -10,10 +10,8 @@
     <select id="findByUserName" resultType="MemberBean">
         select * from member where username=#{username}
     </select>
-
-    <select id="findAll" resultMap="map">
-    	select * from member
-    </select>
+    
+    
     <resultMap id="map" type="MemberBean">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
@@ -21,5 +19,16 @@
         <result property="phonenumber" column="phonenumber"/>
         <association property="message" javaType="MessageBean" select="com.project.dao.IMessageDao.findByMid" column="id"/>
         <association property="credibility" javaType="CredibilityBean" select="com.project.dao.CredibilityDao.findById" column="id" />
+    </resultMap>
+    
+    <select id="findByMemberId" resultMap="map1">
+    	select * from member where id =#{id}
+    </select>
+    <resultMap type="MemberBean" id="map1">
+    	 <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="phonenumber" column="phonenumber"/>
+    	<association property="credibility" javaType="CredibilityBean" select="com.project.dao.CredibilityDao.findById" column="id" />
     </resultMap>
 </mapper>

@@ -92,4 +92,10 @@ List<CarportBean> findcarportbyauditstatus();
  * @return
  */
 boolean updatacarport(CarportBean carport);
+/***
+ * 通过用户id查询该用户所有车位
+ * @param memid
+ * @return
+ */
+List<CarportBean> findcarportbymemid(int memid);
 }

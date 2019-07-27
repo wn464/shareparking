@@ -169,7 +169,15 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 		List<CarportBean> carports=service.findcarportbyauditstatus();
 		return carports;
 	}
+	/**
+	 * 用户再次出租车位
+	 * @param id
+	 * @param begintime
+	 * @param endtime
+	 * @return
+	 */
 	@PutMapping(value="/carport/updatastatus/{id}/{begintime}/{endtime}")
+	@ResponseBody
 public boolean updatacarport(@PathVariable("id")int id,@PathVariable("begintime")String begintime,@PathVariable("endtime")String endtime) {
 	CarportBean p=new CarportBean();
 	p.setBegintime(begintime);
@@ -180,4 +188,15 @@ public boolean updatacarport(@PathVariable("id")int id,@PathVariable("begintime"
 	boolean l=service.updatacarport(p);
 	return l;
 }
+	/**
+	 * 通过车位所属人id查询该用户所有车位
+	 * @param memid
+	 * @return
+	 */
+	@GetMapping(value="/carport/memid/{mid}")
+	@ResponseBody
+	public List<CarportBean> findcarportbymemid(@PathVariable("mid")int memid){
+		List<CarportBean> ports=	service.findcarportbymemid(memid);
+		return ports;
+	}
 }
