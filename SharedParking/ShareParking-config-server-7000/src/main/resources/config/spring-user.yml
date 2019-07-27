@@ -1,4 +1,5 @@
-server:
+
+server: 
   port: 8001 #当前服务端口
 mybatis:
   config-location: classpath:mybatis/mybatis_config.xml #mybatis配置文件
@@ -13,6 +14,7 @@ eureka:
     prefer-ip-address: true
       
 spring:
+  profiles: user8001
   application:
     name: park-user   #当前服务的名字，后面会用到
   datasource:
@@ -37,11 +39,13 @@ spring:
         max-wait: -1 #连接等待时间
         min-idle: 0 #最小连接数
         
-spring: 
-  profiles: user8001
+
   
 #info: #监控信息
   app.name: ShareParking8001
   company.name: www.zcz.com
   build.artifactId: $project.artifactId$
   build.version: $project.version$
+  
+
+---
