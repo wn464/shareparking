@@ -26,13 +26,15 @@ public class ComplaintController {
 	
 	@GetMapping("/complaint/{status}/{page}/{size}")
     public PageBean findComplaint(@PathVariable("status")int status,@PathVariable("page")int page,@PathVariable("size")int size){
-		PageBean bean =service.findByStatus(status, page, size);
+		String str = status+""+page;
+		PageBean bean =service.findByStatus(status, page, size,str);
 		return bean;
 	}
 	
 	@GetMapping("/complaint/{begintime}/{endtime}/{page}/{size}")
     public PageBean findComplaintbydate(@PathVariable("begintime")String begintime, @PathVariable("endtime")String endtime, @PathVariable("page")int page, @PathVariable("size")int size){
-		PageBean bean =service.findByDate(begintime,endtime, page, size);
+		String str = begintime+""+endtime+""+page;
+		PageBean bean =service.findByDate(begintime,endtime, page, size,str);
 		return bean;
 	}
 	
@@ -52,6 +54,12 @@ public class ComplaintController {
 	@DeleteMapping("/complaint/{id}")
 	public int deleteComplaint(@PathVariable("id")int id) {
 		service.deleteComplaint(id);
+		return 1;
+	}
+	
+	@PutMapping("/complaint/{id}")
+	public int updateCreOrder(@PathVariable("id")int id) {
+		service.updateOrder(id);
 		return 1;
 	}
 

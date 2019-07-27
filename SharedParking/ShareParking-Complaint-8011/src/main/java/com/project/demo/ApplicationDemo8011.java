@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan({"com.project.controller","com.project.service"})
 @MapperScan("com.project.dao")
+@ComponentScan("com.project.config")
 @EnableEurekaClient     //代表客户端
 public class ApplicationDemo8011 {
 	public static void main(String[] args) {

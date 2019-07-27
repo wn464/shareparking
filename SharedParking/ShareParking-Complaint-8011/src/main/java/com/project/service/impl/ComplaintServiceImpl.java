@@ -35,7 +35,7 @@ public class ComplaintServiceImpl implements IComplaintService{
 
 	@Override
 	@Cacheable(value = "findByStatus",key = "#str")
-	public PageBean findByStatus(int status, int page, int size) {
+	public PageBean findByStatus(int status, int page, int size,String str) {
 		PageBean bean = new PageBean();
 		List<ComplaintBean> list = new ArrayList<ComplaintBean>();
 		int totalNumber = dao.findComNum(status);
@@ -111,7 +111,7 @@ public class ComplaintServiceImpl implements IComplaintService{
 
 	@Override
 	@Cacheable(value = "findByDate",key = "#str")
-	public PageBean findByDate(String begintime, String endtime, int page, int size) {
+	public PageBean findByDate(String begintime, String endtime, int page, int size,String str) {
 		PageBean bean = new PageBean();
 		List<ComplaintBean> list = new ArrayList<ComplaintBean>();
 		int totalNumber = dao.findDateNum(begintime, endtime);
@@ -137,6 +137,19 @@ public class ComplaintServiceImpl implements IComplaintService{
 	public ComplaintBean findById(int id) {
 		ComplaintBean bean = dao.findById(id);
 		return bean;
+	}
+
+	@Override
+	@CacheEvict(value="*",allEntries = true)
+	public void updateOrder(int id) {
+		int accusesum = dao.findCreNum(id);
+		int ordersum = dao1.selectOrderNumberByMem2(id);
+		int ordersum1 = dao1.selectOrderNumberByMem1(id);
+		ordersum=ordersum+ordersum1;
+		double accu = accusesum;
+		double order = ordersum;
+		double credibility = 1-(accu/order);
+		dao2.updateCreOrder(credibility, id);
 	}
 	
 

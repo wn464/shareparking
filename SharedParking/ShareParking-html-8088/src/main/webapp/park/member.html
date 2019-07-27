@@ -134,7 +134,7 @@
 		        };
 		    },
 		  created(){
-		    	 axios.get("http://127.0.0.1:9500/member/findAll")
+		    	 axios.get("http://myzuul.com:9500/member/findAll")
 				.then(res=>{
 					this.productList=res.data
 					 // 计算一共有几页
@@ -148,7 +148,7 @@
 		 		//模糊查询
 		        find:function(){
 		        	var name = $("#name").val();
-		        	 axios.get("http://127.0.0.1:9500/member/findMohu?name="+name)
+		        	 axios.get("http://myzuul.com:9500/member/findMohu?name="+name)
 						.then(res=>{
 							
 							this.productList=res.data
