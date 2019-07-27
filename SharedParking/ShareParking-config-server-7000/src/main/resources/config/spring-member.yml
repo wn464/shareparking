@@ -36,6 +36,10 @@ spring:
         max-active: 10 #最大连接数
         max-wait: -1 #连接等待时间
         min-idle: 0 #最小连接数
+        
+        
+spring: 
+  profiles: member8002
   #info: #监控信息
   app.name: ShareParking8002
   company.name: www.zcz.com
