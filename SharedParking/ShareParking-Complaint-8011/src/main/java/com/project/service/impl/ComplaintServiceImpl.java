@@ -138,6 +138,19 @@ public class ComplaintServiceImpl implements IComplaintService{
 		ComplaintBean bean = dao.findById(id);
 		return bean;
 	}
+
+	@Override
+	@CacheEvict(value="*",allEntries = true)
+	public void updateOrder(int id) {
+		int accusesum = dao.findCreNum(id);
+		int ordersum = dao1.selectOrderNumberByMem2(id);
+		int ordersum1 = dao1.selectOrderNumberByMem1(id);
+		ordersum=ordersum+ordersum1;
+		double accu = accusesum;
+		double order = ordersum;
+		double credibility = 1-(accu/order);
+		dao2.updateCreOrder(credibility, id);
+	}
 	
 
 }

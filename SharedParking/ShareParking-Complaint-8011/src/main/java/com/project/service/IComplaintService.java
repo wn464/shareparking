@@ -12,4 +12,5 @@ public interface IComplaintService {
     public PageBean findByDate(String begintime,String endtime,int page,int size,String str);
     public int findDateNum(String begintime,String endtime);
     public ComplaintBean findById(int id);
+    public void updateOrder(int id);
 }
