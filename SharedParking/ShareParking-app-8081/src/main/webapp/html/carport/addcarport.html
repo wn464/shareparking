@@ -19,7 +19,8 @@
 	<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
 	<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css"/>
-	
+	<script src="../../js/layui/layui.all.js"></script>
+	<script src="../../js/layui/layui.js"></script>
 	<script type="text/javascript">
 	mui.init()
 	</script>
@@ -34,18 +35,26 @@
 			
 			<div class="mui-card">
 				<div class="carportimgs"></div>
+				<div class="layui-upload-list" id="demo2">
+    				<img :src="item" height="100%" width="33%" v-for="(item,index) in imglist" />
+    			</div> 
 				<div class="mui-input-row">
 					<label>车位图片</label>
-					<input type="file" style="margin-top: 0.3125rem;" accept="image/jpeg,image/x-png,image/gif" class="mui-input-clear">
+					<input type="file"  class="layui-btn" id="test1" @change="upimgs">
+					<span style="font-size: 10px;color: red;text-align:center;">好看的图片能让你的车位更好出租哦</span>
 				</div>
-				
 			</div>
 			
 			<div class="mui-card">
 				<div class="proveimg"></div>
+				<div class="layui-upload-list" id="demo3">
+    				<img  height="100%" width="33%" :src="carimg"  />
+    			</div> 
+				
 				<div class="mui-input-row">
 					<label>证件证明</label>
-					<input type="file" style="margin-top: 0.3125rem;" accept="image/jpeg,image/x-png,image/gif" class="mui-input-clear">
+					<input type="file"  class="layui-btn" id="test2" @change="upimg">
+				<span style="font-size: 10px;color: red;text-align:center;">请上传清晰的车位产权证明哦！不然审核可能通不过哟</span>	
 				</div>
 				
 			</div>
@@ -109,6 +118,9 @@
 		data:{
 			begintime:"",
 			endtime:"",
+			inagenamelist:[],
+			imglist:[],
+	  		carimg:""
 			
 		},
 		mounted() {
@@ -122,6 +134,47 @@
 			
 		},
 		methods:{
+	  		upimgs:function(){
+	  			if(this.imglist.length >=3){
+	  				alert("最多上传三张图片")
+	  				return
+	  			}
+	  			var formData = new FormData();
+				 var img = $("#test1")[0].files[0];
+				 formData.append("file",img);
+				 console.info(formData);
+				 $.ajax({
+					url:"http://192.168.3.132:8081/upimage",
+					type: 'post',
+					cache: false,
+					data: formData,
+					processData: false,
+					contentType: false,
+					success:function(mes){
+						console.log("sss"+JSON.stringify(mes));
+						app.imglist.push("http://192.168.3.132:8081/images/"+mes);
+						app.inagenamelist.push(mes);
+					}
+			 })
+	  		},
+	  		upimg:function(){
+	  			var formData = new FormData();
+				 var img = $("#test2")[0].files[0];
+				 formData.append("file",img);
+				 console.info(formData);
+				 $.ajax({
+					url:"http://192.168.3.132:8081/upimage",
+					type: 'post',
+					cache: false,
+					data: formData,
+					processData: false,
+					contentType: false,
+					success:function(mes){
+						console.log("sss"+JSON.stringify(mes));
+						app.carimg="http://192.168.3.132:8081/images/"+mes
+					}
+			 })
+	  		},
 			getbegintime:function(){
 				dtpicker.show(function(e) { 
 				    console.log(e.value); 
