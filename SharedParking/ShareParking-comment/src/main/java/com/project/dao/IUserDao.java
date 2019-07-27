@@ -1,11 +1,12 @@
 package com.project.dao;
 
-import com.project.Bean.UserBean;
-import feign.Param;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
-import java.util.List;
+import com.project.Bean.UserBean;
 
 /*
     后台用户dao
@@ -38,18 +39,18 @@ public interface IUserDao {
     修改管理员权限
  */
     @Update("update user set a_id=#{a_id} where id=#{id}")
-    int update(int id,int a_id);
+    int update(@Param("id")int id,@Param("a_id")int a_id);
 
     /*
        修改密码
      */
     @Update("update user set password=#{repassword} where id = #{id}")
-    int updatePassword(int id,String repassword);
+    int updatePassword(@Param("id")int id,@Param("repassword")String repassword);
     /*
         修改手机号
      */
     @Update("update user set phonenumber=#{phone}")
-    int updatePhone(int id,String phone);
+    int updatePhone(@Param("id")int id,@Param("phone")String phone);
 
 
 }

@@ -36,7 +36,7 @@ public class UserServiceImpl implements IUserService {
     /*
         修改密码
      */
-    @CacheEvict(value= {"updatePassword"},allEntries = true)
+    @CacheEvict(value= {"findById"},allEntries = true)
     @Override
     public int updatePassword(int id,String repassword) {
 
@@ -46,7 +46,7 @@ public class UserServiceImpl implements IUserService {
     /*
         修改手机号
      */
-    @CacheEvict(value= {"updatePhone"},allEntries = true)
+    @CacheEvict(value= {"findById"},allEntries = true)
     @Override
     public int updatePhone(int id, String phone) {
         return dao.updatePhone(id,phone);
@@ -55,16 +55,17 @@ public class UserServiceImpl implements IUserService {
     /*
         修改管理员权限
      */
-    @CacheEvict(value= {"update"},allEntries = true)
+    @CacheEvict(value= {"findAll"},allEntries = true)
     @Override
     public int update(int id, int a_id) {
+    	System.out.println("asdasdasdsadasdsadsadsadasdasdddddddddddddddddddd==="+a_id);
         return dao.update(id,a_id);
     }
 
     /*
     添加管理员
      */
-    @CacheEvict(value= {"addUser"},allEntries = true)
+    @CacheEvict(value= {"findAll"},allEntries = true)
     @Override
     public int addUser(UserBean user) {
         return dao.addUser(user);
