@@ -1,5 +1,5 @@
 server:
-  port: 8001 #当前服务端口
+  port: 8002 #当前服务端口
 mybatis:
   config-location: classpath:mybatis/mybatis_config.xml #mybatis配置文件
   type-aliases-package: com.project.Bean #所有entity别名所在包
@@ -9,12 +9,12 @@ eureka:
     service-url:
       defaultZone:  http://eurakeserver9000.com:9000/eureka/
   instance:
-    instance-id: ShareParking-user8001
+    instance-id: ShareParking-user8002
     prefer-ip-address: true
-      
+
 spring:
   application:
-    name: park-user   #当前服务的名字，后面会用到
+    name: park-member   #当前服务的名字，后面会用到
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource #当前数据源操作类型
     driver-class-name: com.mysql.jdbc.Driver #mysql驱动包
@@ -30,14 +30,18 @@ spring:
     database: 0 #连接数据库
     host: 106.52.25.168 #主机名称
     port: 6379 #端口号
-    password: 
+    password:
     lettuce:
       pool:
         max-active: 10 #最大连接数
         max-wait: -1 #连接等待时间
         min-idle: 0 #最小连接数
-#info: #监控信息
-  app.name: ShareParking8001
+        
+        
+spring: 
+  profiles: member8002
+  #info: #监控信息
+  app.name: ShareParking8002
   company.name: www.zcz.com
   build.artifactId: $project.artifactId$
   build.version: $project.version$

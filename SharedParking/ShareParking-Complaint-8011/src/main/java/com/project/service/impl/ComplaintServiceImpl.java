@@ -35,7 +35,7 @@ public class ComplaintServiceImpl implements IComplaintService{
 
 	@Override
 	@Cacheable(value = "findByStatus",key = "#str")
-	public PageBean findByStatus(int status, int page, int size) {
+	public PageBean findByStatus(int status, int page, int size,String str) {
 		PageBean bean = new PageBean();
 		List<ComplaintBean> list = new ArrayList<ComplaintBean>();
 		int totalNumber = dao.findComNum(status);
@@ -111,7 +111,7 @@ public class ComplaintServiceImpl implements IComplaintService{
 
 	@Override
 	@Cacheable(value = "findByDate",key = "#str")
-	public PageBean findByDate(String begintime, String endtime, int page, int size) {
+	public PageBean findByDate(String begintime, String endtime, int page, int size,String str) {
 		PageBean bean = new PageBean();
 		List<ComplaintBean> list = new ArrayList<ComplaintBean>();
 		int totalNumber = dao.findDateNum(begintime, endtime);
