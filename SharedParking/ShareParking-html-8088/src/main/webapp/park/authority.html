@@ -60,37 +60,18 @@
     						  			<th>管理员操作</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody v-for="(item,index) in data" :key="index">
 									<tr class="cent">
-										<td>2324</td>
-                            			<td>王小二</td>
-                            			<td>15132329999</td>
-                            			<td>admin</td>
+										<td>{{item.username}}</td>
+                            			<td>{{item.name}}</td>
+                            			<td>{{item.phonenumber}}</td>
+                            			<td>{{item.authority.name}}</td>
                             			<td>
-                            				<a class="btn btn-primary btn-sm" href='#goto' >修改</a>
+                            				<a class="btn btn-primary btn-sm" href='#goto' @click="updata1(item.username,item.name)">修改</a>
 											<a class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
                             			</td>
 									</tr>
-									<tr class="cent">
-										<td>2324</td>
-                            			<td>王小二</td>
-                            			<td>15132329999</td>
-                            			<td>admin</td>
-                            			<td>
-                            				<a class="btn btn-primary btn-sm" href='#goto' >修改</a>
-											<a class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
-                            			</td>
-									</tr>
-									<tr class="cent">
-										<td>2324</td>
-                            			<td>王小二</td>
-                            			<td>15132329999</td>
-                            			<td>admin</td>
-                            			<td>
-                            				<a class="btn btn-primary btn-sm" href='#goto' >修改</a>
-											<a class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
-                            			</td>
-									</tr>
+									
 								</tbody>
 							</table>
 						</div>
@@ -105,66 +86,67 @@
 							<div class="panel-body">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-address-card"></i></span>
-									<input class="form-control" placeholder="管理员工号" type="text">
+									<input class="form-control" placeholder="管理员工号" type="text" id="username">
 								</div>
 								<br>
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-paste"></i></span>
-									<input class="form-control" placeholder="管理员密码" type="text">
+									<input class="form-control" placeholder="管理员密码" type="text" id="password">
 								</div>
 								<br>
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user-circle-o"></i></span>
-									<input class="form-control" placeholder="管理员姓名" type="text">
+									<input class="form-control" placeholder="管理员姓名" type="text" id="namename">
 								</div>
 								<br>
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-phone"></i></span>
-									<input class="form-control" placeholder="管理员手机号" type="text">
+									<input class="form-control" placeholder="管理员手机号" type="text" id="phone">
 								</div>
 								<br>
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-arrow-circle-up"></i></span>
-									<select class="form-control">
+									<select class="form-control" id="authority">
 										<option value="1">admin</option>
 										<option value="2">superadmin</option>
 									</select>
 								</div>
 								<br />
-								<button class="btn btn-primary" style="margin-left: 480px;"><i class="fa fa-refresh"></i> 提交</button>
+								<button @click="add()" class="btn btn-primary" style="margin-left: 480px;"><i class="fa fa-refresh"></i> 提交</button>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="panel">
-							<div class="panel-heading">
+						<div class="panel" id="goto">
+							<div class="panel-heading" @clik="update()">
 								<h3 class="panel-title">修改管理员权限</h3>
 							</div>
 							<div class="panel-body">
 								<div class="alert alert-info alert-dismissible" style="padding: 35px 0;" >
-									<form class="form-horizontal">
+									
 										<div class="form-group">
 		<!--点击修改后管理员的信息显示在这里-->   		<label class="col-sm-4 control-label">管理员工号 ： </label>
 										    <div class="col-sm-7">
-										    	<p class="form-control-static">3421</p>
+										    	<p class="form-control-static" id="uname">3421</p>
 										    </div>
 										</div>
 										<div class="form-group">
 		<!--点击修改后管理员的信息显示在这里-->   		<label class="col-sm-4 control-label">管理员姓名 ： </label>
 										    <div class="col-sm-7">
-										    	<p class="form-control-static">王小二</p>
+										    	<p class="form-control-static" id="nname">王小二</p>
 										    </div>
 										</div>
 										<div class="form-group">
 									   		<label class="col-sm-4 control-label">权 限 更 改  ：</label>
 										    <div class="col-sm-7">
-										    	<select class="form-control-static">
+										    	<select class="form-control-static" id="auth">
 										    		<option value="1"> &nbsp;&nbsp;admin</option>
 										    		<option value="2"> &nbsp;&nbsp;superadmin&nbsp;&nbsp; </option>
 										    	</select>
 										    </div>
+										    <button @click="update2()" class="btn btn-primary" style="margin:30px 0 0 380px;"><i class="fa fa-refresh"></i> 提交</button>
 										</div>
-									</form>
+									
 								</div>
 							</div>
 						</div>
@@ -199,11 +181,57 @@
 					/* 直接发送请求，查询所有管理员  不包括自己  */
 					axios.get("http://myzuul.com:9500/user/user/findall")
 					.then(res=>{
-						console.info(res.data)
 						this.data=res.data
 					})
 				},
-			
+				methods: {
+					update:function(){
+						var authority = $("#auth").val();
+						var username =$("#uname").val();
+						axios.put("http://myzuul.com:9500/user/user/add?authority="+authority+"&username="+username)
+						.then(res=>{
+							
+						})
+					},
+					add:function(){
+						var username=$("#username").val();
+						var password=$("#password").val();
+						var name=$("#namename").val();
+						var phone = $("#phone").val();
+						var authority = $("#authority").val();
+						
+						var params = new URLSearchParams();
+						params.append("username",username);
+						params.append("password",password);
+						params.append("name",name);
+						params.append("phonenumber",phone);
+						params.append("authority.id",authority);
+						
+						axios.post("http://myzuul.com:9500/user/user/add",params)
+						.then(res=>{
+							location.reload();
+						})
+					},
+					updata1:function(username,name){
+						$("#uname").html(username);
+						$("#nname").html(name)
+					},
+					update2:function(){
+						var username = $("#uname").html();
+						var auth = $("#auth").val();
+				
+						axios.put("http://myzuul.com:9500/user/user/updateAuthority?username="+username+"&a_id="+auth)
+						.then(res=>{
+							if(res.data!=0){
+								alert("修改成功")
+								location.reload();
+							}
+							
+						})
+					}
+					
+					
+				}
 				
 				
 			})
