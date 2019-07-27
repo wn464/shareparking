@@ -40,16 +40,32 @@
 		<div style="position:static;height: 300px;overflow: auto;" id="list">
 			<div class= >
 				<ul class="mui-table-view">
-					
-					<li class="mui-table-view-cell mui-media" v-for="(item , index) in locationport">
-						<a href="carport/shows.html">
-							<img class="mui-media-object mui-pull-left" src="">
+					<li class="mui-table-view-cell mui-media" v-for="(item ,index) in locationport">
+						<a  v-if="item.id==0">
+							<img class="mui-media-object mui-pull-left" >
 							<div class="mui-media-body">
-								{{item.title}}
+								{{item.address}}
+								<p class="mui-ellipsis">{{item.message}}</p>
+							</div>
+						</a>
+						<a :href="'html/carport/show.html?id='+item.id" v-if="item.id!=0">
+							<img class="mui-media-object mui-pull-left" >
+							<div class="mui-media-body">
+								{{item.address}}
 								<p class="mui-ellipsis">{{item.message}}</p>
 							</div>
 						</a>
 					</li>
+					<li class="mui-table-view-cell mui-media" v-if="locationport.length==0">
+						<a >
+							<img class="mui-media-object mui-pull-left" >
+							<div class="mui-media-body">
+								暂无车位
+								<p class="mui-ellipsis">附近无车位</p>
+							</div>
+						</a>
+					</li>
+					
 					
 				</ul>
 				<div class="mui-bar-tab">
@@ -108,10 +124,26 @@
 				address =  p.address.poiName;
 				app.adress=p.addresses;
 				console.log(address)
+				getcarport(p.coords.longitude,p.coords.latitude)
 			}, function(){
 				
 			});
 			
+		}
+		function getcarport(x,y){
+			//获取车库列表
+			mui.ajax('http://192.168.3.166:9500/port/carport/coordinate/'+x+'/'+y,{
+				type:'get',//HTTP请求类型
+				timeout:2000,//超时时间设置为10秒；
+				success:function(data){
+					app.locationport=data;
+					console.log(JSON.stringify(data))
+					app.creatallmark();
+				},
+				error:function(xhr,type,errorThrown){
+					app.locationport=[];
+				}
+			});
 		}
 		var center;
 		var centerpoint;
@@ -144,7 +176,7 @@
 				var point = event.coord;  // 转换后的坐标信息
 				var coordType = event.coordType;	// 转换后的坐标系类型
 				app.adress=event.address;
-				
+				getcarport(point.longitude,point.latitude)
 			},function(e){
 				//报错
 				alert("Failed:"+JSON.stringify(e));
@@ -171,67 +203,42 @@
 						   
 					});
 					
-					document.addEventListener('plusready', function(){
-						
-						console.info(app.locationport.length);
-						for (var i = 0; i < app.locationport.length; i++) {
-							app.createmark(app.locationport[i]);
-						}
-						//清除所有
-						//map.clearOverlays()
-					})
+					
 					
 				},
 				methods:{
 					//清除map的标记 
+					clear:function(){
+						map.clearOverlays()
+					},
 					//生成标记
 					createmark:function(mes){
-						var bike1 = new plus.maps.Point(mes.x, mes.y);
+						var bike1 = new plus.maps.Point(mes.coordinate_x, mes.coordinate_y);
 						var bike1Icon = new plus.maps.Marker(bike1);
 						bike1Icon.setIcon('img/bike.png');
-						var bubble = new plus.maps.Bubble(mes.message);
+						var bubble = new plus.maps.Bubble(mes.address);
 						bike1Icon.setBubble(bubble);
 						map.addOverlay(bike1Icon);
-						console.info("ok")
+						console.info(mes.address);
+					},
+					//生成所有标记
+					creatallmark:function(){
+						this.clear();
+						for (var i = 0; i < this.locationport.length; i++) {
+							this.createmark(this.locationport[i]);
+						}
 					}
 					//触发标记
 				},
 				data:{
 					adress:"",
 					locationport:[
-					{
-						x:"104.062325",
-						y:"30.573202",
-						id:"1",
-						title:"财富中心停车场",
-						message:"四川省成都市武侯区桂溪街道科技财富中心B座成都高新孵化园"
-					},
-					{
-						x:"104.064796",
-						y:"30.572817",
-						id:"2",
-						title:"财富中心停车场",
-						message:"四川省成都市武侯区桂溪街道天府大道北段1653成都市人民政府"
-					},{
-						x:"104.064796",
-						y:"30.572817",
-						id:"2",
-						title:"财富中心停车场",
-						message:"四川省成都市武侯区桂溪街道天府大道北段1653成都市人民政府"
-					},{
-						x:"104.064796",
-						y:"30.572817",
-						id:"2",
-						title:"财富中心停车场",
-						message:"四川省成都市武侯区桂溪街道天府大道北段1653成都市人民政府"
-					},{
-						x:"104.064796",
-						y:"30.572817",
-						id:"2",
-						title:"财富中心停车场",
-						message:"四川省成都市武侯区桂溪街道天府大道北段1653成都市人民政府"
-					},
-				]
+						{
+							id:0,
+							address:"等待加载",
+							message:"等待加载"
+						}
+					]
 				},
 				created() {
 					
