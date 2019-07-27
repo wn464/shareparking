@@ -7,4 +7,6 @@ import com.project.Bean.CredibilityBean;
 public interface CredibilityDao {
 	public CredibilityBean findById(int id);
     public void updateCredibility(@Param("credibility")double credibility,@Param("id")int id);
+    public void addCredibility(CredibilityBean bean);
+    public void updateCreOrder(@Param("credibility")double credibility,@Param("id")int id);
 }
