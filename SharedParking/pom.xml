@@ -121,5 +121,6 @@
 
         <module>ShareParking-web-8080</module>
         <module>ShareParking-html-8088</module>
+        <module>ShareParking-app-8081</module>
 	</modules>
 </project>
