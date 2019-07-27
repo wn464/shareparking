@@ -16,6 +16,7 @@ import com.project.Bean.OrderBean;
 import com.project.Bean.OrderDTO;
 import com.project.Bean.PageBean;
 import com.project.service.IOrderService;
+import com.project.util.CountPrice;
 @RestController
 public class OrderHandler {
 
@@ -216,7 +217,6 @@ public class OrderHandler {
 		list.add(bean);
 		PageBean page =new PageBean();
 		page.setList(list);
-		
 		return page;
 		
 	}
@@ -230,5 +230,25 @@ public class OrderHandler {
 		PageBean pageBean = orderService.selectOrderByStatus(status, page, size,str);
 		return pageBean;
 	}
+	/*
+	 * 修改价格跳生成订单
+	 */
+	@GetMapping("/order/pay/{oid}/{price}")
+	public OrderBean payMoney(@PathVariable("oid")int oid,@PathVariable("price")double price) {
+		OrderBean orderBean = orderService.selectOrderById(oid);
+		System.out.println(orderBean);
+		double totalPrice = CountPrice.countPrice(orderBean.getBeginTime(),price);
+		System.out.println(totalPrice);
+		//修改订单价格
+		OrderBean orderBean2 = new OrderBean();
+		orderBean2.setPrice(Math.floor(totalPrice));
+		orderBean2.setOrderNumber(orderBean.getOrderNumber());
+		System.out.println(orderBean2);
+		orderService.updateOrderAttr(orderBean2);
+		OrderBean order = orderService.selectOrderById(oid);
 		
+		return order;
+	}
+		
+	
 }

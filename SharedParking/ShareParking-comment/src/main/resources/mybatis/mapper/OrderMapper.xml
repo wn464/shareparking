@@ -90,8 +90,11 @@
 			<if test="statusBean!=null">
 				status= #{statusBean.id} 
 			</if>
+			<if test="price!=0">
+				price= #{price} 
+			</if>
 		</set>
-		where ordernumber = #{orderNumber} and delStatus = 6
+		where ordernumber = #{orderNumber} 
 	</update>
 	<resultMap id="map" type="OrderBean">
 		<id property="id" column="id"></id>
