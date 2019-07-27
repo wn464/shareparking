@@ -110,7 +110,8 @@
 			</div>
 		</div>
 	</div>
-	<script src="../../js/axios.min.js"></script>
+	<!-- <script src="../../js/axios.min.js"></script> -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script type="text/javascript">
 	
 	var dtpicker;
@@ -201,12 +202,10 @@
 	  					auditnumber:app.carnumber,
 	  			};
 	  			var params = new URLSearchParams();
+	  			console.info(carportbean)
 	  			params.append("carport",carportbean);
 	  			axios.post("http://myzuul.com:9500/port/carport",params)
 	  			.then(res=>{
-	  				console.info(res.data)
-	  			})
-	  			.cache(res=>{
 	  				console.info(res.data)
 	  			})
 	  		},
