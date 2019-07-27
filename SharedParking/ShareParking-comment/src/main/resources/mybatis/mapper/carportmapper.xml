@@ -60,18 +60,11 @@
   <!--经纬度范围查询  -->
   <select id="findcarportbycoordinate" resultMap="onemap">
 select * from carport where sqrt(  
-    (  
-     ((113.914619-#{x})*PI()*12656*cos(((22.50128+#{y})/2)*PI()/180)/180)  
-     *  
-     ((113.914619-#{x})*PI()*12656*cos (((22.50128+#{y})/2)*PI()/180)/180)  
-    )  
-    +  
-    (  
-     ((22.50128-#{x})*PI()*12656/180)  
-     *  
-     ((22.50128-#{y})*PI()*12656/180)  
-    )  
-)&lt;10 and status=10 
+    (((#{x}-coordinate_x)*PI()*12656*cos(((#{y}+coordinate_y)/2)*PI()/180)/180)  
+     * ((#{x}-coordinate_x)*PI()*12656*cos (((#{y}+coordinate_y)/2)*PI()/180)/180) )+( 
+     ((#{y}-coordinate_y)*PI()*12656/180) *  
+     ((#{y}-coordinate_y)*PI()*12656/180))  
+)&lt;2  and status=10 
   </select>
   <!-- 通过车位编号查询车位 -->
   <select id="findcarportbycarportnumber" resultMap="onemap">

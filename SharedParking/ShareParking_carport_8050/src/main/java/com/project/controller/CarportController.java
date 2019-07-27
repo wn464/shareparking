@@ -68,7 +68,8 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	@ResponseBody
 	public List<CarportBean> findcarportbycoordinate(@PathVariable("x")double coordinate_x,@PathVariable("y")double coordinate_y) {
 		System.out.println(coordinate_x);
-		List<CarportBean> page=service.findcarportbycoordinate(coordinate_x, coordinate_y);
+		String key=""+coordinate_x+coordinate_y+"";
+		List<CarportBean> page=service.findcarportbycoordinate(coordinate_x, coordinate_y,key);
 		return page;
 	}
 	/**
