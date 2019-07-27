@@ -30,7 +30,7 @@ CarportBean findcarportbynumber(String carportnumber);
  * @param coordinate_y
  * @return
  */
-List<CarportBean> findcarportbycoordinate(double coordinate_x,double coordinate_y);
+List<CarportBean> findcarportbycoordinate(double coordinate_x,double coordinate_y,String key);
 /**
  * 查询今日时间之前可租的车位
  * @param time

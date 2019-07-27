@@ -56,5 +56,11 @@ public class ComplaintController {
 		service.deleteComplaint(id);
 		return 1;
 	}
+	
+	@PutMapping("/complaint/{id}")
+	public int updateCreOrder(@PathVariable("id")int id) {
+		service.updateOrder(id);
+		return 1;
+	}
 
 }
