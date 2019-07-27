@@ -1,5 +1,6 @@
-server:
+server: 
   port: 7000
+  
 eureka:
   client: #客户端注册进eureka服务列表内
     service-url: 
@@ -15,7 +16,7 @@ spring:
     active: native
   cloud: 
     config:
-      server:
+      server: 
         native: #本地配置
           search-locations: classpath:/config
           

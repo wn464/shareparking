@@ -24,6 +24,7 @@ info: #监控信息
   
   
 spring:
+  profiles: privider8090
   application:
     name: woniucloud-provider   #当前服务的名字，后面会用到
   datasource:
@@ -44,7 +45,6 @@ spring:
         max-idle: 8 #最大连接
         min-idle: 0 #最小连接
         
-spring: 
-  profiles: privider8090
+
   
 ---

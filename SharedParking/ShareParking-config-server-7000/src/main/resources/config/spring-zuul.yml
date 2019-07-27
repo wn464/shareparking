@@ -1,7 +1,9 @@
-server:
+
+server: 
   port: 9500
   
 spring:
+  profiles: zuul9500
   application:
     name: sharePark-zuul
 
@@ -22,8 +24,7 @@ zuul:
       service-id: park-order
       path: /orders/**      # 如果通过路由来访问，可以根据微服务的名字来访问，也可以直接访问资源
 
-spring:
-  profiles: zuul9500
+
   
 info: #监控信息 
   app.name: sharePark-zuul-9500 
