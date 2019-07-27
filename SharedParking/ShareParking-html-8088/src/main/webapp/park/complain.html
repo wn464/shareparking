@@ -349,7 +349,11 @@
         			  $("#li1").css("background-color","pink");
         			  $("#li2").css("background-color","white");
         			  $("#li3").css("background-color","white");
-        			  $("#res").html("操作");   
+        			  $("#res").html("操作"); 
+        			  var str = $(".ch").html();
+      					var all ="<td class='ch'><button class='btn btn-primary' data-toggle='modal' data-target='#myModal' @click='shouli(value.id)' style='margin-right:-60px;margin-left:50px;'>受 理</button></td>"
+									
+      					$(".ch").html(all);
         			  
         		   })
         	   },
