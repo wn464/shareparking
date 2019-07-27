@@ -151,7 +151,7 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/mth/{year}/{month}")
 	public double selcetOrderByDate(@PathVariable("year")Integer year,@PathVariable("month")Integer month) {
-		String str = year+"";
+		String str = year+""+month;
 		List<Double> list = orderService.selectOrderByMonth(year, month, month,str);
 		double mprice = 0;
 		for (Double double1 : list) {

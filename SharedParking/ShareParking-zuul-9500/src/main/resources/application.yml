@@ -9,8 +9,10 @@ eureka:
   client: #客户端注册进eureka服务列表内
     service-url: 
        defaultZone: http://eurakeserver9000.com:9000/eureka/
+#       defaultZone: http://192.168.3.166:9000/eureka/
+       
   instance: 
-    instance-id: sharePark-zuul-9500 # 配置注册中心显示出来的微服务名称
+    instance-id: sharePark-zuul-9501 # 配置注册中心显示出来的微服务名称
     prefer-ip-address: true     #访问路径可以显示IP地址  
     
 #zuul
@@ -28,8 +30,7 @@ zuul:
 
     user:
       service-id: park-user
-      path: /user/**
-      
+      path: /**
     member:
       service-id: park-member
       path: /**
@@ -38,16 +39,35 @@ zuul:
       service-id: SHAREPARKING_CARPORT
       path:  /port/** 
       
-  host:
-    connect-timeout-millis: 15000 #HTTP连接超时要比Hystrix的大
-    socket-timeout-millis: 60000   #socket超时
-ribbon:
-  ReadTimeout: 10000
-  ConnectTimeout: 10000
-    
+#  host:
+#    connect-timeout-millis: 60000 
+#    socket-timeout-millis: 60000
+#    connection-request-timeout-millis: 60000
+#
+#ribbon: 
+#  ReadTimeout: 120000  #请求处理的超时时间  
+#  ConnectTimeout: 30000  #请求连接的超时时间
+  
 
 info: #监控信息 
   app.name: sharePark-zuul-9500 
   company.name: sharePark-zuul-9500 
   build.artifactId: $project.artifactId$
   build.version: $project.version$
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 12000
+ribbon:
+  ReadTimeout: 12000
+  ConnectTimeout: 12000
+  eureka:
+     enabled: true
+
+  host:
+    socket-timeout-millis: 12000
+    connect-timeout-millis: 12000
