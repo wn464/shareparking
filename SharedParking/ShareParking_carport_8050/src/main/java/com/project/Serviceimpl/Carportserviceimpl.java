@@ -60,7 +60,9 @@ private CarportDao dao;
 	@Override
 	@Cacheable(value="findcarportbycoordinate",key="#coordinate_x")
 	public List<CarportBean> findcarportbycoordinate(double coordinate_x, double coordinate_y) {
+		System.out.println("12211");
 		List<CarportBean> carports=dao.findcarportbycoordinate(coordinate_x, coordinate_y);
+		
 		return carports;
 	}
 	/**
