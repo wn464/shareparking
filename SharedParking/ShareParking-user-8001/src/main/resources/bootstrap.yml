@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    config: 
+      name: spring-user
+      profile: user8001
+      uri: http://myconfig.com:7000
