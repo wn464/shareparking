@@ -11,10 +11,9 @@ eureka:
       #服务消费者要连接到的注册中心，集群的三台机器
       defaultZone: http://eurakeserver9000.com:9000/eureka/
 spring:
+   profiles: customer8080
    application:
     name: woniucloud-customert   #当前服务的名字，后面会用到   
     
-spring: 
-  profiles: customer8080
   
 ---
