@@ -63,14 +63,31 @@
 			<div class="mui-card-header ">
 				<span>附近的车位</span>
 			</div>
+			
 			<div class="mui-card-content">
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell mui-media" v-for="(item ,index) in lastcarport">
-						<a href="html/carport/shows.html">
+						<a  v-if="item.id==0">
 							<img class="mui-media-object mui-pull-left" >
 							<div class="mui-media-body">
-								{{item.title}}
+								{{item.address}}
 								<p class="mui-ellipsis">{{item.message}}</p>
+							</div>
+						</a>
+						<a :href="'html/carport/show.html?id='+item.id" v-if="item.id!=0">
+							<img class="mui-media-object mui-pull-left" >
+							<div class="mui-media-body">
+								{{item.address}}
+								<p class="mui-ellipsis">{{item.message}}</p>
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media" v-if="lastcarport.length==0">
+						<a >
+							<img class="mui-media-object mui-pull-left" >
+							<div class="mui-media-body">
+								暂无车位
+								<p class="mui-ellipsis">附近无车位</p>
 							</div>
 						</a>
 					</li>
@@ -116,24 +133,9 @@
 					imglist:["img/1-1.png","img/1-2.png","img/1-3.png","img/1-4.png"],
 					lastcarport:[
 						{
-							id:"1",
-							title:"红星停车场",
-							message:"孵化园财富中心"
-						},
-						{
-							id:"1",
-							title:"红星停车场",
-							message:"孵化园财富中心"
-						},
-						{
-							id:"1",
-							title:"红星停车场",
-							message:"孵化园财富中心"
-						},
-						{
-							id:"1",
-							title:"红星停车场",
-							message:"孵化园财富中心"
+							id:0,
+							address:"等待加载",
+							message:"等待加载"
 						}
 					]
 				},
@@ -142,11 +144,34 @@
 					mui('body').on('tap','a',function(){
 					       window.top.location.href=this.href;
 					});
+					 mui.plusReady(function () {
+					     onPlusReady()
+					 })
 				}
 				
 			
 			});
 			
+			//document.addEventListener('plusready', onPlusReady, false);
+// 扩展API加载完毕，现在可以正常调用扩展API
+			function onPlusReady(){
+				plus.geolocation.getCurrentPosition(function(p){
+					mui.ajax('http://192.168.3.166:9500/port/carport/coordinate/'+p.coords.longitude+'/'+p.coords.latitude,{
+						type:'get',//HTTP请求类型
+						timeout:2000,//超时时间设置为10秒；
+						success:function(data){
+							app.lastcarport=data;
+						},
+						error:function(xhr,type,errorThrown){
+							alter(type)
+						}
+					});
+					
+					
+				}, function(e){
+					alert('Geolocation error: ' + e.message);
+				} );
+			}
 		</script>
 	</script>
 	
