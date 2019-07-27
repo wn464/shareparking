@@ -112,4 +112,10 @@ int findcarportnumber(int status);
 	 * @return
 	 */
 	List<CarportBean> findcarportbyditstatus();
+	/**
+	 * 通过用户id查询用户所有车位
+	 * @param memid
+	 * @return
+	 */
+	List<CarportBean> findcarportbymemid(@Param("memid")int memid);
 }

@@ -80,10 +80,12 @@
 									<div class="sidebar-scroll">
 										<nav>
 											<ul class="nav" id="change">
-					 <!--  默  认  显  示   待处理的投诉   --><li><a href="#" id="li1" class="type"><i class="lnr lnr-bullhorn"></i><span @click="wei()"> &nbsp;未处理</span></a></li>
+											<li><a href="#" id="li3" class="type"><i class="lnr lnr-users"></i><span @click="today()"> &nbsp;今日投诉</span></a></li>
+							
+					 <!--  默  认  显  示   待处理的投诉   --><li><a href="#" id="li1" class=""><i class="lnr lnr-bullhorn"></i><span @click="wei()"> &nbsp;未处理</span></a></li>
 												<li><a href="#" id="li2" class=""><i class="lnr lnr-bubble"></i><span @click="yi()"> &nbsp;已处理</span></a></li>
-												<li><a href="#" id="li3" class=""><i class="lnr lnr-bubble"></i><span @click="today()"> &nbsp;今日订单</span></a></li>
-											</ul>
+																
+												</ul>
 										</nav>
 									</div>
 								</div>
@@ -99,7 +101,7 @@
 												<th>投诉方</th>
 												<th>被投诉方</th>
 												<th>投诉时间</th>
-												<th>操作</th>
+												<th id="res">操作</th>
 											</tr>
 										</thead>
 										<tbody v-for="(value,index) in complaint.list">
@@ -108,15 +110,15 @@
 												<td>{{value.mem_j_id.username}}</td>
 												<td>{{value.mem_y_id.username}}</td>
 												<td>{{value.comtime}}</td>
-												<td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">受 理</button></td>
+												<td class="ch"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" @click="shouli(value.id)">受 理</button></td>
 											</tr>
 										</tbody>
 									</table>
 									<nav style="margin-left:700px; margin-top: 40px;">
 									    <ul class="pagination" >
-										    <li><button @click="shangPage()">上一页</button></li>
-										    <li><button >{{complaint.page}}/{{complaint.totalPage}}</button></li>
-										    <li><button @click="xiaPage()">下一页</button></li>
+										    <li><a href="#" @click="shangPage()">上一页</a></li>
+										    <li><a href="#">{{complaint.page}}/{{complaint.totalPage}}</a></li>
+										    <li><a href="#" @click="xiaPage()">下一页</a></li>
 									    </ul>
 									</nav>
 								</div>
@@ -142,10 +144,10 @@
 						        		</thead>
 						        		<tbody>
 						        			<tr>
-						        				<td></td>
-						        				<td></td>
-						        				<td></td>
-						        				<td></td>
+						        				<td>{{compl.address}}</td>
+					        			        <td>{{compl.carportnumber}}</td>
+						        				<td>{{compl.begintime}}</td> 
+ 						        				<td>{{compl.endtime}}</td> 
 						        			</tr>
 						        		</tbody>
 						        	</table>	
@@ -175,16 +177,16 @@
 						        		</thead>
 						        		<tbody>
 						        			<tr>
-						        				<td>root</td>
-						        				<td>小王</td>
-						        				<td>223442345324353564</td>
-						        				<td>程序员</td>
-						        				<td>12334563456</td>
-						        				<td>96%</td>
+						        				<td>{{complaintbean1.username}}</td>
+						        				<td>{{message1.name}}</td>
+						        				<td>{{message1.idCard}}</td>
+						        				<td>{{message1.job}}</td>
+						        				<td>{{complaintbean1.phonenumber}}</td>
+						        				<td>{{credibility1.credibility}}</td>
 						        			</tr>
 						        			<tr>
 						        				<th>投诉理由 :</th>
-						        				<td colspan="5">该用户的车位太脏了</td>
+						        				<td colspan="5">{{mess.message}}</td>
 						        			</tr>
 						        		</tbody>
 						        	</table>	
@@ -202,19 +204,19 @@
 						        		</thead>
 						        		<tbody>
 						        			<tr>
-						        				<td>root</td>
-						        				<td>小王</td>
-						        				<td>223442345324353564</td>
-						        				<td>程序员</td>
-						        				<td>12334563456</td>
-						        				<td>96%</td>
+ 						        				<td>{{complaintbean2.username}}</td>
+						        				<td>{{message2.name}}</td>
+						        				<td>{{message2.idCard}}</td>
+						        				<td>{{message2.job}}</td>
+						        				<td>{{complaintbean2.phonenumber}}</td>
+						        				<td>{{credibility2.credibility}}</td>
 						        			</tr>
 						        		</tbody>
 						        	</table>	
 						      	</div>
 						      	<div class="modal-footer">
-						        	<button type="button" class="btn btn-danger">投诉成功</button>
-						        	<button type="button" class="btn btn-danger">投诉失败</button>
+						        	<button type="button" class="btn btn-danger" @click="success()">投诉成功</button>
+						        	<button type="button" class="btn btn-danger" @click="fail()">投诉失败</button>
 						      	</div>
 						    </div>
 						</div>
@@ -243,7 +245,7 @@
 			$("#toping").load("top.html");
 		})
 		$("#li1").click(function(){
-			$("#li1").css("background-color","pink");
+			$("#li1").css("background-color","");
 			$("#li2").css("background-color","white");
 			$("#li3").css("background-color","white");
 		})
@@ -264,13 +266,24 @@
 	    	el:"#app",
 	    	data:{
 	    		complaint:[],
+	    		compl:"",
+	    		complaintbean1:"",
+	    		complaintbean2:"",
+	    		message1:"",
+	    		message2:"",
+	    		credibility1:"",
+	    		credibility2:"",
+	    		comid:"",
+	    		mess:"",
+	    		sta:"",
 	    	},
 	    	
 	    	created(){
-	    		axios.get("http://myzuul.com:9500/complaint/complaint/12/1/4")
-	    		.then(res=>{
-	    			this.complaint=res.data;
-	    			console.info(res)
+	    		var now = getNowFormatDate();
+     		   var tommory = getTomFormatDate();
+     		   axios.get("http://myzuul.com:9500/complaint/complaint/"+now+"/"+tommory+"/1/4")
+     		   .then(res=>{
+     			  this.complaint=res.data;
 	    		});
 	    	},
 	    	
@@ -311,18 +324,24 @@
 	 		    		});
 	 	    		}	    		
 	 	    	},
-// 	      点击未处理页面       
+// 	      点击已处理页面       
 	    		yi:function(){
          		   axios.get("http://myzuul.com:9500/complaint/complaint/13/1/4")
          		   .then(res=>{
          			  this.complaint=res.data;
+//          			  var type = res.data.type;
+//          			  var name = type.name;
          			 $("#li2").css("background-color","pink");
          			 $("#li1").css("background-color","white");
          			$("#li3").css("background-color","white");
+         			$("#res").html("处理结果");
+         			var str = $(".ch").html();
+    				var all = "已处理 "
+    					$(".ch").html(all);
          		   })
          		   
          	   },
-//      点击已处理页面    
+//      点击未处理页面    
          	  wei:function(){
         		   axios.get("http://myzuul.com:9500/complaint/complaint/12/1/4")
         		   .then(res=>{
@@ -330,10 +349,13 @@
         			  $("#li1").css("background-color","pink");
         			  $("#li2").css("background-color","white");
         			  $("#li3").css("background-color","white");
+        			  $("#res").html("操作");   
+        			  
         		   })
         	   },
 //             今日订单  
         	   today:function(){
+        	
         		   var now = getNowFormatDate();
         		   var tommory = getTomFormatDate();
         		   axios.get("http://myzuul.com:9500/complaint/complaint/"+now+"/"+tommory+"/1/4")
@@ -342,8 +364,43 @@
         			  $("#li1").css("background-color","white");
         			  $("#li2").css("background-color","white");
         			  $("#li3").css("background-color","pink");
+        			  $("#res").html("操作");
         		   })
         	   },
+//            受理
+             shouli:function(id){
+            	 axios.get("http://myzuul.com:9500/complaint/complaint/"+id)
+      		   .then(res=>{
+      			   console.info(res)
+      			  this.mess = res.data;
+      			  this.compl=res.data.o_id.carportBean;
+      			  this.complaintbean1=res.data.mem_j_id;
+      			  this.message1 = res.data.mem_j_id.message;
+      			  this.credibility1=res.data.mem_j_id.credibility;
+      			  this.complaintbean2=res.data.mem_y_id;
+      			  this.message2 = res.data.mem_y_id.message;
+      			  this.credibility2=res.data.mem_y_id.credibility;
+      			  this.comid=res.data.id;
+      			  this.sta=res.data.status.name;
+      			  
+      		   })
+             },
+//投诉成功
+           success:function(){
+        	   var id =this.comid;
+        	   axios.put("http://myzuul.com:9500/complaint/complaint/"+id+"/"+16)
+      		   .then(res=>{
+      			   location.reload();
+      		   })
+           },
+//投诉失败
+           fail:function(){
+        	   var id =this.comid;
+        	   axios.put("http://myzuul.com:9500/complaint/complaint/"+id+"/"+17)
+      		   .then(res=>{  
+      			 location.reload();
+      		   })
+           },
 	    	}
 	    });
 	  //获取当前时间
@@ -378,6 +435,12 @@
 		      var currentdate = year + seperator1 + month + seperator1 + strDate;
 		      return currentdate;
 		  }
+		
+		
+			
+		
+		
+		
 	</script>
 </body>
 </html>

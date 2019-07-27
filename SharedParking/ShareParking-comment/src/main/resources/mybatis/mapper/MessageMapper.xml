@@ -6,6 +6,9 @@
     <select id="findByMid" resultMap="map">
         select * from message where m_id=#{id}
     </select>
+    
+   
+    
     <resultMap id="map" type="MessageBean">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
@@ -13,6 +16,22 @@
         <result property="address" column="address"/>
         <result property="job" column="job"/>
         <association property="gender" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="gender"/>
-
+    </resultMap>
+    
+    <select id="findAll" resultMap="map1">
+   		 select * from message 
+    </select>
+    
+     <select id="findByMohu" resultMap="map1">
+    	select * from message where name like "%"#{name}"%"
+    </select>
+    <resultMap type="MessageBean" id="map1">
+    	<id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="idCard" column="idCard"/>
+        <result property="address" column="address"/>
+        <result property="job" column="job"/>
+        <association property="gender" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="gender"/>
+    	<association property="member" javaType="MemberBean" select="com.project.dao.IMemberDao.findByMemberId" column="m_id" />
     </resultMap>
 </mapper>

@@ -17,4 +17,5 @@ public interface ComplaintDao {
     public int findDateNum(@Param("begintime")String beginTime,@Param("endtime")String endTime);
     public int findCreNum(int id);
     public ComplaintBean findById(int id);
+    public void updateType(@Param("id")int id,@Param("type")int type);
 }
