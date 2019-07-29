@@ -57,13 +57,14 @@
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media" v-if="locationport.length==0">
-						<a >
+						
+						<div>
 							<img class="mui-media-object mui-pull-left" >
 							<div class="mui-media-body">
 								暂无车位
 								<p class="mui-ellipsis">附近无车位</p>
 							</div>
-						</a>
+						</div>
 					</li>
 					
 					
@@ -159,15 +160,6 @@
 				map.addOverlay(centerpoint);
 				console.log(JSON.stringify(point));
 				getadress(point)
-				
-				// map.onGeocodeSuccess(event ) {
-				// 	var address = event.address;  // 转换后的地理位置
-				// 	var point = event.coord;  // 转换后的坐标信息
-				// 	var coordType = event.coordType;	// 转换后的坐标系类型
-				// 	console.log(JSON.stringify(event));
-				// }
-				//var posObj = new plus.maps.Position( point );
-				//console.log(JSON.stringify(posObj));
 			}
 		});
 		function getadress(point){
