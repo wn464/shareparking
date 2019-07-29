@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -143,6 +144,7 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	@PostMapping("/carport")
 	@ResponseBody
 	public boolean addcarport(CarportBean carport) {
+		System.out.println("++++++++"+carport);
 		SimpleDateFormat datafromat=new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
 		Date te =new Date();
 		String a=datafromat.format(te);

@@ -128,9 +128,9 @@
 	  		carnumber:"",//车位产权编号
 	  		memname:"",//车位所属人姓名
 	  		address:"",//车位地址
-	  		jindu:"",//车位经度 
-	  		weidu:"",//车位纬度
-	  		jiage:"",//车位价格
+	  		jindu:0.0,//车位经度 
+	  		weidu:0.0,//车位纬度
+	  		jiage:0.0,//车位价格
 	  		mess:"",//车位描述
 		},
 		mounted() {
@@ -187,24 +187,19 @@
 			 })
 	  		},
 	  		sublit:function(){
-	  			var imagsbean={
-	  					image1:app.inagenamelist[0],
-	  					image2:app.inagenamelist[1],
-	  					image3:app.inagenamelist[2],
-	  			};
-	  			var carportbean ={
-	  					address:app.address,
-	  					begintime:app.begintime,
-	  					endtime:app.endtime,
-	  					imgs_id:imagsbean,
-	  					statusimage:app.carimgname,
-	  					price:app.jiage,
-	  					message:app.mess,
-	  					auditnumber:app.carnumber,
-	  			};
 	  			var params = new URLSearchParams();
-	  			console.info(carportbean)
-	  			params.append("carport",carportbean);
+	  			params.append("address",app.address);
+	  			params.append("imgs_id.image1",app.inagenamelist[0])
+	  			params.append("imgs_id.image2",app.inagenamelist[1])
+	  			params.append("imgs_id.image3",app.inagenamelist[2])
+	  			params.append("begintime",app.begintime)
+	  			params.append("endtime",app.endtime)
+	  			params.append("statusimage",app.carimgname)
+	  			params.append("price",app.jiage)
+	  			params.append("message",app.mess)
+	  			params.append("auditnumber",app.carnumber)
+	  			params.append("coordinate_x",app.jindu)
+	  			params.append("coordinate_y",app.weidu)
 	  			axios.post("http://myzuul.com:9500/port/carport",params)
 	  			.then(res=>{
 	  				console.info(res.data)
