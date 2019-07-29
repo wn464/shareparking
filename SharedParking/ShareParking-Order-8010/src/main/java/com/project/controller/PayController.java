@@ -33,7 +33,7 @@ public class PayController {
 		OrderBean orderBean = orderService.selectOrderById(oid);
 		String string = null;
 		try {
-			int price = (int)Math.floor(orderBean.getPrice());
+			double price = orderBean.getPrice();
 			string = AlipayUtil.pay(orderBean.getOrderNumber(),price,"支付");
 		} catch (AlipayApiException e) {
 			e.printStackTrace();

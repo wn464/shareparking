@@ -15,6 +15,7 @@ import com.project.Bean.MemberBean;
 import com.project.Bean.OrderBean;
 import com.project.Bean.OrderDTO;
 import com.project.Bean.PageBean;
+import com.project.controller.interfaces.CredibilityHandler;
 import com.project.service.IOrderService;
 import com.project.util.CountPrice;
 @RestController
@@ -22,6 +23,8 @@ public class OrderHandler {
 
 	@Autowired
 	private IOrderService orderService;
+	@Autowired
+	private CredibilityHandler credibilityHandler;
 	
 	
 	/*
@@ -52,7 +55,7 @@ public class OrderHandler {
 	@GetMapping("/order/status1/{status}/{page}/{size}")
 	public PageBean selectOrderByState1(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
 		 int mid = 1;//测试数据
-		 String str = mid+""+page+"";
+		 String str = mid+""+page+""+status;
 		PageBean pageBean = orderService.selectOrderByState1(mid, status, page, size,str);
 		return pageBean;
 	}
@@ -62,7 +65,7 @@ public class OrderHandler {
 	@GetMapping("/order/status2/{status}/{page}/{size}")
 	public PageBean selectOrderByState2(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
 		 int mid = 2;//测试数据
-		 String str = mid+""+page+"";
+		 String str = mid+""+page+""+status;
 		PageBean pageBean = orderService.selectOrderByState2(mid, status, page, size,str);
 		return pageBean;
 	}
@@ -231,7 +234,7 @@ public class OrderHandler {
 		return pageBean;
 	}
 	/*
-	 * 修改价格跳生成订单
+	 * 修改价格生成订单
 	 */
 	@GetMapping("/order/pay/{oid}/{price}")
 	public OrderBean payMoney(@PathVariable("oid")int oid,@PathVariable("price")double price) {
@@ -246,7 +249,9 @@ public class OrderHandler {
 		System.out.println(orderBean2);
 		orderService.updateOrderAttr(orderBean2);
 		OrderBean order = orderService.selectOrderById(oid);
-		
+		int id = 1;//测试数据
+		int num = credibilityHandler.updateCreOrder(id);
+		System.out.println("---------------"+num);
 		return order;
 	}
 		
