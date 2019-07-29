@@ -1,5 +1,6 @@
 server:
   port: 8050 #当前服务端口
+
 mybatis:
   config-location: classpath:mybatis/mybatis_config.xml #mybatis配置文件
   type-aliases-package: com.project.Bean #所有entity别名所在包
@@ -11,7 +12,8 @@ eureka:
   instance:
     instance-id: ShareParking-carport8050
     prefer-ip-address: true
-spring:
+
+spring: 
   application:
     name: ShareParking_carport
   datasource:

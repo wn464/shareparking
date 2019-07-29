@@ -18,7 +18,6 @@ public interface ImagesDao {
 	 * @param images
 	 * @return
 	 */
-	@Insert("insert into imgs (image1,image2,image3) values(#{images.image1},#{images.image2},#{images.image3}) ")
 int addimages(@Param("images")ImagesBean images);
 /**
  * 查询图片
