@@ -18,7 +18,7 @@
 		<h1 class="mui-title">我的车位信息</h1>
 		
 	</header>
-	<div class="mui-content">
+	<div class="mui-content" id="zxc">
 		
 	<div id="slider" class="mui-slider" >
 	  <div class="mui-slider-group mui-slider-loop">
@@ -30,9 +30,9 @@
 		</div>
 		<!-- 第一张 -->
 		<div class="mui-slider-item">
-		  <a href="#">
+		  < <a href="#">
 			<img src="http:\/\/placehold.it\/400x300">
-		  </a>
+		  </a> 
 		</div>
 		<!-- 第二张 -->
 		<div class="mui-slider-item">
@@ -51,17 +51,16 @@
 		  <a href="#">
 			<img src="http:\/\/placehold.it\/400x300">
 		  </a>
-		</div>
+		</div> 
 		<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
 		<div class="mui-slider-item mui-slider-item-duplicate">
-		  <a href="#">
+		  <!-- <a href="#">
 			<img src="http:\/\/placehold.it\/400x300">
-		  </a>
+		  </a> -->
 		</div>
 	  </div>
 	  <div class="mui-slider-indicator">
 		<div class="mui-indicator mui-active"></div>
-		<div class="mui-indicator"></div>
 		<div class="mui-indicator"></div>
 		<div class="mui-indicator"></div>
 	  </div>
@@ -143,6 +142,28 @@
 		 </div>
 		
 	</div>
+	<script src="../../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+	var cid=window.location.href.split("=")[1];//获取url上车位的id
+	var zxc=new Vue({
+		el:"#zxc",
+		data:{
+			carport:[],
+		},
+		created(){
+			axios.get("http://myzuul.com:9500/port/carport/cid/"+cid+"")
+			.then(res=>{
+				console.info(res.data)
+				this.carport=res.data
+			})
+			.catch(res=>{
+				console.info(res.data)
+			})
+		},
+		
+	})
+	
+	</script>
 	<script type="text/javascript">
 		mui('.mui-slider').slider({interval: 2000})
 	</script>
