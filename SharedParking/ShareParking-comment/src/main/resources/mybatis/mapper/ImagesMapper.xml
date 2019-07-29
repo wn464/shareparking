@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.project.dao.ImagesDao"> 
+  <insert id="addimages" parameterType="com.project.Bean.ImagesBean" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  insert into imgs (image1,image2,image3) values(#{images.image1},#{images.image2},#{images.image3});
+ 
+  </insert>
+  </mapper>
