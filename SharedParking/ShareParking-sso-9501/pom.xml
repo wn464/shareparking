@@ -1,20 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  
   <parent>
     <groupId>com.project.sharedparking</groupId>
     <artifactId>SharedParking</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>ShareParking-zuul-9500</artifactId>
+  <artifactId>ShareParking-sso-9501</artifactId>
   <packaging>war</packaging>
+  <name>sso</name>
+  <description>SingleSignOn</description>
   <dependencies>
- 	 <!-- 依赖公共模块 -->
-	<dependency>
-		<groupId>com.project.sharedparking</groupId>
-		<artifactId>ShareParking-comment</artifactId>
-		<version>${project.version}</version>
-	</dependency>
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-web</artifactId>
@@ -25,25 +20,34 @@
 		 <artifactId>spring-boot-devtools</artifactId>
 		 <optional>true</optional>
 	</dependency>
-	<!-- 将微服务provider注册进eureka，作为客户端的角色 -->
 	<dependency>
 	    <groupId>org.springframework.cloud</groupId>
 	    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 	</dependency>
-	<!-- 加上zuul组件 -->
+	<!-- oauth2实现单点登录 -->
 	<dependency>
 	    <groupId>org.springframework.cloud</groupId>
-	    <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+	    <artifactId>spring-cloud-starter-oauth2</artifactId>
 	</dependency>
-	<!-- 将微服务配置客户端 -->
-	<dependency>
+    <dependency>
         <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-config-client</artifactId>
+        <artifactId>spring-cloud-starter-security</artifactId>
     </dependency>
-    <!-- 加上hystrix组件 -->
+    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-jwt -->
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-jwt</artifactId>
+	    <version>1.0.10.RELEASE</version>
+	</dependency>
+	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+	
+	<!-- 将微服务配置服务端 -->
 	<dependency>
            <groupId>org.springframework.cloud</groupId>
-           <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-    </dependency> 
+           <artifactId>spring-cloud-config-server</artifactId>
+       </dependency>
   </dependencies>
 </project>
