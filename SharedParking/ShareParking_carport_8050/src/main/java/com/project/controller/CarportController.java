@@ -200,9 +200,11 @@ public boolean updatacarport(@PathVariable("id")int id,@PathVariable("begintime"
 	 * @param memid
 	 * @return
 	 */
-	@GetMapping(value="/carport/memid/{mid}")
+	@GetMapping(value="/carport/memid")
 	@ResponseBody
-	public List<CarportBean> findcarportbymemid(@PathVariable("mid")int memid){
+	public List<CarportBean> findcarportbymemid(){
+		
+		int memid=1;
 		System.out.println(memid);
 		List<CarportBean> ports=service.findcarportbymemid(memid);
 		return ports;

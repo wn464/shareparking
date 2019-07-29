@@ -31,13 +31,13 @@ public class OrderHandler {
 	 * 添加订单
 	 */
 	@PostMapping("/order")
-	public String insertOrder(OrderBean orderBean) {
+	public Integer insertOrder(OrderBean orderBean) {
 		System.out.println("-----"+orderBean);
         MemberBean memberBean1 = new MemberBean();
         memberBean1.setId(1);
         orderBean.setMemberBean1(memberBean1);
 		int num = orderService.insertOrder(orderBean);
-		return "ok";
+		return num;
 	}
 	/*
 	 * 生成订单

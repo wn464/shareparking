@@ -38,7 +38,8 @@ public class OrderServiceImp implements IOrderService{
     
 	System.out.println("order++++++++==========================-"+orderBean);
     //添加订单
-    int num =orderDao.insertOrder(orderBean);
+   orderDao.insertOrder(orderBean);
+   int num=orderBean.getId();
 		return num;
 	}
 	
