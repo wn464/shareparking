@@ -67,7 +67,9 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	@GetMapping(value="/carport/coordinate/{x}/{y}")
 	@ResponseBody
 	public List<CarportBean> findcarportbycoordinate(@PathVariable("x")double coordinate_x,@PathVariable("y")double coordinate_y) {
-		List<CarportBean> page=service.findcarportbycoordinate(coordinate_x, coordinate_y);
+		System.out.println(coordinate_x);
+		String key=""+coordinate_x+coordinate_y+"";
+		List<CarportBean> page=service.findcarportbycoordinate(coordinate_x, coordinate_y,key);
 		return page;
 	}
 	/**
@@ -139,7 +141,7 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	 */
 	@PostMapping("/carport")
 	@ResponseBody
-	public boolean addcarport(@RequestBody CarportBean carport) {
+	public boolean addcarport(CarportBean carport) {
 		SimpleDateFormat datafromat=new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
 		Date te =new Date();
 		String a=datafromat.format(te);
@@ -196,7 +198,8 @@ public boolean updatacarport(@PathVariable("id")int id,@PathVariable("begintime"
 	@GetMapping(value="/carport/memid/{mid}")
 	@ResponseBody
 	public List<CarportBean> findcarportbymemid(@PathVariable("mid")int memid){
-		List<CarportBean> ports=	service.findcarportbymemid(memid);
+		System.out.println(memid);
+		List<CarportBean> ports=service.findcarportbymemid(memid);
 		return ports;
 	}
 }
