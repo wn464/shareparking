@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  
   <parent>
     <groupId>com.project.sharedparking</groupId>
     <artifactId>SharedParking</artifactId>
@@ -19,11 +20,11 @@
 		<artifactId>spring-boot-starter-web</artifactId>
 	</dependency>
 	<!-- 热部署 地址 -->
-	<dependency>
+	<!-- <dependency>
 		 <groupId>org.springframework.boot</groupId>
 		 <artifactId>spring-boot-devtools</artifactId>
-		 <optional>true</optional>
-	</dependency>
+		 <optional>false</optional>
+	</dependency> -->
 	<!-- 将微服务provider注册进eureka，作为客户端的角色 -->
 	<dependency>
 	    <groupId>org.springframework.cloud</groupId>
@@ -39,5 +40,16 @@
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-config-client</artifactId>
     </dependency>
+    <!-- 加上hystrix组件 -->
+	<dependency>
+           <groupId>org.springframework.cloud</groupId>
+           <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+    </dependency> 
+    <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
+	<dependency>
+	    <groupId>org.springframework.cloud</groupId>
+	    <artifactId>spring-cloud-starter-feign</artifactId>
+	</dependency>
+	
   </dependencies>
 </project>
