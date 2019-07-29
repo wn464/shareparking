@@ -3,6 +3,7 @@ package com.project.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -141,11 +142,13 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	 */
 	@PostMapping("/carport")
 	@ResponseBody
-	public boolean addcarport(@RequestBody CarportBean carport) {
+	public boolean addcarport(CarportBean carport) {
 		SimpleDateFormat datafromat=new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
 		Date te =new Date();
 		String a=datafromat.format(te);
 		carport.setAddtime(a);
+		String number="ABCD"+UUID.randomUUID();
+		carport.setCarportnumber(number);
 		boolean l =service.addcarport(carport);
 		return l;
 	}
