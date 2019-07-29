@@ -20,11 +20,11 @@
 		<artifactId>spring-boot-starter-web</artifactId>
 	</dependency>
 	<!-- 热部署 地址 -->
-	<dependency>
+	<!-- <dependency>
 		 <groupId>org.springframework.boot</groupId>
 		 <artifactId>spring-boot-devtools</artifactId>
-		 <optional>true</optional>
-	</dependency>
+		 <optional>false</optional>
+	</dependency> -->
 	<!-- 将微服务provider注册进eureka，作为客户端的角色 -->
 	<dependency>
 	    <groupId>org.springframework.cloud</groupId>
@@ -45,5 +45,11 @@
            <groupId>org.springframework.cloud</groupId>
            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
     </dependency> 
+    <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
+	<dependency>
+	    <groupId>org.springframework.cloud</groupId>
+	    <artifactId>spring-cloud-starter-feign</artifactId>
+	</dependency>
+	
   </dependencies>
 </project>
