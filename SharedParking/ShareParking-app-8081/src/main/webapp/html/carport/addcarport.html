@@ -110,11 +110,109 @@
 			</div>
 		</div>
 	</div>
-	<script src="../../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
-	<!-- <script src="../../js/axios.min.js"></script> -->
-<!-- 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
-	<script type="text/javascript">
+	<div class="mui-content mui-hidden" id="app2">
+		<div id="map">
+			
+		</div>
+		<div class="mui-row">
+			<div class="mui-card">
+				<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<div >
+								坐标：
+								<span class="mui-pull-right">x:{{x}} y:{{y}}</span>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div >
+								地址：
+								<span class="mui-pull-right">{{address}}</span>
+							</div>
+						</li>
+					</ul>
+			</div>
+			<div class="mui-card">
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" @click="getaddress()">提交</button>
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-danger " style=" margin: 0.5rem 3rem;" onclick="exitmap">取消</button>
+			</div>
+			
+		</div>
+	</div>
 	
+	<script src="../../js/axios.min.js"></script>
+	<script type="text/javascript">
+		var app2 = new Vue({
+			el:"#app2",
+			data:{
+				x:"",
+				y:"",
+				address:""
+			},
+			methods:{
+				getaddress:function(){
+					app.address=this.address
+					app.jindu=this.x
+					app.weidu=this.y
+					exitmap();
+				}
+			},
+		})
+		function showmap(){
+			//隐藏正文,显示地图
+			document.getElementById("app").classList.add("mui-hidden")
+			document.getElementById("app2").classList.remove("mui-hidden")
+			//初始化地图
+			map = new plus.maps.Map("map");
+			//设置显示大小
+			map.setZoom(16);
+			//开启用户位置显示
+			map.showUserLocation(true);
+			//获取用户位置信息
+			map.getUserLocation( function(state, point){
+				console.log(JSON.stringify(point));
+				locationPos = point;
+				center = new plus.maps.Point(point.longitude, point.latitude);
+				//设置地图中心点
+				map.setCenter(center);
+				getadress(center)
+			});
+			var centerpoint= null
+			map.onclick = function( point ){
+				map.removeOverlay(centerpoint)
+				centerpoint = new plus.maps.Marker(point);
+				centerpoint.setIcon('../../img/map/map-marker-red.png');
+				var bubble = new plus.maps.Bubble("目标地点");
+				centerpoint.setBubble(bubble);
+				map.addOverlay(centerpoint);
+				console.log(JSON.stringify(point));
+				getadress(point)
+			}
+			
+		}
+		function getadress(point){
+			plus.maps.Map.reverseGeocode(point,{},function(event){
+				var address = event.address;  // 转换后的地理位置
+				var point = event.coord;  // 转换后的坐标信息
+				var coordType = event.coordType;	// 转换后的坐标系类型
+				console.log(JSON.stringify(event))
+				app2.x=event.coord.longitude
+				app2.y=event.coord.latitude
+				app2.address=event.address
+				//getcarport(point.longitude,point.latitude)
+			},function(e){
+				//报错
+				alert("Failed:"+JSON.stringify(e));
+			});
+		}
+		function exitmap(){
+			document.getElementById("app2").classList.add("mui-hidden")
+			document.getElementById("app").classList.remove("mui-hidden")
+			if(map!=null){
+				map.close()
+			}
+			
+		}
+	var map=null;
 	var dtpicker;
 	var app = new Vue({
 		el:"#app",
