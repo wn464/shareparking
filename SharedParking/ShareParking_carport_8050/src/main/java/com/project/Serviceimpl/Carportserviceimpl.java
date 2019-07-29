@@ -159,10 +159,14 @@ private CarportDao dao;
 	@Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
 	public boolean addcarport(CarportBean carport) {
 		int v=idao.addimages(carport.getImgs_id());
-		ImagesBean m=new ImagesBean();
-		m.setId(v);
-		carport.setImgs_id(m);
-		int s=dao.addcarport(carport);
+		int s=0;
+		if(v>0) {
+			ImagesBean m=new ImagesBean();
+			m.setId(v);
+			carport.setImgs_id(m);
+			s=dao.addcarport(carport);
+		}
+		
 		if(s>0) {
 			return true;
 		}
