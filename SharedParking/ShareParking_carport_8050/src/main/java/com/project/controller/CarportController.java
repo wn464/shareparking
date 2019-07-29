@@ -3,6 +3,7 @@ package com.project.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -141,11 +143,14 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	 */
 	@PostMapping("/carport")
 	@ResponseBody
-	public boolean addcarport(@RequestBody CarportBean carport) {
+	public boolean addcarport(CarportBean carport) {
+		System.out.println("++++++++"+carport);
 		SimpleDateFormat datafromat=new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
 		Date te =new Date();
 		String a=datafromat.format(te);
 		carport.setAddtime(a);
+		String number="ABCD"+UUID.randomUUID();
+		carport.setCarportnumber(number);
 		boolean l =service.addcarport(carport);
 		return l;
 	}
@@ -195,9 +200,11 @@ public boolean updatacarport(@PathVariable("id")int id,@PathVariable("begintime"
 	 * @param memid
 	 * @return
 	 */
-	@GetMapping(value="/carport/memid/{mid}")
+	@GetMapping(value="/carport/memid")
 	@ResponseBody
-	public List<CarportBean> findcarportbymemid(@PathVariable("mid")int memid){
+	public List<CarportBean> findcarportbymemid(){
+		
+		int memid=1;
 		System.out.println(memid);
 		List<CarportBean> ports=service.findcarportbymemid(memid);
 		return ports;

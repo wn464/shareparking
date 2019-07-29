@@ -37,4 +37,5 @@ public interface IMemberDao {
     
     //message 查询用到的
     MemberBean findByMemberId(int id);
+    
 }

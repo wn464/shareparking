@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.dao.IOrderDao">
 <!-- 	添加订单-->
-	<insert id="insertOrder" parameterType="OrderBean">
+	<insert id="insertOrder" parameterType="OrderBean" useGeneratedKeys="true" keyProperty="id">
 		insert into orders(ordertime,ordernumber,status,delStatus,carport_id,mem_j_id,mem_y_id,begintime,carnumber)
 		values(#{orderTime},#{orderNumber},#{statusBean.id},#{delState.id},
 		#{carportBean.id},#{memberBean1.id},#{memberBean2.id},#{beginTime},#{carNumber})
@@ -90,8 +90,11 @@
 			<if test="statusBean!=null">
 				status= #{statusBean.id} 
 			</if>
+			<if test="price!=0">
+				price= #{price} 
+			</if>
 		</set>
-		where ordernumber = #{orderNumber} and delStatus = 6
+		where ordernumber = #{orderNumber} 
 	</update>
 	<resultMap id="map" type="OrderBean">
 		<id property="id" column="id"></id>

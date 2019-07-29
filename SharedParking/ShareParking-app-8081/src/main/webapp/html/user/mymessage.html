@@ -20,7 +20,7 @@
 		
 	</header>
 	
-	<div class="mui-content">
+	<div class="mui-content" id="app">
 		<div class="mui-card">
 			
 		<ul class="mui-table-view">
@@ -35,31 +35,31 @@
 				<li class="mui-table-view-cell">
 					<a >
 						 账号id
-						 <span class="mui-pull-right">10000</span>
+						 <span class="mui-pull-right">{{data.id}}</span>
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
 					<a >
 						 用户名
-						 <span class="mui-pull-right">10000</span>
+						 <span class="mui-pull-right">{{data.username}}</span>
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
 					<a >
 						 电话号码
-						 <span class="mui-pull-right">10000</span>
+						 <span class="mui-pull-right">{{data.phonenumber}}</span>
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
-					<a >
+					<a  >
 						 订单数
-						 <span class="mui-pull-right">10</span>
+						 <span class="mui-pull-right" v-if="data.credibility">{{data.credibility.ordersum}}</span>
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
 					<a >
 						 信誉度
-						 <span class="mui-pull-right">90%</span>
+						 <span class="mui-pull-right"  v-if="data.credibility">{{data.credibility.credibility*100}}%</span>
 					</a>
 				</li>
 				
@@ -72,31 +72,31 @@
 						<li class="mui-table-view-cell">
 							<a>
 								用户姓名
-								<span class="mui-pull-right">25仔</span>
+								<span class="mui-pull-right" v-if="data.message">{{data.message.name}}</span>
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
 							<a>
 								身份证号
-								<span class="mui-pull-right">xxxxxxxx</span>
+								<span class="mui-pull-right" v-if="data.message">{{data.message.idCard}}</span>
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
 							<a>
 								性别
-								<span class="mui-pull-right">x</span>
+								<span class="mui-pull-right">{{gender.name}}</span>
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
 							<a>
 								地址
-								<span class="mui-pull-right">xxxxx</span>
+								<span class="mui-pull-right"  v-if="data.message">{{data.message.address}}</span>
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
 							<a>
 								工作
-								<span class="mui-pull-right">xxxxx</span>
+								<span class="mui-pull-right"  v-if="data.message">{{data.message.job}}</span>
 							</a>
 						</li>
 					</ul>
@@ -119,5 +119,26 @@
 			</div>
 		</div>
 	</div>
+	
+	<script src="../../js/axios.min.js"></script>
+	<script type="text/javascript">
+	var vm = new Vue({
+		el:"#app",
+		data:{
+	        data:{},
+			gender:{}
+	    },
+		created(){
+	    	 axios.get("http://myzuul.com:9500/member/findbyid")
+			.then(res=>{
+				this.data=res.data;
+			this.gender=res.data.message.gender
+				console.info(res.data)
+			}) 
+	    }
+		
+	})
+	
+	</script>
 </body>
 </html>

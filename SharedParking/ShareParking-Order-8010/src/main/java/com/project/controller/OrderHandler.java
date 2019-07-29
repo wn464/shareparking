@@ -15,25 +15,29 @@ import com.project.Bean.MemberBean;
 import com.project.Bean.OrderBean;
 import com.project.Bean.OrderDTO;
 import com.project.Bean.PageBean;
+import com.project.controller.interfaces.CredibilityHandler;
 import com.project.service.IOrderService;
+import com.project.util.CountPrice;
 @RestController
 public class OrderHandler {
 
 	@Autowired
 	private IOrderService orderService;
+	@Autowired
+	private CredibilityHandler credibilityHandler;
 	
 	
 	/*
 	 * 添加订单
 	 */
 	@PostMapping("/order")
-	public String insertOrder(OrderBean orderBean) {
+	public Integer insertOrder(OrderBean orderBean) {
 		System.out.println("-----"+orderBean);
         MemberBean memberBean1 = new MemberBean();
         memberBean1.setId(1);
         orderBean.setMemberBean1(memberBean1);
 		int num = orderService.insertOrder(orderBean);
-		return "ok";
+		return num;
 	}
 	/*
 	 * 生成订单
@@ -50,8 +54,10 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/status1/{status}/{page}/{size}")
 	public PageBean selectOrderByState1(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
-		 int mid = 1;//测试数据
-		 String str = mid+""+page+"";
+		System.out.println("==============="+status+"===========");
+		
+		int mid = 1;//测试数据
+		 String str = mid+""+page+""+status;
 		PageBean pageBean = orderService.selectOrderByState1(mid, status, page, size,str);
 		return pageBean;
 	}
@@ -60,8 +66,8 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/status2/{status}/{page}/{size}")
 	public PageBean selectOrderByState2(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
-		 int mid = 2;//测试数据
-		 String str = mid+""+page+"";
+		int mid = 2;//测试数据
+		 String str = mid+""+page+""+status;
 		PageBean pageBean = orderService.selectOrderByState2(mid, status, page, size,str);
 		return pageBean;
 	}
@@ -151,7 +157,7 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/mth/{year}/{month}")
 	public double selcetOrderByDate(@PathVariable("year")Integer year,@PathVariable("month")Integer month) {
-		String str = year+"";
+		String str = year+""+month;
 		List<Double> list = orderService.selectOrderByMonth(year, month, month,str);
 		double mprice = 0;
 		for (Double double1 : list) {
@@ -216,7 +222,6 @@ public class OrderHandler {
 		list.add(bean);
 		PageBean page =new PageBean();
 		page.setList(list);
-		
 		return page;
 		
 	}
@@ -230,5 +235,27 @@ public class OrderHandler {
 		PageBean pageBean = orderService.selectOrderByStatus(status, page, size,str);
 		return pageBean;
 	}
+	/*
+	 * 修改价格生成订单
+	 */
+	@GetMapping("/order/pay/{oid}/{price}")
+	public OrderBean payMoney(@PathVariable("oid")int oid,@PathVariable("price")double price) {
+		OrderBean orderBean = orderService.selectOrderById(oid);
+		System.out.println(orderBean);
+		double totalPrice = CountPrice.countPrice(orderBean.getBeginTime(),price);
+		System.out.println(totalPrice);
+		//修改订单价格
+		OrderBean orderBean2 = new OrderBean();
+		orderBean2.setPrice(Math.floor(totalPrice));
+		orderBean2.setOrderNumber(orderBean.getOrderNumber());
+		System.out.println(orderBean2);
+		orderService.updateOrderAttr(orderBean2);
+		OrderBean order = orderService.selectOrderById(oid);
+		int id = 1;//测试数据
+		int num = credibilityHandler.updateCreOrder(id);
+		System.out.println("---------------"+num);
+		return order;
+	}
 		
+	
 }

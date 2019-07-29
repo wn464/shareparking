@@ -43,8 +43,8 @@ public class UserHandler {
     /*
         ------ 登录 模块 -----
         0 : 前台输入的格式不正确
-        2 ：密码输入错误
-        1 ：登录成功
+              2 ：密码输入错误
+             1 ：登录成功
      */
     @PostMapping("/user/login")
     public int login(@Validated UserBean user, BindingResult result){
@@ -110,13 +110,14 @@ public class UserHandler {
     //2：添加失败
     @PostMapping("/user/add")
     public int add(@Validated UserBean user,BindingResult result){
+    	
         if(result.hasErrors()) {
             System.out.println("----------出现错误----------");
             List<FieldError> list =result.getFieldErrors();
             for (FieldError error : list) {
                 System.out.println(error.getDefaultMessage());
             }
-            return 2;
+            return 3;
         }else {
             //判断是否存在这个用户
             UserBean bean = service.findByUserName(user.getUsername());
@@ -127,6 +128,8 @@ public class UserHandler {
                 UserBean user1 = new UserBean();									//创建user对象 然后封装
                 user1.setUsername(user.getUsername());
                 user1.setPassword(obj.toString());
+                user1.setName(user.getName());
+                user1.setPhonenumber(user.getPhonenumber());
                 user1.setAuthority(user.getAuthority());
                 int i = service.addUser(user1);
 
@@ -212,8 +215,10 @@ public class UserHandler {
         a_id：级别的id
      */
     @PutMapping("/user/updateAuthority")
-    public int updateAuthority(Integer id,Integer a_id){
-        int i = service.update(id, a_id);
+    public int updateAuthority(String username,Integer a_id){
+    	UserBean bean = service.findByUserName(username);
+    	System.out.println(a_id);
+        int i = service.update(bean.getId(), a_id);
         return i;
     }
 

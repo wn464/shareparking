@@ -1,0 +1,14 @@
+server:
+  port: 9501
+
+spring:
+   application:
+    name: sharePark-sso
+
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url: 
+       defaultZone: http://eurakeserver9000.com:9000/eureka/   
+  instance: 
+    instance-id: sharePark-sso-9501 # 配置注册中心显示出来的微服务名称
+    prefer-ip-address: true     #访问路径可以显示IP地址  

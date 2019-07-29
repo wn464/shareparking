@@ -19,7 +19,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">我的</h1>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content" id="app">
 			<ul class="mui-table-view mui-card">
 				<li class="mui-table-view-cell mui-media">
 					<a href="../user/mymessage.html">
@@ -35,13 +35,13 @@
 			</ul>
 			<div class="mui-card mui-row">
 				<div class="mui-col-sm-4 mui-table-view-cell">
-					我的订单数：10
+					我的订单数：{{data.ordersum}}
 				</div>
 				<div class="mui-col-sm-4 mui-table-view-cell">
-					投诉次数：1
+					投诉次数：{{data.accusesum}}
 				</div>
 				<div class="mui-col-sm-4 mui-table-view-cell">
-					我的信誉度：90%
+					我的信誉度：{{data.credibility*100}}%
 				</div>
 			</div>
 			
@@ -91,10 +91,27 @@
 				<span class="mui-tab-label">我的</span>
 			</a>
 		</nav>
+		<script src="../../js/axios.min.js"></script>
 		<script type="text/javascript">
 			mui('body').on('tap','a',function(){
 			       window.top.location.href=this.href;
 			});
+			
+			var vm = new Vue({
+				el:"#app",
+				data:{
+			        data:{},
+			    },
+				created(){
+			    	 axios.get("http://myzuul.com:9500/member/findbyid")
+					.then(res=>{
+						this.data=res.data.credibility;
+						console.info(res.data.credibility)
+					}) 
+			    }
+				
+			})
+			
 			
 		</script>
 	</body>

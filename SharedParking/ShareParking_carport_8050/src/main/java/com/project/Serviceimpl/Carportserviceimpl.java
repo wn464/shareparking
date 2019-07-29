@@ -3,7 +3,6 @@ package com.project.Serviceimpl;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -14,6 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.Bean.CarportBean;
+import com.project.Bean.ImagesBean;
 import com.project.Bean.MarkBean;
 import com.project.Bean.PageBean;
 import com.project.IService.CarportIService;
@@ -58,7 +58,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	//@Cacheable(value="findcarportbycoordinate",key="#key")
+	@Cacheable(value="findcarportbycoordinate",key="#key")
 	public List<CarportBean> findcarportbycoordinate(double coordinate_x, double coordinate_y,String key) {
 		System.out.println("12211");
 		List<CarportBean> carports=dao.findcarportbycoordinate(coordinate_x, coordinate_y);
@@ -158,8 +158,18 @@ private CarportDao dao;
 	@Override
 	@Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
 	public boolean addcarport(CarportBean carport) {
+		 
+		 
+		
 		idao.addimages(carport.getImgs_id());
-		int s=dao.addcarport(carport);
+		int c=carport.getImgs_id().getId();
+		int s=0;
+		if(c>0) {
+			ImagesBean m=new ImagesBean();
+			m.setId(c);
+			carport.setImgs_id(m);
+			s=dao.addcarport(carport);
+		}
 		if(s>0) {
 			return true;
 		}

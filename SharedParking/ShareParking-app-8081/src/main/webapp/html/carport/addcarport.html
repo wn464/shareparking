@@ -48,7 +48,7 @@
 			<div class="mui-card">
 				<div class="proveimg"></div>
 				<div class="layui-upload-list" id="demo3">
-    				<img  height="100%" width="33%" :src="carimg"  />
+    				<img   :src="carimg" />
     			</div> 
 				
 				<div class="mui-input-row">
@@ -63,15 +63,15 @@
 				<form class="mui-input-group">
 					<div class="mui-input-row">
 						<label>产权证明编号</label>
-						<input type="text" class="mui-input-clear" placeholder="请输入">
+						<input type="text" v-model="carnumber" class="mui-input-clear" placeholder="请输入">
 					</div>
 					<div class="mui-input-row">
 						<label>名字</label>
-						<input type="text" class="mui-input-clear" placeholder="请输入">
+						<input type="text" v-model="memname" class="mui-input-clear" placeholder="请输入">
 					</div>
 					<div class="mui-input-row">
 						<label>地址</label>
-						<input type="text" class="mui-input-clear" placeholder="请输入">
+						<input type="text" v-model="address" class="mui-input-clear" placeholder="请输入">
 					</div>
 					<div class="mui-input-row">
 						<label>坐标</label>
@@ -87,13 +87,13 @@
 					</div>
 					<div class="mui-input-row">
 						<label>价格</label>
-						<input type="text" class="mui-input-clear" placeholder="请输入">
+						<input type="text" v-model="jiage" class="mui-input-clear" placeholder="请输入">
 					</div>
 					
 				</form>
 				<div class="mui-input-row">
 					<label>描述</label>
-					<textarea rows="5" cols="15" maxlength="150" style="border: #000000 solid 0.0625rem;"></textarea>
+					<textarea rows="5" cols="15" v-model="mess" maxlength="150" style="border: #000000 solid 0.0625rem;"></textarea>
 				</div>
 				
 				
@@ -105,23 +105,131 @@
 				注意：信息需要审核
 			</div>
 			<div class="mui-row">
-				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;">提交</button>
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" @click="sublit()">提交</button>
 				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-danger " style=" margin: 0.5rem 3rem;">取消</button>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
+	<div class="mui-content mui-hidden" id="app2">
+		<div id="map">
+			
+		</div>
+		<div class="mui-row">
+			<div class="mui-card">
+				<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<div >
+								坐标：
+								<span class="mui-pull-right">x:{{x}} y:{{y}}</span>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div >
+								地址：
+								<span class="mui-pull-right">{{address}}</span>
+							</div>
+						</li>
+					</ul>
+			</div>
+			<div class="mui-card">
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" @click="getaddress()">提交</button>
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-danger " style=" margin: 0.5rem 3rem;" onclick="exitmap">取消</button>
+			</div>
+			
+		</div>
+	</div>
 	
+	<script src="../../js/axios.min.js"></script>
+	<script type="text/javascript">
+		var app2 = new Vue({
+			el:"#app2",
+			data:{
+				x:"",
+				y:"",
+				address:""
+			},
+			methods:{
+				getaddress:function(){
+					app.address=this.address
+					app.jindu=this.x
+					app.weidu=this.y
+					exitmap();
+				}
+			},
+		})
+		function showmap(){
+			//隐藏正文,显示地图
+			document.getElementById("app").classList.add("mui-hidden")
+			document.getElementById("app2").classList.remove("mui-hidden")
+			//初始化地图
+			map = new plus.maps.Map("map");
+			//设置显示大小
+			map.setZoom(16);
+			//开启用户位置显示
+			map.showUserLocation(true);
+			//获取用户位置信息
+			map.getUserLocation( function(state, point){
+				console.log(JSON.stringify(point));
+				locationPos = point;
+				center = new plus.maps.Point(point.longitude, point.latitude);
+				//设置地图中心点
+				map.setCenter(center);
+				getadress(center)
+			});
+			var centerpoint= null
+			map.onclick = function( point ){
+				map.removeOverlay(centerpoint)
+				centerpoint = new plus.maps.Marker(point);
+				centerpoint.setIcon('../../img/map/map-marker-red.png');
+				var bubble = new plus.maps.Bubble("目标地点");
+				centerpoint.setBubble(bubble);
+				map.addOverlay(centerpoint);
+				console.log(JSON.stringify(point));
+				getadress(point)
+			}
+			
+		}
+		function getadress(point){
+			plus.maps.Map.reverseGeocode(point,{},function(event){
+				var address = event.address;  // 转换后的地理位置
+				var point = event.coord;  // 转换后的坐标信息
+				var coordType = event.coordType;	// 转换后的坐标系类型
+				console.log(JSON.stringify(event))
+				app2.x=event.coord.longitude
+				app2.y=event.coord.latitude
+				app2.address=event.address
+				//getcarport(point.longitude,point.latitude)
+			},function(e){
+				//报错
+				alert("Failed:"+JSON.stringify(e));
+			});
+		}
+		function exitmap(){
+			document.getElementById("app2").classList.add("mui-hidden")
+			document.getElementById("app").classList.remove("mui-hidden")
+			if(map!=null){
+				map.close()
+			}
+			
+		}
+	var map=null;
 	var dtpicker;
 	var app = new Vue({
 		el:"#app",
 		data:{
-			begintime:"",
-			endtime:"",
-			inagenamelist:[],
-			imglist:[],
-	  		carimg:""
-			
+			begintime:"",//开始出租时间
+			endtime:"",//结束时间
+			inagenamelist:[],//车位图片名字集合
+			imglist:[],//车位图片集合
+	  		carimg:"",//车位产权图片
+	  		carimgname:"",//车位产权图片名字
+	  		carnumber:"",//车位产权编号
+	  		memname:"",//车位所属人姓名
+	  		address:"",//车位地址
+	  		jindu:0.0,//车位经度 
+	  		weidu:0.0,//车位纬度
+	  		jiage:0.0,//车位价格
+	  		mess:"",//车位描述
 		},
 		mounted() {
 			dtpicker = new mui.DtPicker({
@@ -171,9 +279,31 @@
 					contentType: false,
 					success:function(mes){
 						console.log("sss"+JSON.stringify(mes));
-						app.carimg="http://192.168.3.132:8081/images/"+mes
+						app.carimg="http://192.168.3.132:8081/images/"+mes;
+						app.carimgname=mes;
 					}
 			 })
+	  		},
+	  		sublit:function(){
+	  			var params = new URLSearchParams();
+	  			params.append("address",app.address);
+	  			params.append("imgs_id.image1",app.inagenamelist[0])
+	  			params.append("imgs_id.image2",app.inagenamelist[1])
+	  			params.append("imgs_id.image3",app.inagenamelist[2])
+	  			params.append("begintime",app.begintime)
+	  			params.append("endtime",app.endtime)
+	  			params.append("statusimage",app.carimgname)
+	  			params.append("price",app.jiage)
+	  			params.append("message",app.mess)
+	  			params.append("auditnumber",app.carnumber)
+	  			params.append("coordinate_x",app.jindu)
+	  			params.append("coordinate_y",app.weidu)
+	  			axios.post("http://myzuul.com:9500/port/carport",params)
+	  			.then(res=>{
+	  			if(res.data=="true"){
+	  				alert("添加成功")
+	  			}
+	  			})
 	  		},
 			getbegintime:function(){
 				dtpicker.show(function(e) { 
