@@ -13,6 +13,12 @@
     <update id="deleteComplaint" parameterType="int" >
         update complaint set status=14 where id =#{id}
     </update>
+    <select id="findBymid" parameterType="int" resultMap="map">
+        select * from complaint where mem_j_id = #{id}
+    </select>
+    <select id="findByOrder" parameterType="int" resultMap="map">
+        select * from complaint where mem_j_id = #{mid} and o_id = #{oid}
+    </select>
     <select id="findById" parameterType="int" resultMap="map">
         select * from complaint where id = #{id}
     </select>
@@ -35,7 +41,7 @@
 		<id property="id" column="id"></id>
 		<result property="message" column="message"></result>
 		<result property="comtime" column="comtime"></result>
-		<result property="imgName" column="imgName"></result>
+		<result property="imgName" column="img"></result>
 		<association property="mem_j_id" javaType="MemberBean" select="com.project.dao.IMemberDao.findById" column="mem_j_id"/>
 		<association property="mem_y_id" javaType="MemberBean" select="com.project.dao.IMemberDao.findById" column="mem_y_id"/>
 		<association property="o_id" javaType="OrderBean" select="com.project.dao.IOrderDao.selectOrderById" column="o_id"/>

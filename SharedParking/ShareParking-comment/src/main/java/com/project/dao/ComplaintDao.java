@@ -18,4 +18,6 @@ public interface ComplaintDao {
     public int findCreNum(int id);
     public ComplaintBean findById(int id);
     public void updateType(@Param("id")int id,@Param("type")int type);
+    public List<ComplaintBean> findBymid(int id);
+    public ComplaintBean findByOrder(@Param("oid")int oid,@Param("mid")int mid);
 }

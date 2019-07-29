@@ -158,7 +158,7 @@
 										  	</button>
 										  	<ul class="dropdown-menu no-padding" style="margin-left: 480px;">
 										    	<div class="panel-body no-padding bg-primary text-center" style="height: 260px; width: 360px;">
-							<!--显示投诉凭证图片的位置--><img src="assets/img/profile-bg.png" style="height: 100%;width: 100%;"/>
+							<!--显示投诉凭证图片的位置--><img :src="img" style="height: 100%;width: 100%;"/>
 												</div>
 										  	</ul>
 										</div>
@@ -276,6 +276,7 @@
 	    		comid:"",
 	    		mess:"",
 	    		sta:"",
+	    		img:"",
 	    	},
 	    	
 	    	created(){
@@ -386,7 +387,7 @@
       			  this.credibility2=res.data.mem_y_id.credibility;
       			  this.comid=res.data.id;
       			  this.sta=res.data.status.name;
-      			  
+      			  this.img="http://localhost:8081/images/"+res.data.imgName;
       		   })
              },
 //投诉成功
