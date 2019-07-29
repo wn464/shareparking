@@ -21,4 +21,9 @@ public interface IMessageDao {
      * 查询所有
      */
     List<MessageBean> findAll();
+    
+    /*
+     * 修改个人信息
+     */
+   int updateMySelf(String address,String job,int m_id);
 }

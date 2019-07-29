@@ -34,4 +34,17 @@
         <association property="gender" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="gender"/>
     	<association property="member" javaType="MemberBean" select="com.project.dao.IMemberDao.findByMemberId" column="m_id" />
     </resultMap>
+    
+    <update id="updateMySelf">
+    	update message 
+    		<set>
+    			<if test="address!=null and address!=''">
+    				address = #{address}
+    			</if>
+    			<if test="job!=null and job != ''">
+    				job = #{job}
+    			</if>
+    		</set>
+    		where m_id= #{m_id}
+    </update>
 </mapper>
