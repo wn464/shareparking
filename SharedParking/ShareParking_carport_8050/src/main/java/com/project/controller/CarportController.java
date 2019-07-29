@@ -141,7 +141,7 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	 */
 	@PostMapping("/carport")
 	@ResponseBody
-	public boolean addcarport(@RequestBody CarportBean carport) {
+	public boolean addcarport(CarportBean carport) {
 		SimpleDateFormat datafromat=new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
 		Date te =new Date();
 		String a=datafromat.format(te);
