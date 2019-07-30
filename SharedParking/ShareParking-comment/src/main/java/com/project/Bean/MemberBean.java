@@ -3,17 +3,21 @@ package com.project.Bean;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 //前台用户登录bean
 @Data
 public class MemberBean implements Serializable {
-    private int id;
+    /**
+	 * 
+	 */
+	private int id;
     private String username;
     private String password;
     private String phonenumber;
     private MessageBean message;
     private CredibilityBean credibility;   //信誉度
-
+    private List<CarBean> list;
     public int getId() {
         return id;
     }

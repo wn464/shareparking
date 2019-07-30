@@ -4,7 +4,7 @@
 <!-- 	添加订单-->
 	<insert id="insertOrder" parameterType="OrderBean" useGeneratedKeys="true" keyProperty="id">
 		insert into orders(ordertime,ordernumber,status,delStatus,carport_id,mem_j_id,mem_y_id,begintime,carnumber)
-		values(#{orderTime},#{orderNumber},#{statusBean.id},#{delState.id},
+		values(#{orderTime},#{orderNumber},#{statusBean.id},6,
 		#{carportBean.id},#{memberBean1.id},#{memberBean2.id},#{beginTime},#{carNumber})
 	</insert>
 	
