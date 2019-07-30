@@ -1,5 +1,6 @@
 package com.project.service.impl;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +72,8 @@ public class ComplaintServiceImpl implements IComplaintService{
 			double order = ordersum;
 			double accuse = accusesum;
 			Double credibility = 1-(double) (accuse/order);
+			DecimalFormat df=new DecimalFormat(".##");
+			credibility=Double.valueOf(df.format(credibility));
 			dao2.updateCredibility(credibility, mem_j_id);
 			}
 		}else {
@@ -81,7 +84,9 @@ public class ComplaintServiceImpl implements IComplaintService{
 			accusesum = dao.findCreNum(mem_y_id);
 			double order = ordersum;
 			double accuse = accusesum;
-			Double credibility = 1-(double) (accuse/order);
+			double credibility = 1-(double) (accuse/order);
+			DecimalFormat df=new DecimalFormat(".##");
+			credibility=Double.valueOf(df.format(credibility));
 			dao2.updateCredibility(credibility, mem_y_id);
 			}
 		}
@@ -153,15 +158,23 @@ public class ComplaintServiceImpl implements IComplaintService{
 	}
 
 	@Override
+	@Cacheable(value = "findBymid",key = "#id")
 	public List<ComplaintBean> findBymid(int id) {
 		List<ComplaintBean> list = dao.findBymid(id);
 		return list;
 	}
 
 	@Override
-	public ComplaintBean findByoid(int oid, int mid) {
+	@Cacheable(value = "findByoid",key = "#str")
+	public ComplaintBean findByoid(int oid, int mid,String str) {
 		ComplaintBean bean = dao.findByOrder(oid, mid);
 		return bean;
+	}
+
+	@Override
+	public void updateStatusTpe(int id) {
+		dao.updateStatusType(id);
+		
 	}
 	
 

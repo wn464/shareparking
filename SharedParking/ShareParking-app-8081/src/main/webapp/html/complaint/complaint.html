@@ -30,7 +30,7 @@
 				</li>
 				<li class="mui-table-view-cell">
 					<a >
-						投诉状态：{{status.name}}
+						投诉状态：{{type.name}}
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
@@ -67,7 +67,7 @@
 		</div>
 		<div class="mui-card">
 			<div class="mui-row">
-				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-danger " style=" margin: 0.5rem 3rem;">取消投诉</button>
+				<button id="tou" type="button" @click="qx()" class="mui-col-sm-2 mui-btn mui-btn-danger " style=" margin: 0.5rem 3rem;">取消投诉</button>
 			</div>
 		</div>
 	</div>
@@ -85,18 +85,34 @@
 			mem_j_id:"",
 			mem_y_id:"",
 			img:"",
+			type:"",
 		},
 		created(){
  		   axios.get("http://myzuul.com:9500/complaint/complaint/order/"+oid+"/"+mid)
  		   .then(res=>{
- 			   console.info(res.data);
+ 			   var status = res.data.status;
+ 			  if(status.id==13){
+ 				  $("#tou").attr("style","display:none;");
+ 			  }
  			  this.complaint=res.data;
  			  this.img="http://localhost:8081/images/"+res.data.imgName;
  			  this.order=res.data.o_id;
  			  this.status=res.data.status;
  			  this.mem_j_id=res.data.mem_j_id;
  			  this.mem_y_id=res.data.mem_y_id;
+ 			  this.type=res.data.type;
     		});
+    	},
+    	methods:{
+    		qx:function(){
+    			var id = vm.complaint.id;
+    			axios.put("http://myzuul.com:9500/complaint/complaint/statusType/"+id)
+    			.then(res=>{
+    				alert("取消成功！");
+    				window.location.href="complaints.html?id="+mid;
+    				
+    			})
+    		}
     	},
 		
 	})
