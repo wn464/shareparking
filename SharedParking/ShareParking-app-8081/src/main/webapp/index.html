@@ -147,6 +147,7 @@
 					 mui.plusReady(function () {
 					     onPlusReady()
 					 })
+					 
 				}
 				
 			
@@ -156,7 +157,7 @@
 // 扩展API加载完毕，现在可以正常调用扩展API
 			function onPlusReady(){
 				plus.geolocation.getCurrentPosition(function(p){
-					mui.ajax('http://192.168.3.166:9500/port/carport/coordinate/'+p.coords.longitude+'/'+p.coords.latitude,{
+					mui.ajax('http://myzuul.com:9500/port/carport/coordinate/'+p.coords.longitude+'/'+p.coords.latitude,{
 						type:'get',//HTTP请求类型
 						timeout:2000,//超时时间设置为10秒；
 						success:function(data){
