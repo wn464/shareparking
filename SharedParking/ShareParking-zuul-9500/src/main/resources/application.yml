@@ -40,7 +40,7 @@ zuul:
 
     user:
       service-id: park-user
-      path: /**
+      path: /user/**
     member:
       service-id: park-member
       path: /**
