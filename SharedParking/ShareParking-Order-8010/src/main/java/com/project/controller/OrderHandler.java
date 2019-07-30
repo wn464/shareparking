@@ -19,6 +19,7 @@ import com.project.Bean.OrderBean;
 import com.project.Bean.OrderDTO;
 import com.project.Bean.PageBean;
 import com.project.controller.interfaces.CredibilityHandler;
+import com.project.controller.interfaces.MemberRemoter;
 import com.project.service.IOrderService;
 import com.project.util.CountPrice;
 @RestController
@@ -28,6 +29,8 @@ public class OrderHandler {
 	private IOrderService orderService;
 	@Autowired
 	private CredibilityHandler credibilityHandler;
+	@Autowired
+	private MemberRemoter memberremoter;
 	
 	
 	/*
@@ -35,10 +38,8 @@ public class OrderHandler {
 	 */
 	@PostMapping("/order")
 	public Integer insertOrder(OrderBean orderBean) {
-		System.out.println("-----"+orderBean);
-        MemberBean memberBean1 = new MemberBean();
-        memberBean1.setId(1);
-        orderBean.setMemberBean1(memberBean1);
+        orderBean.setMemberBean1(memberremoter.findById());
+        orderBean.setCarNumber(memberremoter.findById().getList().get(0).getCarnumber());
 		int num = orderService.insertOrder(orderBean);
 		return num;
 	}
