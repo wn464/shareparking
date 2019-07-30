@@ -20,11 +20,16 @@
 		<artifactId>spring-boot-starter-web</artifactId>
 	</dependency>
 	<!-- 热部署 地址 -->
-	<!-- <dependency>
+	<dependency>
 		 <groupId>org.springframework.boot</groupId>
 		 <artifactId>spring-boot-devtools</artifactId>
-		 <optional>false</optional>
-	</dependency> -->
+		 <optional>true</optional>
+	</dependency> 
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-data-redis</artifactId>
+	</dependency>
+
 	<!-- 将微服务provider注册进eureka，作为客户端的角色 -->
 	<dependency>
 	    <groupId>org.springframework.cloud</groupId>
@@ -50,6 +55,16 @@
 	    <groupId>org.springframework.cloud</groupId>
 	    <artifactId>spring-cloud-starter-feign</artifactId>
 	</dependency>
-	
+	 <!-- redis连接池的管理 -->
+      <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-data-redis -->
+	<dependency>
+	    <groupId>org.springframework.session</groupId>
+	    <artifactId>spring-session-data-redis</artifactId>
+	</dependency>
+			
   </dependencies>
 </project>

@@ -40,6 +40,10 @@ public class UserHandler {
         return false;
     }
 
+    @GetMapping("/user/username")
+    public UserBean findByName(String username) {
+    	return service.findByUserName(username);
+    }
     /*
         ------ 登录 模块 -----
         0 : 前台输入的格式不正确

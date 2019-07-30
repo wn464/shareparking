@@ -1,5 +1,7 @@
 package com.project.service;
 
+import java.util.List;
+
 import com.project.Bean.ComplaintBean;
 import com.project.Bean.PageBean;
 
@@ -13,4 +15,6 @@ public interface IComplaintService {
     public int findDateNum(String begintime,String endtime);
     public ComplaintBean findById(int id);
     public void updateOrder(int id);
+    public List<ComplaintBean> findBymid(int id);
+    public ComplaintBean findByoid(int oid,int mid);
 }

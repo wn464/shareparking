@@ -151,6 +151,18 @@ public class ComplaintServiceImpl implements IComplaintService{
 		double credibility = 1-(accu/order);
 		dao2.updateCreOrder(credibility, id);
 	}
+
+	@Override
+	public List<ComplaintBean> findBymid(int id) {
+		List<ComplaintBean> list = dao.findBymid(id);
+		return list;
+	}
+
+	@Override
+	public ComplaintBean findByoid(int oid, int mid) {
+		ComplaintBean bean = dao.findByOrder(oid, mid);
+		return bean;
+	}
 	
 
 }

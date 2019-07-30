@@ -9,6 +9,7 @@
 	<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/axios.min.js" type="text/javascript" charset="utf-8"></script>	
 	<script type="text/javascript">
 	mui.init()
 	</script>
@@ -20,41 +21,16 @@
 	</header>
 	<div class="mui-content">
 		
-		<div class="mui-card">
-				<ul class="mui-table-view">
+		<div  id="app" >
+				<ul class="mui-table-view" v-for="(value,index) in complaint" style="margin-bottom: 10px">
 					<li class="mui-table-view-cell mui-media">
-						<a href="complaint.html">
-							<img class="mui-media-object mui-pull-left" src="">
+						<a  href="javascript:void(0)" v-on:click="ck1(value.o_id.id)">
+							<img class="mui-media-object mui-pull-left" :src="value.imgName">
 							<div class="mui-media-body">
-								订单编号：11123
-								<span class="mui-pull-right">正在处理</span>
-								<p class="mui-ellipsis">地址：xxxxxx
-								<span class="mui-pull-right">投诉时间：2019-08-01</span>
-								</p>
-							</div>
-						</a>
-					</li>
-					
-					<li class="mui-table-view-cell mui-media">
-						<a href="complaint.html">
-							<img class="mui-media-object mui-pull-left" src="">
-							<div class="mui-media-body">
-								订单编号：11123
-								<span class="mui-pull-right">已处理</span>
-								<p class="mui-ellipsis">地址：xxxxxx
-								<span class="mui-pull-right">投诉时间：2019-08-01</span>
-								</p>
-							</div>
-						</a>
-					</li>
-					<li class="mui-table-view-cell mui-media">
-						<a href="complaint.html">
-							<img class="mui-media-object mui-pull-left" src="">
-							<div class="mui-media-body">
-								订单编号：11123
-								<span class="mui-pull-right">已取消</span>
-								<p class="mui-ellipsis">地址：xxxxxx
-								<span class="mui-pull-right">投诉时间：2019-08-01</span>
+								订单编号：{{value.o_id.orderNumber}}
+								<span class="mui-pull-right">{{value.status.name}}</span>
+								<p class="mui-ellipsis">地址：{{value.o_id.carportBean.address}}
+								<span class="mui-pull-right">投诉时间：{{value.comtime}}</span>
 								</p>
 							</div>
 						</a>
@@ -63,6 +39,35 @@
 			
 		</div>
 	</div>
+	<script type="text/javascript">
+// 	var id = window.location.href.split("=")[1];	
+    var id = 1;
+	var vm = new Vue({
+		el:"#app",
+		data:{
+			complaint:"",
+			carport:"",
+			id:id,
+		},
+		created(){
+ 		   axios.get("http://myzuul.com:9500/complaint/complaint/user/"+id)
+ 		   .then(res=>{
+ 			   for(var i=0;i<res.data.length;i++){
+ 				   res.data[i].imgName="http://localhost:8081/images/"+res.data[i].imgName;
+ 			   }
+ 			   console.info(res.data);
+ 			  this.complaint=res.data;
+    		});
+    	},
+    	methods:{
+    		ck1: function(oid){
+    			window.location.href="complaint.html?id="+oid+"&mid="+id;            
+    			},     		
+    	},
+		
+	})
+	
+	</script>
 	
 </body>
 </html>

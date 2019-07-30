@@ -8,6 +8,7 @@
 	<script src="../../js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 	mui.init()
 	</script>
@@ -17,18 +18,18 @@
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">投诉</h1>
 	</header>
-	<div class="mui-content">
+	<div class="mui-content" id="app">
 		<div class="mui-card">
 			<ul class="mui-table-view">
 					<li class="mui-table-view-cell">
 						<a>
-							投诉订单：<span class="mui-pull-right">222222</span>
+							投诉订单：<span class="mui-pull-right">{{order.orderNumber}}</span>
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
 						<a>
 							投诉理由：<br />
-							<textarea rows="5" cols="15"  maxlength="150" placeholder="150字内"></textarea>
+							<textarea rows="5" cols="15" id="mes" maxlength="150" placeholder="150字内"></textarea>
 						</a>
 					</li>
 				</ul>
@@ -38,19 +39,106 @@
 				上传投诉照片
 			</div>
 			<div class="mui-card-content">
-				<img src="../../img/1-1.png" height="100rem" >
+				<img :src="complaintImg" height="100rem" >
 			</div>
 			<div class="mui-card-footer">
-				<input type="file"  />
+				<input type="file" id="up" @change="upimg()" />
 			</div>
 		</div>
 		<div class="mui-card">
 			<div class="mui-row">
-				<button @click="newcomplaint" type="button" class="mui-col-sm-2 mui-btn mui-btn-blue "  style=" margin: 0.5rem 3rem;">提交</button>
+				<button @click="newcomplaint()" type="button" class="mui-col-sm-2 mui-btn mui-btn-blue "  style=" margin: 0.5rem 3rem;">提交</button>
 				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-danger " style=" margin: 0.5rem 3rem;">返回</button>
 			</div>
 		</div>
 	</div>
 	
+	<script type="text/javascript">
+	var id = window.location.href.split("=")[1];
+	var arr = id.split("&");
+ 	var oid = arr[0];
+	var mid = window.location.href.split("=")[2];
+// 	window.location.href="miaosha.html?id="+id;
+//     alert(oid);
+//     alert(mid);
+	var vum = new Vue({
+		el:"#app",
+		data:{
+			complaintImg:"",
+			order:"",
+			imgName:"",
+		},
+		created(){
+	 		   axios.get("http://myzuul.com:9500/orders/order/"+oid)
+	 		   .then(res=>{
+	 			  this.order=res.data;
+	    		});
+	    	},
+	    //选择照片，进行照片预览	
+		methods:{
+			upimg:function(){
+	  			var formData = new FormData();
+				 var img = $("#up")[0].files[0];
+				 formData.append("file",img);
+				 console.info(formData);
+				 $.ajax({
+					url:"http://localhost:8081/comimg",
+					type: 'post',
+					cache: false,
+					data: formData,
+					processData: false,
+					contentType: false,
+					success:function(mes){
+						console.log("sss"+JSON.stringify(mes));
+						vum.complaintImg="http://localhost:8081/images/"+mes;
+						vum.imgName=mes;
+					}
+			 })
+	  		},
+	  		//跳转到投诉项目，进行投诉添加
+	  		newcomplaint:function(){	  			
+	  			if(mid==0){
+	  				var mem_j_id=vum.order.memberBean1;
+ 	  				var mem_y_id=vum.order.memberBean2;	  				
+	  			}else{
+	  				var mem_j_id=vum.order.memberBean2;
+ 	  				var mem_y_id=vum.order.memberBean1;	
+	  			};
+	  			var message=$("#mes").val();
+	  			axios.post("http://myzuul.com:9500/complaint/complaint",{
+	  				o_id:this.order,
+	  				comtime:getNowFormatDate(),
+	  				imgName:this.imgName,
+	  				mem_j_id:mem_j_id,
+	  				mem_y_id:mem_y_id,
+	  				message:message,
+	  			})
+	      		   .then(res=>{  
+	      			   alert("投诉成功！")
+	      			 location.reload();
+	      		   })
+	  		},
+		}
+	})
+	 //获取当前时间
+	 function getNowFormatDate() {
+	      var date = new Date();
+	      var seperator1 = "-";
+	      var year = date.getFullYear();
+	      var month = date.getMonth() + 1;
+	      var strDate = date.getDate();
+	      var hours = date.getHours();
+	      var minute = date.getMinutes();
+	      var second = date.getSeconds();
+	      if (month >= 1 && month <= 9) {
+	          month = "0" + month;
+	      }
+	      if (strDate >= 0 && strDate <= 9) {
+	          strDate = "0" + strDate;
+	      }
+	      var currentdate = year + seperator1 + month + seperator1 + strDate+ seperator1 + hours + seperator1 + minute + seperator1 + second;
+	      return currentdate;
+	  }
+	</script>
 </body>
 </html>

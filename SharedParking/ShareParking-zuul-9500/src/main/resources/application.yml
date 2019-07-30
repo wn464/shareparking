@@ -1,9 +1,19 @@
 server:
   port: 9500
 
-spring:
-   application:
+spring: 
+   application: 
     name: sharePark-zuul
+   redis: 
+    database: 0 #连接数据库
+    host: 106.52.25.168 #主机名称
+    port: 6379 #端口号
+    password: 
+    lettuce:
+      pool:
+        max-active: 10 #最大连接数
+        max-wait: -1 #连接等待时间
+        min-idle: 0 #最小连接数
 
 eureka:
   client: #客户端注册进eureka服务列表内
@@ -48,6 +58,8 @@ zuul:
 #  ReadTimeout: 120000  #请求处理的超时时间  
 #  ConnectTimeout: 30000  #请求连接的超时时间
   
+
+ 
 
 info: #监控信息 
   app.name: sharePark-zuul-9500 
