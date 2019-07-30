@@ -9,6 +9,9 @@ import com.project.Bean.MessageBean;
 
 public interface IMemberService {
 	
+	/*
+	 * 通过id查找
+	 */
 	MemberBean findById(int id);
 
     /*
@@ -34,4 +37,9 @@ public interface IMemberService {
      * 模糊查询
      */
     List<MessageBean> findByMohu(String name);
+    
+    /*
+     * 修改个人信息
+     */
+    int updateMySelf(String address,String job,int m_id,String phone);
 }

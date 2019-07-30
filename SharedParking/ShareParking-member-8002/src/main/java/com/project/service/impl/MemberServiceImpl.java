@@ -28,11 +28,11 @@ public class MemberServiceImpl implements IMemberService {
 	/*
 	 * 通过id查找
 	 */
-	@Cacheable("findById")
+	@Cacheable(value="findById")
 	@Override
 	public MemberBean findById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 	
 	/*
@@ -83,6 +83,17 @@ public class MemberServiceImpl implements IMemberService {
 		// TODO Auto-generated method stub
 		
 		return dao1.findByMohu(name);
+	}
+	
+	/*
+	 * 修改个人信息
+	 */
+	@Override
+	public int updateMySelf(String address, String job, int m_id,String phone) {
+		// TODO Auto-generated method stub
+		int mySelf = dao1.updateMySelf(address, job, m_id);
+		int phon = dao.updatePhone(m_id, phone);
+		return 1;
 	}
 	
 	

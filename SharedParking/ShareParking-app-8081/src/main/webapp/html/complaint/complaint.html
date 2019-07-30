@@ -8,6 +8,7 @@
 	<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 	mui.init()
 	</script>
@@ -17,34 +18,34 @@
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">反馈详情</h1>
 	</header>
-	<div class="mui-content">
+	<div class="mui-content" id="app">
 		
 		<div class="mui-card">
 			<ul class="mui-table-view">
 				
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right">
-						投诉订单：
-					</a>
+					<p class="mui-navigate-right">
+						投诉订单：{{order.orderNumber}}
+					</p>
 				</li>
 				<li class="mui-table-view-cell">
 					<a >
-						投诉状态：
+						投诉状态：{{status.name}}
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right">
-						投诉时间：
+						投诉时间：{{complaint.comtime}}
 					</a>
 				</li>
 					<li class="mui-table-view-cell">
 						<a class="mui-navigate-right">
-							投诉方：
+							投诉方：{{mem_j_id.username}}
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
 						<a class="mui-navigate-right">
-							 被投诉方：
+							 被投诉方：{{mem_y_id.username}}
 						</a>
 					</li>
 					
@@ -55,12 +56,12 @@
 				投诉照片
 			</div>
 			<div >
-				<img src="../../img/1-1.png" height="200px" >
+				<img :src="img" height="200px" >
 			</div>
 			
 				<div >
 					<label>投诉理由:</label>
-					<p>ssss</p>
+					<p>{{complaint.message}}</p>
 				</div>
 			
 		</div>
@@ -70,6 +71,35 @@
 			</div>
 		</div>
 	</div>
-	
+	<script type="text/javascript">
+	var id = window.location.href.split("=")[1];
+	var arr = id.split("&");
+ 	var oid = arr[0];
+	var mid = window.location.href.split("=")[2];	
+	var vm = new Vue({
+		el:"#app",
+		data:{
+			complaint:"",
+			order:"",
+			status:"",
+			mem_j_id:"",
+			mem_y_id:"",
+			img:"",
+		},
+		created(){
+ 		   axios.get("http://myzuul.com:9500/complaint/complaint/order/"+oid+"/"+mid)
+ 		   .then(res=>{
+ 			   console.info(res.data);
+ 			  this.complaint=res.data;
+ 			  this.img="http://localhost:8081/images/"+res.data.imgName;
+ 			  this.order=res.data.o_id;
+ 			  this.status=res.data.status;
+ 			  this.mem_j_id=res.data.mem_j_id;
+ 			  this.mem_y_id=res.data.mem_y_id;
+    		});
+    	},
+		
+	})
+	</script>
 </body>
 </html>

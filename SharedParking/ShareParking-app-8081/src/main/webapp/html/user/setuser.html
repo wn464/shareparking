@@ -17,7 +17,7 @@
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">修改账号信息</h1>
 	</header>
-	<div class="mui-content">
+	<div class="mui-content" id="app">
 		<div class="mui-card">
 			<div class="mui-card-content">
 				<img src="../../img/1-1.png" height="100px" >上传头像
@@ -33,27 +33,49 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>电话号码</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入">
+					<input type="text" class="mui-input-clear" placeholder="请输入" id="phone">
 				</div>
 				
 				<div class="mui-input-row">
 					<label>当前居住地址</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入">
+					<input type="text" class="mui-input-clear" placeholder="请输入" id="address">
 				</div>
 				<div class="mui-input-row">
 					<label>工作</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入">
+					<input type="text" class="mui-input-clear" placeholder="请输入" id="job">
 				</div>
 			</form>
 		</div>
 		<div class="mui-card">
 			
 			<div class="mui-row">
-				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;">提交</button>
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" @click="updata()">提交</button>
 				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-danger " style=" margin: 0.5rem 3rem;">取消</button>
 			</div>
 		</div>
 	</div>
+	<script src="../../js/axios.min.js"></script>
+	<script type="text/javascript">
+	var vm = new Vue({
+		el:"#app",
+		data:{
+	        data:{}
+	    },
+		methods:{
+			updata:function(){
+				var phone = $("#phone").val();
+				var address=$("#address").val();
+				var job = $("#job").val();
+				 axios.get("http://myzuul.com:9500/member/updatemyself")
+					.then(res=>{
+						alert(res.data)
+					}) 
+			}
+	    	
+	    }
+		
+	})
 	
+	</script>
 </body>
 </html>

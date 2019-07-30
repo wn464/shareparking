@@ -47,8 +47,8 @@ public class UserHandler {
     /*
         ------ 登录 模块 -----
         0 : 前台输入的格式不正确
-        2 ：密码输入错误
-        1 ：登录成功
+              2 ：密码输入错误
+             1 ：登录成功
      */
     @PostMapping("/user/login")
     public int login(@Validated UserBean user, BindingResult result){

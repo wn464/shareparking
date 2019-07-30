@@ -300,7 +300,9 @@
 	  			params.append("coordinate_y",app.weidu)
 	  			axios.post("http://myzuul.com:9500/port/carport",params)
 	  			.then(res=>{
-	  				console.info(res.data)
+	  			if(res.data=="true"){
+	  				alert("添加成功")
+	  			}
 	  			})
 	  		},
 			getbegintime:function(){

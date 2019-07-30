@@ -31,13 +31,13 @@ public class OrderHandler {
 	 * 添加订单
 	 */
 	@PostMapping("/order")
-	public String insertOrder(OrderBean orderBean) {
+	public Integer insertOrder(OrderBean orderBean) {
 		System.out.println("-----"+orderBean);
         MemberBean memberBean1 = new MemberBean();
         memberBean1.setId(1);
         orderBean.setMemberBean1(memberBean1);
 		int num = orderService.insertOrder(orderBean);
-		return "ok";
+		return num;
 	}
 	/*
 	 * 生成订单
@@ -54,7 +54,9 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/status1/{status}/{page}/{size}")
 	public PageBean selectOrderByState1(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
-		 int mid = 1;//测试数据
+		System.out.println("==============="+status+"===========");
+		
+		int mid = 1;//测试数据
 		 String str = mid+""+page+""+status;
 		PageBean pageBean = orderService.selectOrderByState1(mid, status, page, size,str);
 		return pageBean;
@@ -64,7 +66,7 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/status2/{status}/{page}/{size}")
 	public PageBean selectOrderByState2(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
-		 int mid = 2;//测试数据
+		int mid = 2;//测试数据
 		 String str = mid+""+page+""+status;
 		PageBean pageBean = orderService.selectOrderByState2(mid, status, page, size,str);
 		return pageBean;
