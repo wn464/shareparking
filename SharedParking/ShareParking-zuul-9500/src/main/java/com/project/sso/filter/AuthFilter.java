@@ -32,15 +32,27 @@ public class AuthFilter extends ZuulFilter{
 	public boolean shouldFilter() {
 		// TODO Auto-generated method stub
 		//过滤判断是否需要验证
-		RequestContext ctx = RequestContext.getCurrentContext();
+	  RequestContext ctx = RequestContext.getCurrentContext();
       HttpServletRequest request = ctx.getRequest();
       HttpServletResponse response = ctx.getResponse();
-      
+      request.getSession().setAttribute("id", 1);
       //访问路径
-      
       String url = request.getRequestURL().toString();
-      System.out.println(url);
-		return false;
+      String uri = request.getRequestURI().toString();
+      System.out.println(uri);
+      
+      
+      //CORS实现跨域
+      //https://www.cnblogs.com/lazyInsects/p/8110758.html
+      HttpServletResponse res =response;  
+	  res.setContentType("text/html;charset=UTF-8");  
+	  res.setHeader("Access-Control-Allow-Origin", "*");  
+	  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");  
+	  res.setHeader("Access-Control-Max-Age", "0");  
+	  res.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");  
+	  res.setHeader("Access-Control-Allow-Credentials", "true");  
+	  res.setHeader("XDomainRequestAllowed","1");  
+	  return false;
 	}
 
 	//过滤器的具体逻辑

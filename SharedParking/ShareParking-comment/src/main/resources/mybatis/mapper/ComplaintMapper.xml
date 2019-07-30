@@ -4,6 +4,9 @@
 	<insert id="addComplaint" parameterType="ComplaintBean">
 		insert into complaint(message,comtime,img,o_id,mem_j_id,mem_y_id)values(#{message},#{comtime},#{imgName},#{o_id.id},#{mem_j_id.id},#{mem_y_id.id})
 	</insert>
+	<update id="updateStatusType" parameterType="int">
+	     update complaint set status = 13,type=18 where id =#{id}
+	</update>
 	<update id="updateType" parameterType="int">
 	    update complaint set type=#{type} where id =#{id}
 	</update>

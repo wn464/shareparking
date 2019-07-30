@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>车位信息</title>
+	<meta http-equiv="Access-Control-Allow-Origin" content="*" />
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<style type="text/css">
 		.mui-slider img{
@@ -72,14 +73,14 @@
 		  <ul class="mui-table-view">
 		  		<li class="mui-table-view-cell">
 		  			<a >
-		  				{{carport.name}}
+		  				
 		  			</a>
 		  		</li>
 		  		<li class="mui-table-view-cell">
 		  			<a >
 		  				 地址：
 						 <span class="mui-icon mui-icon-location"></span>
-						 {{carport.adress}}
+						 {{carport.address}}
 		  			</a>
 		  		</li>
 		  		<li class="mui-table-view-cell">
@@ -91,10 +92,10 @@
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right mui-row" href="../user/othermessage.html">
 						<div class="mui-col-sm-6">
-							 出租者：{{carport.owner.name}}
+							 出租者：
 						</div>
 						<div class="mui-col-sm-4"style="margin-left: 3rem;">
-							信誉度：{{(1-carport.owner.badnum/carport.owner.ordernum)*100}}%
+							信誉度：
 						</div>
 					</a>
 				</li>
@@ -115,7 +116,7 @@
 		
 		
 		
-			<div class="mui-card">
+			<!-- <div class="mui-card">
 			
 				<div class="mui-input-row" >
 					<label>租车位时间：</label>
@@ -123,13 +124,13 @@
 					<input type="text" placeholder="结束时间" readonly @click="getendtime" v-model="endtime">
 				</div>
 			
-		</div>
+		</div> -->
 		<div class="mui-card">
 			<ul class="mui-table-view">
 					<li class="mui-table-view-cell">
 						<a >
 							车位信息：<br>
-							{{carport.message}}
+							
 						</a>
 					</li>
 					
@@ -159,33 +160,20 @@
 		
 	</nav>
 	
-	
+		<script src="../../js/axios.min.js"></script>
 	<script type="text/javascript">
-		
+	search=window.location.search.replace("\?","").split("&");
+	var urldata = {};
+	for (var i = 0; i < search.length; i++) {
+		urldata[search[i].split("=")[0]] = search[i].split("=")[1]
+	}
 		var dtpicker;
 		var app = new Vue({
 			el:"#app",
 			data:{
 				begintime:"",
 				endtime:"",
-				carport:{
-					id:1,
-					name:"25仔停车场25号",
-					adress:"我是个好人",
-					owner:{
-						name:"25仔",
-						ordernum:10,
-						badnum:1,
-						car:[
-							{
-								id:"川A8888"
-							}
-						]
-					},
-					message:"曾经我也是一个好人",
-					begintime:"2019-08-01",
-					endtime:"2019-08-02"
-				}
+				carport:{},
 			},
 			mounted() {
 				mui('body').on('tap','a',function(){
@@ -201,53 +189,28 @@
 				  interval:1000//自动轮播周期，若为0则不自动播放，默认为0；
 				});
 				
-			},created() {
-				
+			},
+			created() {
+				axios.get("http://myzuul.com:9500/port/carport/cid/"+urldata.id+"")
+				.then(res=>{
+					console.info(res.data)
+					this.carport=res.data
+				})
+				.catch(res=>{
+					console.info(res.data)
+				})
 			},
 			methods:{
-				getbegintime:function(){
-					dtpicker.show(function(e) { 
-					    console.log(e.value); 
-						app.begintime=e.value;
-					})
-				},
-				getendtime:function(){
-					dtpicker.show(function(e) { 
-					    console.log(e); 
-						app.endtime=e.value;
-					})
-				},
 				getcar:function(){
 					
 				},
-				neworder:function(){
-					//判断用户是否登录
-					//如果开始时间为空
-					if(this.begintime == ""){
-						mui.toast('选择开始时间',{ duration:'long', type:'div' }) 
-						this.getbegintime;
-					}
-					//如果结束时间为空
-					if(this.endtime == ""){
-						mui.toast('选择结束时间',{ duration:'long', type:'div' }) 
-						this.getendtime;
-					}
-					//判断时间是否符合要求
-					if(this.endtime<=this.begintime){
-						mui.toast('时间选择错误，请重新选择时间',{ duration:'long', type:'div' }) 
-						this.endtime="";
-						this.begintime="";
-					}
-					//选择车辆
-					//判断数据是否全部符合要求
-					//生成订单
-				}
 			}
 		})
 	
 
 
 		
+		alert(window.location.search)
 	</script>
 </body>
 </html>
