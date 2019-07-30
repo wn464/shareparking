@@ -1,9 +1,6 @@
 server:
   port: 9501
-
-spring:
-   application:
-    name: sharePark-sso
+ 
 
 eureka:
   client: #客户端注册进eureka服务列表内
@@ -12,3 +9,17 @@ eureka:
   instance: 
     instance-id: sharePark-sso-9501 # 配置注册中心显示出来的微服务名称
     prefer-ip-address: true     #访问路径可以显示IP地址  
+    
+spring: 
+  application:
+    name: sharePark-sso
+  redis:
+    database: 0 #连接数据库s
+    host: 106.52.25.168 #主机名称
+    port: 6379 #端口号
+    password: 
+    lettuce:
+      pool:
+        max-active: 10 #最大连接数
+        max-wait: -1 #连接等待时间
+        min-idle: 0 #最小连接数

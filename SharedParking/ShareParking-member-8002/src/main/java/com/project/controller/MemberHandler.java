@@ -17,6 +17,10 @@ public class MemberHandler {
 	private IMemberService service;
 	
 
+	@GetMapping("/member/username")
+	public MemberBean findByName(String username) {
+		return service.findByUserName(username);
+	}
 	
 	/*
 	 * 查询所有用户
