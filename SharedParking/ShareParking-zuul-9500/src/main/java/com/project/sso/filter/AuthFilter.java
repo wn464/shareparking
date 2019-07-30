@@ -35,8 +35,10 @@ public class AuthFilter extends ZuulFilter{
 	  RequestContext ctx = RequestContext.getCurrentContext();
       HttpServletRequest request = ctx.getRequest();
       HttpServletResponse response = ctx.getResponse();
-      request.getSession().setAttribute("id", 1);
+      request.getSession().setAttribute("userid", 1);
+      request.getSession().setAttribute("memberid", 1);
       //访问路径
+      System.out.println(request.getSession().getId());
       String url = request.getRequestURL().toString();
       String uri = request.getRequestURI().toString();
       System.out.println(uri);

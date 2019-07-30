@@ -29,25 +29,28 @@ eureka:
 zuul:
   #ignored-services: woniucloud-provider    #设置不暴露微服务的名称
   ignored-services: "*"
-  routes: 
+  routes:   
     order: #路由的名称，这个名字可以自己写
       service-id: park-order
       path: /orders/**      # 如果通过路由来访问，可以根据微服务的名字来访问，也可以直接访问资源
-
+      sensitiveHeaders: "*"
     complaint: 
       service-id: park-complaint
       path: /complaint/**
-
+      sensitiveHeaders: "*"
     user:
       service-id: park-user
       path: /user/**
+      sensitiveHeaders: "*"
     member:
       service-id: park-member
       path: /**
+      sensitiveHeaders: "*"
       
     carport:
       service-id: SHAREPARKING_CARPORT
       path:  /port/** 
+      sensitiveHeaders: "*"
       
 #  host:
 #    connect-timeout-millis: 60000 
