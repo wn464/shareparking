@@ -13,6 +13,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class CarBean implements Serializable {
+	/**
+	 * 
+	 */
 	private int id;
 	private MemberBean m_id;
 	private String carnumber;

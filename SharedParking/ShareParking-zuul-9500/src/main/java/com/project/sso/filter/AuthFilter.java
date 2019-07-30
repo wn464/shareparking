@@ -40,7 +40,18 @@ public class AuthFilter extends ZuulFilter{
       String url = request.getRequestURL().toString();
       String uri = request.getRequestURI().toString();
       System.out.println(uri);
-      System.out.println(url);
+      
+      
+      //CORS实现跨域
+      //https://www.cnblogs.com/lazyInsects/p/8110758.html
+      HttpServletResponse res =response;  
+	  res.setContentType("text/html;charset=UTF-8");  
+	  res.setHeader("Access-Control-Allow-Origin", "*");  
+	  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");  
+	  res.setHeader("Access-Control-Max-Age", "0");  
+	  res.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");  
+	  res.setHeader("Access-Control-Allow-Credentials", "true");  
+	  res.setHeader("XDomainRequestAllowed","1");  
 	  return false;
 	}
 

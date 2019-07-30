@@ -16,4 +16,5 @@ public interface IUserService {
     int update(int id,int a_id);
     int addUser(UserBean user);
     UserBean findById(int id);
+    int del(int id);
 }

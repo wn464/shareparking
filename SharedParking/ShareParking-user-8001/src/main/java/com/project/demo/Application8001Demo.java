@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 @SpringBootApplication
 @ComponentScan("com.project.controller")
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.project.util")
 @MapperScan("com.project.dao")
 @EnableEurekaClient
+@EnableRedisHttpSession
 public class Application8001Demo {
     public static void main(String[] args) {
         SpringApplication.run(Application8001Demo.class,args);

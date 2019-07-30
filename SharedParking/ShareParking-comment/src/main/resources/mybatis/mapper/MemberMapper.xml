@@ -19,6 +19,7 @@
         <result property="phonenumber" column="phonenumber"/>
         <association property="message" javaType="MessageBean" select="com.project.dao.IMessageDao.findByMid" column="id"/>
         <association property="credibility" javaType="CredibilityBean" select="com.project.dao.CredibilityDao.findById" column="id" />
+        <collection property="list" ofType="CarBean" select="com.project.dao.CarDao.findcarbymid"  column="id"/>
     </resultMap>
     
     <select id="findByMemberId" resultMap="map1">

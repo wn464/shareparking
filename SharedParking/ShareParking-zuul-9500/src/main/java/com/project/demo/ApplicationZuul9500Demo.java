@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @EnableEurekaClient
 @EnableZuulProxy
-@ComponentScan("com.project.sso")
+@ComponentScan({"com.project.sso","com.project.filter"})
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 public class ApplicationZuul9500Demo {
 

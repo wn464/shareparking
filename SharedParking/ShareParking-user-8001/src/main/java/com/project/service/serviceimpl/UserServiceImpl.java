@@ -79,4 +79,10 @@ public class UserServiceImpl implements IUserService {
     public UserBean findById(int id) {
         return dao.findById(id);
     }
+
+	@Override
+	public int del(int id) {
+		// TODO Auto-generated method stub
+		return dao.del(id);
+	}
 }

@@ -1,6 +1,7 @@
 package com.project.Bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.Data;
 
@@ -18,6 +19,6 @@ public class UserBean implements Serializable{
     private String phonenumber;
     private String email;
     private AuthorityBean authority;        //权限
-
+   
 
 }

@@ -4,6 +4,9 @@ package com.project.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import com.project.Bean.OrderBean;
 import com.project.Bean.OrderDTO;
 import com.project.Bean.PageBean;
 import com.project.controller.interfaces.CredibilityHandler;
+import com.project.controller.interfaces.MemberRemoter;
 import com.project.service.IOrderService;
 import com.project.util.CountPrice;
 @RestController
@@ -25,6 +29,8 @@ public class OrderHandler {
 	private IOrderService orderService;
 	@Autowired
 	private CredibilityHandler credibilityHandler;
+	@Autowired
+	private MemberRemoter memberremoter;
 	
 	
 	/*
@@ -32,10 +38,8 @@ public class OrderHandler {
 	 */
 	@PostMapping("/order")
 	public Integer insertOrder(OrderBean orderBean) {
-		System.out.println("-----"+orderBean);
-        MemberBean memberBean1 = new MemberBean();
-        memberBean1.setId(1);
-        orderBean.setMemberBean1(memberBean1);
+        orderBean.setMemberBean1(memberremoter.findById());
+        orderBean.setCarNumber(memberremoter.findById().getList().get(0).getCarnumber());
 		int num = orderService.insertOrder(orderBean);
 		return num;
 	}
@@ -53,9 +57,11 @@ public class OrderHandler {
 	 * 租客分页查询
 	 */
 	@GetMapping("/order/status1/{status}/{page}/{size}")
-	public PageBean selectOrderByState1(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
+	public PageBean selectOrderByState1(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size,HttpServletRequest request) {
 		System.out.println("==============="+status+"===========");
-		
+//		HttpSession session = request.getSession(false);
+//		int id = (int) session.getAttribute("id");
+//		System.out.println("-------"+id);
 		int mid = 1;//测试数据
 		 String str = mid+""+page+""+status;
 		PageBean pageBean = orderService.selectOrderByState1(mid, status, page, size,str);
@@ -240,9 +246,10 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/pay/{oid}/{price}")
 	public OrderBean payMoney(@PathVariable("oid")int oid,@PathVariable("price")double price) {
+		System.out.println("付款订单"+price);
 		OrderBean orderBean = orderService.selectOrderById(oid);
 		System.out.println(orderBean);
-		double totalPrice = CountPrice.countPrice(orderBean.getBeginTime(),price);
+		double totalPrice = CountPrice.countPrice(orderBean.getOrderTime(),price);
 		System.out.println(totalPrice);
 		//修改订单价格
 		OrderBean orderBean2 = new OrderBean();
