@@ -32,15 +32,16 @@ public class AuthFilter extends ZuulFilter{
 	public boolean shouldFilter() {
 		// TODO Auto-generated method stub
 		//过滤判断是否需要验证
-		RequestContext ctx = RequestContext.getCurrentContext();
+	  RequestContext ctx = RequestContext.getCurrentContext();
       HttpServletRequest request = ctx.getRequest();
       HttpServletResponse response = ctx.getResponse();
-      
+      request.getSession().setAttribute("id", 1);
       //访问路径
-      
       String url = request.getRequestURL().toString();
+      String uri = request.getRequestURI().toString();
+      System.out.println(uri);
       System.out.println(url);
-		return false;
+	  return false;
 	}
 
 	//过滤器的具体逻辑
