@@ -19,6 +19,6 @@ public class UserBean implements Serializable{
     private String phonenumber;
     private String email;
     private AuthorityBean authority;        //权限
-    private List<CarBean> list;
+   
 
 }

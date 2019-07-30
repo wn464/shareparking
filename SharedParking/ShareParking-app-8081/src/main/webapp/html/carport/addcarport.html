@@ -252,7 +252,7 @@
 				 formData.append("file",img);
 				 console.info(formData);
 				 $.ajax({
-					url:"http://192.168.3.132:8081/upimage",
+					url:"http://localhost:8081/upimage",
 					type: 'post',
 					cache: false,
 					data: formData,
@@ -260,7 +260,7 @@
 					contentType: false,
 					success:function(mes){
 						console.log("sss"+JSON.stringify(mes));
-						app.imglist.push("http://192.168.3.132:8081/images/"+mes);
+						app.imglist.push("http://localhost:8081/images/"+mes);
 						app.inagenamelist.push(mes);
 					}
 			 })
@@ -271,7 +271,7 @@
 				 formData.append("file",img);
 				 console.info(formData);
 				 $.ajax({
-					url:"http://192.168.3.132:8081/upimage",
+					url:"http://localhost:8081/upimage",
 					type: 'post',
 					cache: false,
 					data: formData,
@@ -279,7 +279,7 @@
 					contentType: false,
 					success:function(mes){
 						console.log("sss"+JSON.stringify(mes));
-						app.carimg="http://192.168.3.132:8081/images/"+mes;
+						app.carimg="http://localhost:8081/images/"+mes;
 						app.carimgname=mes;
 					}
 			 })

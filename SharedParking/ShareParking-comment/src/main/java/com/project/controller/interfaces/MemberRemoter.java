@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.project.Bean.MemberBean;
 
-
-@FeignClient(name="park-complaint",fallbackFactory=TestHandlerFallbackfactory.class)
-public interface CredibilityHandler {
-	@PutMapping("/complaint/{id}")
-	public int updateCreOrder(@PathVariable("id")int id);
+@FeignClient(name="park-member",fallbackFactory=TestHandlerFallbackfactory.class)
+public interface MemberRemoter {
+	@GetMapping("/member/findbyid")
+	public MemberBean findById();
 	
 	
 	
 
 }
+

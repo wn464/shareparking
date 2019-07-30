@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import com.project.Bean.MarkBean;
 import com.project.Bean.OrderBean;
 import com.project.Bean.PageBean;
 import com.project.dao.IOrderDao;
@@ -26,6 +28,9 @@ public class OrderServiceImp implements IOrderService{
 	
 	
 	//添加订单
+	/**
+	 *
+	 */
 	@Override
 	@CacheEvict(value="*",allEntries = true)
 	public int insertOrder(OrderBean orderBean) {
@@ -35,6 +40,9 @@ public class OrderServiceImp implements IOrderService{
   	//生成订单号
     String orderNumber =  CreateOrderInfo.getOrderNumber();
     orderBean.setOrderNumber(orderNumber);
+    MarkBean status = new MarkBean();
+    status.setId(3);
+    orderBean.setStatusBean(status);
     
 	System.out.println("order++++++++==========================-"+orderBean);
     //添加订单
