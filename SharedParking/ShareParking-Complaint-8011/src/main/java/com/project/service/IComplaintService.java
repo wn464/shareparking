@@ -16,5 +16,6 @@ public interface IComplaintService {
     public ComplaintBean findById(int id);
     public void updateOrder(int id);
     public List<ComplaintBean> findBymid(int id);
-    public ComplaintBean findByoid(int oid,int mid);
+    public ComplaintBean findByoid(int oid,int mid,String str);
+    public void updateStatusTpe(int id);
 }
