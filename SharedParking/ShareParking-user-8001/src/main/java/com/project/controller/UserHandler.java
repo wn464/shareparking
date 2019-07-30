@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 /*
     管理员controller
  */
@@ -44,60 +46,20 @@ public class UserHandler {
     public UserBean findByName(String username) {
     	return service.findByUserName(username);
     }
-    /*
-        ------ 登录 模块 -----
-        0 : 前台输入的格式不正确
-              2 ：密码输入错误
-             1 ：登录成功
-     */
-    @PostMapping("/user/login")
-    public int login(@Validated UserBean user, BindingResult result){
-        if (result.hasErrors()){
-            System.out.println("------------出现错误---------");
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            for (FieldError fieldError : fieldErrors) {
-                System.out.println(fieldError.getDefaultMessage());
-            }
-            return 0;
-        }else{
-        	Object obj = new SimpleHash("MD5",user.getPassword(),user.getUsername(),1024);
-        	
-            Subject subject = SecurityUtils.getSubject();
-            UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
-            if (!subject.isAuthenticated()){
-                try {
-                    subject.login(token);
-                    System.out.println("------认证成功------");
-                    
-                    //把id存到session
-                    UserBean bean = service.findByUserName(user.getUsername());
-                    Session session = subject.getSession();
-                    session.setAttribute("id",bean.getId());
-                    System.out.println(session.getAttribute("id")+"==================="); 
-                    return 1;
-                }catch (Exception e){
-                    System.out.println("------认证失败------");
-                    return 2;
-                }
-            }
-        }
-        return 1;
-    }
 
     /*
         ------------------------查询模块----------------------
      */
     //查询所有管理员
     @GetMapping("/user/findall")
-    public List<UserBean> findAll(){
-//    	System.out.println("123123123123123");
-//    	 Subject subject = SecurityUtils.getSubject();
-//    	 Session session = subject.getSession(false);
-//    	 int id = (int) session.getAttribute("id");	//获取当前登录的id
-//    	 System.out.println("id======="+id);
-        List<UserBean> list = service.findAll(1);
+    public List<UserBean> findAll(HttpSession session){	 
+    	System.out.println(session.getId());
+    	 int id = (int) session.getAttribute("userid");	//获取当前登录的id
+    	 System.out.println("id======="+id);
+        List<UserBean> list = service.findAll(id);
         return list;
     }
+    
     //通过id查询管理员
     @GetMapping("/user/findById")
     public UserBean findById(){
@@ -126,9 +88,7 @@ public class UserHandler {
             //判断是否存在这个用户
             UserBean bean = service.findByUserName(user.getUsername());
             if(bean==null) {
-
                 Object obj = new SimpleHash("MD5",user.getPassword(),user.getUsername(),1024);		//盐值
-
                 UserBean user1 = new UserBean();									//创建user对象 然后封装
                 user1.setUsername(user.getUsername());
                 user1.setPassword(obj.toString());
@@ -168,15 +128,12 @@ public class UserHandler {
         3：前台输入是密码长度不合格
      */
     @PostMapping("/user/updatePassword")
-    public String updataPassword(String password, String repassword) {
-    	
-        if(repassword.length()<6||repassword.length()>12) {
-            return "3";
-        }else {
-            Subject subject = SecurityUtils.getSubject();
-            //int id = (int) subject.getSession().getAttribute("id");	//获取当前登录的id
+    public String updataPassword(HttpSession session,String password, String repassword) {
+    
+           
+            int id = (int) session.getAttribute("id");	//获取当前登录的id
 
-            UserBean user = service.findById(1);
+            UserBean user = service.findById(id);
 
             //将输入的原密码加密
             Object obj = new SimpleHash("MD5",password,user.getUsername(),1024);
@@ -192,7 +149,7 @@ public class UserHandler {
             return "2";						//2是修改失败
         }
 
-    }
+    
 
     /*
         修改手机号
@@ -200,13 +157,13 @@ public class UserHandler {
         2：修改失败
      */
     @GetMapping("/user/updatePhone")
-    public int updatePhone(String code,String phone){
+    public int updatePhone(HttpSession session,String code,String phone){
     	System.out.println(code);
     	System.out.println(generateCode.toString()+"================");
     	
         if(code.equals(generateCode.toString())){
-            Subject subject = SecurityUtils.getSubject();
-            //int id = (int) subject.getSession().getAttribute("id");
+           
+            int id = (int) session.getAttribute("id");
             int i = service.updatePhone(1, phone);
             return 1;
         }
@@ -225,5 +182,12 @@ public class UserHandler {
         int i = service.update(bean.getId(), a_id);
         return i;
     }
-
+    
+    /**
+     * 删除管理员
+     */
+    public int delete(Integer id) {
+    	
+    	return service.del(id);
+    }
 }

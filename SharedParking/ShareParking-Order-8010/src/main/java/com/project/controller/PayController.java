@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alipay.api.AlipayApiException;
+import com.project.Bean.MarkBean;
 import com.project.Bean.OrderBean;
 import com.project.service.IOrderService;
 import com.project.util.AlipayUtil;
@@ -81,19 +82,17 @@ public class PayController {
 			System.out.println(num[1]);
 			OrderBean orderBean = orderService.selectOrderByOrderNumber(num[0]);
 //			//修改支付宝号
-//			OrderBean orderBean2 = new OrderBean();
-//			orderBean2.setId(orderBean.getId());
-//			orderBean2.setAlipayNumber(num[1]);
-//			orderService.updateOrderAttr(orderBean2);
-//			//修改订单状态
-//			OrderBean orderBean3 = new OrderBean();
-//			orderBean3.setId(orderBean.getId());
-//			MarkBean statusBean = new MarkBean();
-//			statusBean.setId(6);
-//			orderBean3.setStatus(statusBean);
-//			orderService.updateOrderAttr(orderBean3);
-			
-			
+			OrderBean orderBean2 = new OrderBean();
+			orderBean2.setId(orderBean.getId());
+			orderBean2.setAlipayNumber(num[1]);
+			orderService.updateOrderAttr(orderBean2);
+			//修改订单状态
+			OrderBean orderBean3 = new OrderBean();
+			orderBean3.setId(orderBean.getId());
+			MarkBean statusBean = new MarkBean();
+			statusBean.setId(4);
+			orderBean3.setStatusBean(statusBean);
+			orderService.updateOrderAttr(orderBean3);
 			
 			//发送推送消息
 //			System.out.println("推送-------------------"+orderBean.getId());
@@ -104,6 +103,7 @@ public class PayController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("回调");
 		return "redirect:/index.html";
 	}
 	
