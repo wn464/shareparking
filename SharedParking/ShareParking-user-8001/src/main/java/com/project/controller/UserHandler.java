@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /*
@@ -52,11 +53,13 @@ public class UserHandler {
      */
     //查询所有管理员
     @GetMapping("/user/findall")
-    public List<UserBean> findAll(HttpSession session){	 
+    public List<UserBean> findAll(HttpServletRequest request){	 
+    	HttpSession session = request.getSession();
     	System.out.println(session.getId());
     	 int id = (int) session.getAttribute("userid");	//获取当前登录的id
     	 System.out.println("id======="+id);
         List<UserBean> list = service.findAll(id);
+        System.out.println(list);
         return list;
     }
     
