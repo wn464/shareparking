@@ -34,37 +34,37 @@
 			<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 			<div class="mui-slider-item mui-slider-item-duplicate">
 			  <a href="#">
-				<img src="../../img/1-4.png">
+				<img :src="imagesname[0]">
 			  </a>
 			</div>
 			<!-- 第一张 -->
 			<div class="mui-slider-item">
 			  <a href="#">
-				<img src="../../img/1-1.png">
+				<img :src="imagesname[0]">
 			  </a>
 			</div>
 			<!-- 第二张 -->
 			<div class="mui-slider-item">
 			  <a href="#">
-				<img src="../../img/1-2.png">
+				<img :src="imagesname[1]">
 			  </a>
 			</div>
-			<!-- 第三张 -->
-			<div class="mui-slider-item">
+			<!-- <!-- 第三张 -->
+			<!-- <div class="mui-slider-item">
 			  <a href="#">
-				<img src="../../img/1-3.png">
+				<img :src="imagesname[2]">
 			  </a>
-			</div>
+			</div>  -->
 			<!-- 第四张 -->
-			<div class="mui-slider-item">
+			<!-- <div class="mui-slider-item">
 			  <a href="#">
 				<img src="../../img/1-4.png">
 			  </a>
-			</div>
+			</div>  -->
 			<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
 			<div class="mui-slider-item mui-slider-item-duplicate">
 			  <a href="#">
-				<img src="../../img/1-1.png">
+				<img :src="imagesname[2]">
 			  </a>
 			</div>
 		  </div>
@@ -84,21 +84,32 @@
 		  		</li>
 		  		<li class="mui-table-view-cell">
 		  			<a >
-		  				 可租日期： {{carport.begintime}}至{{carport.endtime}}
+		  				 开始出租时间： {{carport.begintime}}
+		  			<a >
+		  				 结束出租时间：{{carport.endtime}}
 		  			</a>
 		  		</li>
 				
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right mui-row" href="../user/othermessage.html">
 						<div class="mui-col-sm-6">
-							 出租者：
+							 出租者：{{username}}
 						</div>
 						<div class="mui-col-sm-4"style="margin-left: 3rem;">
-							信誉度：
+							信誉度：{{xyd}}%
 						</div>
 					</a>
 				</li>
-				
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right mui-row" href="../user/othermessage.html">
+						<div class="mui-col-sm-6">
+							 价格：{{carport.price}}元/小时
+						</div>
+						<div class="mui-col-sm-4"style="margin-left: 3rem;">
+							车位编号：{{carport.carportnumber}}
+						</div>
+					</a>
+				</li>
 				
 		  	</ul>
 		</div>
@@ -129,7 +140,7 @@
 					<li class="mui-table-view-cell">
 						<a >
 							车位信息：<br>
-							
+							{{carport.message}}
 						</a>
 					</li>
 					
@@ -141,13 +152,13 @@
 	</div>
 	
 	<nav class="mui-bar mui-bar-tab" >
-		<a class="mui-tab-item " href="../order/neworder.html">
+		<a class="mui-tab-item " href="javascript:void(0)">
 			<div style="margin-bottom: 1rem;">
-				<button type="button" @click="neworder" class="mui-btn mui-btn-danger">停车</button>
+				<button type="button" @click="addorder()" class="mui-btn mui-btn-danger">停车</button>
 			</div>
 			
 		</a>
-		<a class="mui-tab-item" >
+		<!-- <a class="mui-tab-item" >
 			
 			<div style="margin-bottom: 1rem;">
 				
@@ -155,7 +166,7 @@
 				<button type="button" class="mui-btn ">加入购物车</button>
 			</div>
 			
-		</a>
+		</a> -->
 		
 	</nav>
 	
@@ -173,6 +184,9 @@
 			data:{
 				begintime:"",
 				endtime:"",
+				xyd:0.0,
+				imagesname:[],
+				username:"",
 				carport:{},
 			},
 			mounted() {
@@ -194,7 +208,12 @@
 				axios.get("http://myzuul.com:9500/port/carport/cid/"+urldata.id+"")
 				.then(res=>{
 					console.info(res.data)
+					this.xyd=(res.data.m_id.credibility.credibility)*100
+					this.username=res.data.m_id.username
 					this.carport=res.data
+					this.imagesname.push("http://192.168.3.152:8081/images/"+res.data.imgs_id.image1)
+					this.imagesname.push("http://192.168.3.152:8081/images/"+res.data.imgs_id.image2)
+					this.imagesname.push("http://192.168.3.152:8081/images/"+res.data.imgs_id.image3)
 				})
 				.catch(res=>{
 					console.info(res.data)
