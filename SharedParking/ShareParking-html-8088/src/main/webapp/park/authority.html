@@ -179,7 +179,9 @@
 				},
 				created(){
 					/* 直接发送请求，查询所有管理员  不包括自己  */
-					axios.get("http://myzuul.com:9500/user/user/findall")
+					axios.get("http://myzuul.com:9500/user/user/findall",{
+						withCredentials: true, 
+					})
 					.then(res=>{
 						this.data=res.data
 					})
@@ -188,7 +190,10 @@
 					update:function(){
 						var authority = $("#auth").val();
 						var username =$("#uname").val();
-						axios.put("http://myzuul.com:9500/user/user/add?authority="+authority+"&username="+username)
+						axios.put("http://myzuul.com:9500/user/user/add?authority="+authority+"&username="+username,{
+							withCredentials: true, 
+
+						})
 						.then(res=>{
 							
 						})
