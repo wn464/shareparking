@@ -12,7 +12,7 @@ public interface IComplaintService {
     public void deleteComplaint(int id);
     public int findComNum(int status);
     public PageBean findByDate(String begintime,String endtime,int page,int size,String str);
-    public int findDateNum(String begintime,String endtime);
+    public int findDateNum(String begintime,String endtime,String str);
     public ComplaintBean findById(int id);
     public void updateOrder(int id);
     public List<ComplaintBean> findBymid(int id);

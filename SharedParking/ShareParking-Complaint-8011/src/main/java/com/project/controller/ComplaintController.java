@@ -37,7 +37,7 @@ public class ComplaintController {
 	@GetMapping("/complaint/order/{oid}/{mid}")
 	public ComplaintBean findByOrder(@PathVariable("oid")int oid,@PathVariable("mid")int mid) {
 		String str = oid+""+mid;
-		ComplaintBean bean = service.findByoid(oid, mid,str);
+		ComplaintBean bean = service.findByoid(oid,mid,str);
 		System.out.println("对象"+bean);
 		return bean;
 	}
