@@ -49,7 +49,7 @@
 						<div class="panel-body" id="newinfo">
 							<div class="row">
 								<div class="col-md-3">
-									<div class="metric" onclick="location.href='http://localhost:8088/park/order.html#';"  style="cursor:pointer">
+									<div class="metric" onclick="location.href='http://myzuul.com:8080/park/order.html#';"  style="cursor:pointer">
 										<span class="icon" style="background-color: #dbd292"><i class="fa fa-eject" ></i></span>
 										<p>
 											<span class="number">{{order}}</span>
@@ -68,10 +68,10 @@
 								</div>
 								<div class="col-md-3">
 									<div class="metric">
-										<span class="icon" style="background-color: #fe8463"><i class="fa fa-archive"></i></span>
+										<span class="icon"  style="background-color: #fe8463"><i class="fa fa-archive"></i></span>
 										<p>
-											<span class="number">8</span>
-											<span class="title">今日新增投诉</span>
+											<a class="number" href="complain.html">{{complaintnumber}}</a>
+											<a class="title" href="complain.html">今日新增投诉</a>
 										</p>
 									</div>
 								</div>
@@ -143,6 +143,7 @@
 				data:{
 					order:[],
 					carportnumber:0,
+					complaintnumber:"",
 				},
 				created(){
 					/* 直接发送请求  查询今日的订单 */
@@ -155,6 +156,11 @@
 					.then(res=>{
 						console.info(res.data)
 						this.carportnumber=res.data.totalNumber
+					})
+					axios.get("http://myzuul.com:9500/complaint/complaint/"+getNowFormatDate()+"/"+getTomFormatDate())
+					.then(res=>{
+						console.info(res.data)
+						this.complaintnumber=res.data
 					})
 				}
 				
@@ -311,6 +317,38 @@
 	})
 	}
 	tab();
+	 //获取当前时间
+	 function getNowFormatDate() {
+	      var date = new Date();
+	      var seperator1 = "-";
+	      var year = date.getFullYear();
+	      var month = date.getMonth() + 1;
+	      var strDate = date.getDate();
+	      if (month >= 1 && month <= 9) {
+	          month = "0" + month;
+	      }
+	      if (strDate >= 0 && strDate <= 9) {
+	          strDate = "0" + strDate;
+	      }
+	      var currentdate = year + seperator1 + month + seperator1 + strDate;
+	      return currentdate;
+	  }
+	//获取明日时间
+	 function getTomFormatDate() {
+	      var date = new Date();
+	      var seperator1 = "-";
+	      var year = date.getFullYear();
+	      var month = date.getMonth() + 1;
+	      var strDate = date.getDate()+1;
+	      if (month >= 1 && month <= 9) {
+	          month = "0" + month;
+	      }
+	      if (strDate >= 0 && strDate <= 9) {
+	          strDate = "0" + strDate;
+	      }
+	      var currentdate = year + seperator1 + month + seperator1 + strDate;
+	      return currentdate;
+	  }
 	</script>
 </body>
 </html>

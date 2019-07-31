@@ -4,13 +4,9 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-<<<<<<< HEAD
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
         <dependent-module archiveName="ShareParking-comment-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ShareParking-comment/ShareParking-comment">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-=======
->>>>>>> branch 'master' of https://github.com/wn464/shareparking.git
         <property name="context-root" value="woniucloud"/>
         <property name="java-output-path" value="/ShareParking-sso-9501/target/classes"/>
     </wb-module>

@@ -43,6 +43,13 @@ public class ComplaintController {
 		return list;
 	}
 	
+	@GetMapping("/complaint/{begintime}/{endtime}")
+	public int findDateNum(@PathVariable("begintime")String begintime, @PathVariable("endtime")String endtime) {
+		String str = begintime+""+endtime;
+		int i =service.findDateNum(begintime, endtime, str);
+		return i;
+	}
+	
 	@GetMapping("/complaint/order/{oid}/{mid}")
 	public ComplaintBean findByOrder(@PathVariable("oid")int oid,@PathVariable("mid")int mid) {
 		String str = oid+""+mid;
