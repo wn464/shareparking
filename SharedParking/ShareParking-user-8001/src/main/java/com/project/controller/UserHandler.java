@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /*
@@ -43,8 +44,14 @@ public class UserHandler {
     }
 
     @PostMapping("/user/username")
-    public UserBean findByName(String username) {
-    	System.out.println(username);
+    public UserBean findByName(HttpSession session,String username) {
+    
+    	int id = (int) session.getAttribute("userid");
+    	UserBean bean = service.findById(id);
+
+    	if(bean.getUsername()!=null) {
+    		return service.findByUserName(bean.getUsername());
+    	}
     	return service.findByUserName(username);
     }
 
@@ -53,11 +60,13 @@ public class UserHandler {
      */
     //查询所有管理员
     @GetMapping("/user/findall")
-    public List<UserBean> findAll(HttpSession session){	 
+    public List<UserBean> findAll(HttpServletRequest request){	 
+    	HttpSession session = request.getSession();
     	System.out.println(session.getId());
     	 int id = (int) session.getAttribute("userid");	//获取当前登录的id
     	 System.out.println("id======="+id);
         List<UserBean> list = service.findAll(id);
+        System.out.println(list);
         return list;
     }
     

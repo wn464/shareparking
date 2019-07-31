@@ -55,7 +55,7 @@
 				<nav>
 					<ul class="nav" >
 						<li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>共享车位主页</span></a></li>
-						<li><a href="log.html" class=""><i class="lnr lnr-file-empty"></i> <span>日志管理</span></a></li>
+						<li v-if="shabi==2"><a href="log.html" class=""><i class="lnr lnr-file-empty"></i> <span>日志管理</span></a></li>
 						
 						<li><a href="order.html" class=""><i class="lnr lnr-map"></i> <span>订单中心</span></a></li>
 						<li><a href="car.html" class=""><i class="lnr lnr-map-marker"></i> <span>车位信息</span></a></li>
@@ -64,7 +64,7 @@
 						<li><a href="money.html" class=""><i class="lnr lnr-linearicons"></i> <span>财务统计</span></a></li>
 						<li><a href="complain.html" class="active"><i class="lnr lnr-chart-bars"></i> <span>投诉管理</span></a></li>
 						<li><a href="user-change.html" class=""><i class="lnr lnr-user"></i> <span>个人信息管理</span></a></li>
-						<li><a href="authority.html" class=""><i class="lnr lnr-cog"></i><span>操作权限管理</span></a></li>
+						<li v-if="shabi==2"><a href="authority.html" class=""><i class="lnr lnr-cog"></i><span>操作权限管理</span></a></li>
 					</ul>
 				</nav>
 			</div>
@@ -266,7 +266,7 @@
 // 		url:"http://myzuul.com:9500/complaint/complaint/12/1/2",
 //      网页初始页面
 	    var vm = new Vue({
-	    	el:"#app",
+	    	el:"#wrapper",
 	    	data:{
 	    		complaint:[],
 	    		compl:"",
@@ -279,7 +279,8 @@
 	    		comid:"",
 	    		mess:"",
 	    		sta:"",
-	    		img:"",    		
+	    		img:"",   
+	    		shabi:{}
 	    	},
 	    	
 	    	created(){
@@ -291,7 +292,11 @@
      			  
 //      			 this.s=res.data.list[0].status.id;
      			 
-	    		});
+	    		}),
+	    		axios.post("http://myzuul.com:9500/user/user/username").then(res=>{
+					this.shabi=res.data.authority.id;
+
+				})
 	    	},
 	    	
 	    	methods:{
@@ -372,7 +377,7 @@
         			  $("#li2").css("background-color","white");
         			  $("#li3").css("background-color","pink");
         			  $("#res").html("操作");
-        			  this.s=res.data.list[0].status.id;
+        			  //this.s=res.data.list[0].status.id;
         		   })
         	   },
 //            受理
@@ -390,7 +395,7 @@
       			  this.credibility2=res.data.mem_y_id.credibility;
       			  this.comid=res.data.id;
       			  this.sta=res.data.status.name;
-      			  this.img="http://localhost:8081/images/"+res.data.imgName;
+      			  this.img="http://myzuul.com:80/images/"+res.data.imgName;
       		   })
              },
 //投诉成功

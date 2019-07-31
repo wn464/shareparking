@@ -82,7 +82,7 @@
 				 formData.append("file",img);
 				 console.info(formData);
 				 $.ajax({
-					url:"http://localhost:8081/comimg",
+					url:"http://myzuul.com:80/comimg",
 					type: 'post',
 					cache: false,
 					data: formData,
@@ -90,7 +90,7 @@
 					contentType: false,
 					success:function(mes){
 						console.log("sss"+JSON.stringify(mes));
-						vum.complaintImg="http://localhost:8081/images/"+mes;
+						vum.complaintImg="http://myzuul.com:80/images/"+mes;
 						vum.imgName=mes;
 					}
 			 })

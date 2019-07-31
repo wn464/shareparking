@@ -30,7 +30,7 @@
 				<nav>
 					<ul class="nav" >
 						<li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>共享车位主页</span></a></li>
-						<li><a href="log.html" class=""><i class="lnr lnr-file-empty"></i> <span>日志管理</span></a></li>
+						<li v-if="shabi==2"><a href="log.html" class=""><i class="lnr lnr-file-empty"></i> <span>日志管理</span></a></li>
 						
 						<li><a href="order.html" class=""><i class="lnr lnr-map"></i> <span>订单中心</span></a></li>
 						<li><a href="car.html" class=""><i class="lnr lnr-map-marker"></i> <span>车位信息</span></a></li>
@@ -39,7 +39,7 @@
 						<li><a href="money.html" class=""><i class="lnr lnr-linearicons"></i> <span>财务统计</span></a></li>
 						<li><a href="complain.html" class=""><i class="lnr lnr-chart-bars"></i> <span>投诉管理</span></a></li>
 						<li><a href="user-change.html" class=""><i class="lnr lnr-user"></i> <span>个人信息管理</span></a></li>
-						<li><a href="authority.html" class="active"><i class="lnr lnr-cog"></i><span>操作权限管理</span></a></li>
+						<li v-if="shabi==2"><a href="authority.html" class="active"><i class="lnr lnr-cog"></i><span>操作权限管理</span></a></li>
 					</ul>
 				</nav>
 			</div>
@@ -176,15 +176,20 @@
 		})
 		
 			var vm = new Vue({
-				el:"#app",
+				el:"#wrapper",
 				data:{
-					data:[]
+					data:[],
+					shabi:{}
 				},
 				created(){
 					/* 直接发送请求，查询所有管理员  不包括自己  */
 					axios.get("http://myzuul.com:9500/user/user/findall")
 					.then(res=>{
 						this.data=res.data
+					}),
+					axios.post("http://myzuul.com:9500/user/user/username").then(res=>{
+						this.shabi=res.data.authority.id;
+
 					})
 				},
 				methods: {

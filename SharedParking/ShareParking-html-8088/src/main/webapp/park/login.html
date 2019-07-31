@@ -77,24 +77,23 @@
 					params.append("username",username);
 					params.append("password",password);
 					axios.post("http://myzuul.com:9500/sso/user/login",params).then(res=>{
-						if(res.data==2){
-							layer.msg('密码输入错误 ', {
-								icon: 5,
-								time: 1500
-							}, function(){});   
-						}else if(res.data==1){
-							layer.msg('登陆成功', {
-								icon: 1,
-								time: 500
-							}, function(){
-								location.href="index.html"
-							});   
-						}else if(res.data==0){
-							layer.msg('格式不正确', {
-								icon: 5,
-								time: 1500
-							}, function(){});   
-						}
+
+							if(res.data==true){
+								layer.msg('登陆成功', {
+									icon: 1,
+									time: 500
+								}, function(){
+									location.href="index.html"
+								})
+								
+							}else{
+									layer.msg('密码输入错误 ', {
+										icon: 5,
+										time: 1500
+									}, function(){}); 
+									
+							}
+						
 					})
 				}
 			}

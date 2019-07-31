@@ -15,7 +15,8 @@
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 </head>
-<body>
+<body>	
+	<div id="newinfo">
 	<div id="wrapper">
 		<nav class="navbar navbar-default navbar-fixed-top" id="toping"></nav>
 	<!--侧边栏-->
@@ -24,7 +25,7 @@
 				<nav>
 					<ul class="nav" >
 						<li><a href="index.html" class="active"><i class="lnr lnr-home"></i> <span>共享车位主页</span></a></li>
-						<li><a href="log.html" class=""><i class="lnr lnr-file-empty"></i> <span>日志管理</span></a></li>
+						<li v-if="shabi==2"><a href="log.html" class=""><i class="lnr lnr-file-empty"></i> <span>日志管理</span></a></li>
 						
 						<li><a href="order.html" class=""><i class="lnr lnr-map"></i> <span>订单中心</span></a></li>
 						<li><a href="car.html" class=""><i class="lnr lnr-map-marker"></i> <span>车位信息</span></a></li>
@@ -33,7 +34,7 @@
 						<li><a href="money.html" class=""><i class="lnr lnr-linearicons"></i> <span>财务统计</span></a></li>
 						<li><a href="complain.html" class=""><i class="lnr lnr-chart-bars"></i> <span>投诉管理</span></a></li>
 						<li><a href="user-change.html" class=""><i class="lnr lnr-user"></i> <span>个人信息管理</span></a></li>
-						<li><a href="authority.html" class=""><i class="lnr lnr-cog"></i><span>操作权限管理</span></a></li>
+						<li v-if="shabi==2"><a href="authority.html" class=""><i class="lnr lnr-cog" ></i><span>操作权限管理</span></a></li>
 					</ul>
 				</nav>
 			</div>
@@ -46,10 +47,10 @@
 							<p class="panel-subtitle">&nbsp;</p>
 							<h3 class="panel-title">&nbsp;&nbsp;今日信息</h3>
 						</div>
-						<div class="panel-body" id="newinfo">
+						<div class="panel-body" >
 							<div class="row">
 								<div class="col-md-3">
-									<div class="metric" onclick="location.href='http://localhost:8088/park/order.html#';"  style="cursor:pointer">
+									<div class="metric" onclick="location.href='http://myzuul.com:8080/park/order.html#';"  style="cursor:pointer">
 										<span class="icon" style="background-color: #dbd292"><i class="fa fa-eject" ></i></span>
 										<p>
 											<span class="number">{{order}}</span>
@@ -61,17 +62,17 @@
 									<div class="metric">
 										<span class="icon" style="background-color: #27727b"><i class="fa fa-navicon"></i></span>
 										<p>
-											<span class="number">6</span>
-											<span class="title">今日新增车位</span>
+											<a class="number" href="car.html">{{carportnumber}}</a>
+											<a class="title" href="car.html">今日新增车位</a>
 										</p>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="metric">
-										<span class="icon" style="background-color: #fe8463"><i class="fa fa-archive"></i></span>
+										<span class="icon"  style="background-color: #fe8463"><i class="fa fa-archive"></i></span>
 										<p>
-											<span class="number">8</span>
-											<span class="title">今日新增投诉</span>
+											<a class="number" href="complain.html">{{complaintnumber}}</a>
+											<a class="title" href="complain.html">今日新增投诉</a>
 										</p>
 									</div>
 								</div>
@@ -118,6 +119,7 @@
 			</div>
 		</footer>
 	</div>
+	</div>
 	<script src="assets/vendor/jquery/jquery.min.js"></script>
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
@@ -141,14 +143,29 @@
 	var vm = new Vue({
 				el:"#newinfo",
 				data:{
-					order:[]
-				},
+					order:[],
+					shabi:{}
+
 				created(){
 					/* 直接发送请求  查询今日的订单 */
 					axios.get("http://myzuul.com:9500/orders/order/dayNumber/"+time)
 					.then(res=>{
 						console.info(res.data)
 						this.order=res.data
+					}),
+					axios.post("http://myzuul.com:9500/user/user/username").then(res=>{
+						this.shabi=res.data.authority.id;
+						console.info(this.shabi)
+					}),
+					axios.get("http://myzuul.com:9500/port/carport/time/1/100")
+					.then(res=>{
+						console.info(res.data)
+						this.carportnumber=res.data.totalNumber
+					}),
+					axios.get("http://myzuul.com:9500/complaint/complaint/"+getNowFormatDate()+"/"+getTomFormatDate())
+					.then(res=>{
+						console.info(res.data)
+						this.complaintnumber=res.data
 					})
 				}
 				
@@ -305,6 +322,39 @@
 	})
 	}
 	tab();
+	 //获取当前时间
+	 function getNowFormatDate() {
+	      var date = new Date();
+	      var seperator1 = "-";
+	      var year = date.getFullYear();
+	      var month = date.getMonth() + 1;
+	      var strDate = date.getDate();
+	      if (month >= 1 && month <= 9) {
+	          month = "0" + month;
+	      }
+	      if (strDate >= 0 && strDate <= 9) {
+	          strDate = "0" + strDate;
+	      }
+	      var currentdate = year + seperator1 + month + seperator1 + strDate;
+	      return currentdate;
+	  }
+	//获取明日时间
+	 function getTomFormatDate() {
+	      var date = new Date();
+	      var seperator1 = "-";
+	      var year = date.getFullYear();
+	      var month = date.getMonth() + 1;
+	      var strDate = date.getDate()+1;
+	      if (month >= 1 && month <= 9) {
+	          month = "0" + month;
+	      }
+	      if (strDate >= 0 && strDate <= 9) {
+	          strDate = "0" + strDate;
+	      }
+	      var currentdate = year + seperator1 + month + seperator1 + strDate;
+	      return currentdate;
+	  }
 	</script>
+	
 </body>
 </html>
