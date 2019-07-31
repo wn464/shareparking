@@ -24,7 +24,7 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<img src="assets/img/user.png" class="img-circle">
-								<span>{{data}}</span><i class="icon-submenu lnr lnr-chevron-down"></i></a>
+								<span></span><i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><a href="user-change.html"><i class="lnr lnr-user"></i> <span>个人中心</span></a></li>
 								<li><a href="http://myzuul.com:9500/sso/logout"><i class="lnr lnr-exit"></i> <span>注销</span></a></li>
@@ -58,18 +58,6 @@
 	});
 		
 		
-		var vm = new Vue({
-				el:"#brand",
-				data() {
-			       data:{}
-			    },
-				mounted:function(){
-				
-			    	axios.post("http://myzuul.com:9500/user/user/username").then(res=>{
-						this.data=res.data.username;
-						console.info(res.data)
-					})
-			    }
-		})
+		
 	</script>
 </html>
