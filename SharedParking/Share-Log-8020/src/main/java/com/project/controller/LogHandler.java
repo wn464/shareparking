@@ -24,7 +24,7 @@ public class LogHandler {
 	 */
 	@PostMapping("/log/{username}/{message}")
 	public Integer insertLog(@PathVariable("username")String username,@PathVariable("message")String message) {
-		System.out.println(username+"----------"+message);
+		System.out.println("日志"+username+"----------"+message);
 		int num = logService.insertLog(username, message);
 		return num;
 	}

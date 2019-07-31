@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({"com.project.service"})
 @ComponentScan({"com.project.controller"})
 @ComponentScan("com.project.config")
+@ComponentScan("com.project.aop")
 @MapperScan("com.project.dao")
 @EnableFeignClients(basePackages="com.project.controller.interfaces")
 public class ApplicationDemo {

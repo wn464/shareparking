@@ -40,7 +40,6 @@ public class OrderHandler {
 	 */
 	@PostMapping("/order")
 	public Integer insertOrder(OrderBean orderBean) {
-		System.out.println("-------------"+orderBean);
         orderBean.setMemberBean1(memberremoter.findById());
         orderBean.setCarNumber(memberremoter.findById().getList().get(0).getCarnumber());
 		int num = orderService.insertOrder(orderBean);
@@ -51,7 +50,7 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/{oid}")
 	public OrderBean selectOrderById(@PathVariable("oid")int oid) {
-		logRemoter.insertLog("xiao", "添加订单");
+		logRemoter.insertLog("root", "添加");
 		OrderBean orderBean = orderService.selectOrderById(oid);
 		return orderBean;
 	}
