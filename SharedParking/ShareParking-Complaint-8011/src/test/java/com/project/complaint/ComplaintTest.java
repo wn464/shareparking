@@ -61,9 +61,9 @@ public class ComplaintTest {
 //		PageBean bean = service.findByDate("2019-07-22 00:00:00","2019-07-25 00:00:00", 1, 2);
 //		System.out.println("页码："+bean);
 //	}
-	@Test
-	public void test7() {
-		int i = service.findDateNum("2019-07-22 00:00:00","2019-07-25 00:00:00");
-		System.out.println(i);
-	}
+//	@Test
+//	public void test7() {
+////		int i = service.findDateNum("2019-07-22 00:00:00","2019-07-25 00:00:00");
+//		System.out.println(i);
+//	}
 }

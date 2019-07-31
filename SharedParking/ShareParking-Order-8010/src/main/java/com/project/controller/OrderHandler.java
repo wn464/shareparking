@@ -19,6 +19,7 @@ import com.project.Bean.OrderBean;
 import com.project.Bean.OrderDTO;
 import com.project.Bean.PageBean;
 import com.project.controller.interfaces.CredibilityHandler;
+import com.project.controller.interfaces.LogRemoter;
 import com.project.controller.interfaces.MemberRemoter;
 import com.project.service.IOrderService;
 import com.project.util.CountPrice;
@@ -31,13 +32,15 @@ public class OrderHandler {
 	private CredibilityHandler credibilityHandler;
 	@Autowired
 	private MemberRemoter memberremoter;
-	
+	@Autowired
+	private LogRemoter logRemoter;
 	
 	/*
 	 * 添加订单
 	 */
 	@PostMapping("/order")
 	public Integer insertOrder(OrderBean orderBean) {
+		System.out.println("+++++++++++++++++"+orderBean);
         orderBean.setMemberBean1(memberremoter.findById());
         orderBean.setCarNumber(memberremoter.findById().getList().get(0).getCarnumber());
 		int num = orderService.insertOrder(orderBean);
@@ -48,9 +51,8 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/{oid}")
 	public OrderBean selectOrderById(@PathVariable("oid")int oid) {
-		System.out.println("111111111-=-=-=-=-=-=-"+oid);
+		logRemoter.insertLog("root", "添加");
 		OrderBean orderBean = orderService.selectOrderById(oid);
-		System.out.println("-----========="+orderBean);
 		return orderBean;
 	}
 	/*

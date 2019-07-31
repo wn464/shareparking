@@ -23,7 +23,6 @@ public class ComplaintController {
 	
 	@PostMapping("/complaint")
 	public int addComplaint(@RequestBody ComplaintBean bean) {
-		System.out.println("名字："+bean);
 		service.addComplaint(bean);
 		return 1;
 	}
@@ -37,8 +36,7 @@ public class ComplaintController {
 	@GetMapping("/complaint/order/{oid}/{mid}")
 	public ComplaintBean findByOrder(@PathVariable("oid")int oid,@PathVariable("mid")int mid) {
 		String str = oid+""+mid;
-		ComplaintBean bean = service.findByoid(oid, mid,str);
-		System.out.println("对象"+bean);
+		ComplaintBean bean = service.findByoid(oid,mid,str);
 		return bean;
 	}
 	

@@ -30,6 +30,8 @@
 				<nav>
 					<ul class="nav" >
 						<li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>共享车位主页</span></a></li>
+						<li><a href="log.html" class=""><i class="lnr lnr-file-empty"></i> <span>日志管理</span></a></li>
+						
 						<li><a href="order.html" class=""><i class="lnr lnr-map"></i> <span>订单中心</span></a></li>
 						<li><a href="car.html" class=""><i class="lnr lnr-map-marker"></i> <span>车位信息</span></a></li>
 						<li><a href="member.html" class=""><i class="lnr lnr-users"></i> <span>用户管理</span></a></li>
@@ -127,13 +129,13 @@
 										<div class="form-group">
 		<!--点击修改后管理员的信息显示在这里-->   		<label class="col-sm-4 control-label">管理员工号 ： </label>
 										    <div class="col-sm-7">
-										    	<p class="form-control-static" id="uname">3421</p>
+										    	<p class="form-control-static" id="uname"></p>
 										    </div>
 										</div>
 										<div class="form-group">
 		<!--点击修改后管理员的信息显示在这里-->   		<label class="col-sm-4 control-label">管理员姓名 ： </label>
 										    <div class="col-sm-7">
-										    	<p class="form-control-static" id="nname">王小二</p>
+										    	<p class="form-control-static" id="nname"></p>
 										    </div>
 										</div>
 										<div class="form-group">
@@ -168,6 +170,7 @@
 	<script src="assets/js/vue.js" type="text/javascript" charset="utf-8"></script>
 	<script src="assets/js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 	<script>
+	    
 		$(function(){
 				$("#toping").load("top.html");
 		})
@@ -179,9 +182,7 @@
 				},
 				created(){
 					/* 直接发送请求，查询所有管理员  不包括自己  */
-					axios.get("http://myzuul.com:9500/user/user/findall",{
-						withCredentials: true, 
-					})
+					axios.get("http://myzuul.com:9500/user/user/findall")
 					.then(res=>{
 						this.data=res.data
 					})

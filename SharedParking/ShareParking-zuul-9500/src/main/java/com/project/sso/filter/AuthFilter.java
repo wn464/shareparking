@@ -4,8 +4,10 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 
-import java.util.HashMap;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,9 +37,13 @@ public class AuthFilter extends ZuulFilter{
 	  RequestContext ctx = RequestContext.getCurrentContext();
       HttpServletRequest request = ctx.getRequest();
       HttpServletResponse response = ctx.getResponse();
-      request.getSession().setAttribute("id", 1);
+      request.getSession().setAttribute("userid", 1);
+      request.getSession().setAttribute("username", "ss");
+      request.getSession().setAttribute("memberid", 1);
+      request.getSession().setAttribute("membername", "log");
       //访问路径
-      String url = request.getRequestURL().toString();
+      System.out.println(request.getSession().getId());
+      //String url = request.getRequestURL().toString();
       String uri = request.getRequestURI().toString();
       System.out.println(uri);
       
@@ -45,13 +51,28 @@ public class AuthFilter extends ZuulFilter{
       //CORS实现跨域
       //https://www.cnblogs.com/lazyInsects/p/8110758.html
       HttpServletResponse res =response;  
+      String origin = request.getHeader("Origin");
+      if(origin == null) {
+          origin = request.getHeader("Referer");
+      }
+      System.out.println(origin);
 	  res.setContentType("text/html;charset=UTF-8");  
-	  res.setHeader("Access-Control-Allow-Origin", "*");  
+	  res.setHeader("Access-Control-Allow-Origin", origin);  
 	  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");  
-	  res.setHeader("Access-Control-Max-Age", "0");  
+	  res.setHeader("Access-Control-Max-Age", "30");  
 	  res.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");  
 	  res.setHeader("Access-Control-Allow-Credentials", "true");  
 	  res.setHeader("XDomainRequestAllowed","1");  
+	  Cookie[] cookies = request.getCookies();
+      if(null != cookies){
+          for (Cookie cookie : cookies) {
+              System.out.println(cookie.getName()+":"+cookie.getValue());
+          }
+      }
+      if(cookies==null) {
+    	  System.out.println("cookie为空");
+      }
+      
 	  return false;
 	}
 
@@ -67,18 +88,24 @@ public class AuthFilter extends ZuulFilter{
 		RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         HttpServletResponse response = ctx.getResponse();
-
         //访问路径
         String url = request.getRequestURL().toString();
         String uri = request.getRequestURI().toString();
         //判断是否放行
         String filterUri=null;
-        String filterPermission=null;
+        List<String> filterRole=new ArrayList<String>();
+        List<String> filterPermission=new ArrayList<String>();
         Map<String, String> urimap = new LinkedHashMap<String, String>();
         
-        
-        
-        
+        urimap.put("/sso/user/login", "anno");
+        urimap.put("/sso/user/logout", "anno");
+        urimap.put("/sso/unlogin", "anno");
+        urimap.put("/sso/unrole", "anno");
+        urimap.put("/sso/unpremission", "anno");
+        urimap.put("/sso/member/login", "anno");
+        urimap.put("/sso/member/logout", "anno");
+//      urimap.put("/getusr", "role:user,role:member");
+        urimap.put("/**", "");
         Set<String> set =urimap.keySet();
         for (String string : set) {
         	if(pathmatcher.match(string, uri)) {
@@ -88,18 +115,35 @@ public class AuthFilter extends ZuulFilter{
 		}
         if(filterUri==null) {
         	//不放行
-        	
-        	
+        	//不受理页面
+        	ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(401);
         	return null;
         }
         
         //判断是否需要登录
-        filterPermission =urimap.get(filterUri);
-        if(filterPermission.equals("anno")) {
-        	//不需要登录，放行
-        	return null;
+         String[] arry = urimap.get(filterUri).split(",");
+         for (String string : arry) {
+			System.out.println(string);
+		}
+         for (String string : arry) {
+			if(string.contains("role:")) {
+				filterRole.add(string.replace("role:", ""));
+			}
+			if(string.contains("permission:")) {
+				filterPermission.add(string.replace("permission:", ""));
+			}
+		}
+//        filterPermission =urimap.get(filterUri);
+//        if(filterPermission.equals("anno")) {
+//        	//不需要登录，放行
+//        	return null;
+//        }
+        if(arry.length==1 && arry[0].equals("anno")) {
+        	ctx.setSendZuulResponse(true);
+            ctx.setResponseStatusCode(200);
+            return null;
         }
-        
         
         //判断是否登录
         //从cookie里面取值（Zuul丢失Cookie的解决方案：https://blog.csdn.net/lindan1984/article/details/79308396）
@@ -114,37 +158,101 @@ public class AuthFilter extends ZuulFilter{
         }
         if(accessToken==null) {
         	//跳转登录
+        	ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(401);
+            //重定向到登录页面
+            try {
+            	request.getSession().setAttribute("url", url);
+            	response.sendRedirect("http://myzuul.com:9500/sso/unlogin");
+            	//判断是web还是app
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
         
         //判断redis是否有效
         Object obj = redisTemplate.opsForValue().get(accessToken);
         if(obj==null) {
         	//登录失效
+        	ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(401);
+            //重定向到登录页面
+            try {
+            	//判断是web还是app
+            	request.getSession().setAttribute("url", url);
+            	response.sendRedirect("http://myzuul.com:9500/sso/unlogin");
+            	
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
         
         //获取redis参数
         Map<String, String> map = (Map<String, String>) obj;
         
-        //判断session是否有效
         
         
-        
-        //判断是否拥有角色
-        if(filterPermission.contains("role-")) {
-        	filterPermission.replace("role-", "");
+//        //判断是否拥有角色
+//        if(filterPermission.contains("role:")) {
+//        	filterPermission.replace("role:", "");
+//        }
+        if(filterRole.size()!=0) {
+        	String role = map.get("role");
+        	for (String string : filterRole) {
+				if(!string.equals(role)) {
+					//提示权限不足
+					//登录失效
+		        	ctx.setSendZuulResponse(false);
+		            ctx.setResponseStatusCode(401);
+		            //重定向到登录页面
+		            try {
+		            	//跳转无角色页面
+		            	response.sendRedirect("http://myzuul:9500/sso/unrole");
+		            	
+		            } catch (IOException  e) {
+		                e.printStackTrace();
+		            }
+		            return null;
+				}
+			}
         }
-        String role = map.get("role");
+        
         
         
         
         //判断是否拥有权限
-        if(filterPermission.contains("perm-")) {
-        	filterPermission.replace("perm-", "");
+//        if(filterPermission.contains("perm:")) {
+//        	filterPermission.replace("perm:", "");
+//        }
+        if(filterPermission.size()!=0) {
+        	String permission = map.get("permission");
+        	for (String string : filterPermission) {
+				if(!string.equals(permission)) {
+					//提示权限不足
+					//登录失效
+		        	ctx.setSendZuulResponse(false);
+		            ctx.setResponseStatusCode(401);
+		            //重定向到登录页面
+		            try {
+		            	//跳转权限不足的网站
+		            	
+		            	response.sendRedirect("http://myzuul:9500/sso/unpremission");
+		            } catch (IOException e) {
+		                e.printStackTrace();
+		            }
+		            return null;
+				}
+			}
         }
-        String permission = map.get("permission");
-       
         
         
+        
+        //剩下为满足条件
+        //放行
+        ctx.setSendZuulResponse(true);
+        ctx.setResponseStatusCode(200);
         return null;
         
 	}

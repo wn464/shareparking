@@ -43,8 +43,9 @@ public class UserHandler {
         return false;
     }
 
-    @GetMapping("/user/username")
+    @PostMapping("/user/username")
     public UserBean findByName(String username) {
+    	System.out.println(username);
     	return service.findByUserName(username);
     }
 
