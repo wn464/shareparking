@@ -32,7 +32,7 @@ public class OrderServiceImp implements IOrderService{
 	 *
 	 */
 	@Override
-	@CacheEvict(value="selectOrderById,selectOrderByOrderNumber,selectOrderByState1,selectOrderByState2,selectOrderByMonth,selectOrderCount,selcetOrderByDate,selectOrderNumberByDate,selcetOrderByDay,selectOrderByStatus",allEntries = true)
+	@CacheEvict(value= {"selectOrderById","selectOrderByOrderNumber","selectOrderByState1","selectOrderByState2","selectOrderByMonth","selectOrderCount","selcetOrderByDate","selectOrderNumberByDate","selcetOrderByDay","selectOrderByStatus"},allEntries = true)
 	public int insertOrder(OrderBean orderBean) {
 	//生成订单时间
 	String orderTime= CreateOrderInfo.getCreateTime();
@@ -103,7 +103,7 @@ public class OrderServiceImp implements IOrderService{
 	
 	//修改订单属性
 	@Override
-	@CacheEvict(value="selectOrderById,selectOrderByOrderNumber,selectOrderByState1,selectOrderByState2,selectOrderByMonth,selectOrderCount,selcetOrderByDate,selectOrderNumberByDate,selcetOrderByDay,selectOrderByStatus",allEntries = true)
+	@CacheEvict(value={"selectOrderById","selectOrderByOrderNumber","selectOrderByState1","selectOrderByState2","selectOrderByMonth","selectOrderCount","selcetOrderByDate","selectOrderNumberByDate","selcetOrderByDay","selectOrderByStatus"},allEntries = true)
 	public int updateOrderAttr(OrderBean orderBean) {
 		int num = orderDao.updateOrderAttr(orderBean);
 		return num;
