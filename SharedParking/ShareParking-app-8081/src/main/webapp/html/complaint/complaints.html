@@ -40,8 +40,8 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-// 	var id = window.location.href.split("=")[1];	
-    var id = 1;
+	var id = window.location.href.split("=")[1];	
+//     var id = 1;
 	var vm = new Vue({
 		el:"#app",
 		data:{
@@ -53,7 +53,7 @@
  		   axios.get("http://myzuul.com:9500/complaint/complaint/user/"+id)
  		   .then(res=>{
  			   for(var i=0;i<res.data.length;i++){
- 				   res.data[i].imgName="http://localhost:8081/images/"+res.data[i].imgName;
+ 				   res.data[i].imgName="http://myzuul.com:80/images/"+res.data[i].imgName;
  			   }
  			   console.info(res.data);
  			  this.complaint=res.data;
