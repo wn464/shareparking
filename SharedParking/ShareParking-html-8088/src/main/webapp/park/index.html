@@ -156,6 +156,11 @@
 						console.info(res.data)
 						this.carportnumber=res.data.totalNumber
 					})
+					axios.get("http://myzuul.com:9500/port/carport/time/1/100")
+					.then(res=>{
+						console.info(res.data)
+						this.carportnumber=res.data.totalNumber
+					})
 				}
 				
 				
