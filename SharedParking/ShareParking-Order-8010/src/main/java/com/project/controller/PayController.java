@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alipay.api.AlipayApiException;
 import com.project.Bean.MarkBean;
 import com.project.Bean.OrderBean;
+import com.project.controller.interfaces.carportHandler;
 import com.project.service.IOrderService;
 import com.project.util.AlipayUtil;
 import com.project.util.CountPrice;
@@ -26,6 +27,8 @@ public class PayController {
 	@Autowired
 	private IOrderService orderService;
 	
+	@Autowired
+	private carportHandler carportHandler;
 	//调用支付宝接口
 	@GetMapping("/pay/{oid}")
 	@ResponseBody
@@ -93,6 +96,8 @@ public class PayController {
 			statusBean.setId(4);
 			orderBean3.setStatusBean(statusBean);
 			orderService.updateOrderAttr(orderBean3);
+			//修改车位状态
+			carportHandler.updatestatusy(orderBean.getCarportBean().getId());
 			
 			//发送推送消息
 //			System.out.println("推送-------------------"+orderBean.getId());

@@ -141,6 +141,7 @@
 	
 	<script src="../../js/axios.min.js"></script>
 	<script type="text/javascript">
+	
 		var app2 = new Vue({
 			el:"#app2",
 			data:{
@@ -300,9 +301,8 @@
 	  			params.append("coordinate_y",app.weidu)
 	  			axios.post("http://myzuul.com:9500/port/carport",params)
 	  			.then(res=>{
-	  			if(res.data=="true"){
 	  				alert("添加成功")
-	  			}
+	  				location.reload();
 	  			})
 	  		},
 			getbegintime:function(){

@@ -21,6 +21,7 @@ import com.project.Bean.PageBean;
 import com.project.controller.interfaces.CredibilityHandler;
 import com.project.controller.interfaces.LogRemoter;
 import com.project.controller.interfaces.MemberRemoter;
+import com.project.controller.interfaces.carportHandler;
 import com.project.service.IOrderService;
 import com.project.util.CountPrice;
 @RestController
@@ -34,17 +35,21 @@ public class OrderHandler {
 	private MemberRemoter memberremoter;
 	@Autowired
 	private LogRemoter logRemoter;
-	
+	@Autowired
+	private carportHandler carportHandler ;
 	
 	/*
 	 * 添加订单
 	 */
 	@PostMapping("/order")
-	public Integer insertOrder(HttpServletRequest request,OrderBean orderBean) {
+	public Integer insertOrder(OrderBean orderBean) {
 		System.out.println("添加订单-----"+orderBean);
         orderBean.setMemberBean1(memberremoter.findById());
         orderBean.setCarNumber(memberremoter.findById().getList().get(0).getCarnumber());
 		int num = orderService.insertOrder(orderBean);
+		System.out.println("-----num"+num);
+		System.out.println("------id"+orderBean.getCarportBean().getId());
+		carportHandler.updatestatusf(orderBean.getCarportBean().getId());
 //		HttpSession session = request.getSession(false);
 //		String membername =  (String) session.getAttribute("membername");
 		logRemoter.insertLog("xiaowang", "添加订单");//测试数据
