@@ -35,22 +35,26 @@ public class OrderHandler {
 	@Autowired
 	private LogRemoter logRemoter;
 	
+	
 	/*
 	 * 添加订单
 	 */
 	@PostMapping("/order")
-	public Integer insertOrder(OrderBean orderBean) {
+	public Integer insertOrder(HttpServletRequest request,OrderBean orderBean) {
+		System.out.println("添加订单-----"+orderBean);
         orderBean.setMemberBean1(memberremoter.findById());
         orderBean.setCarNumber(memberremoter.findById().getList().get(0).getCarnumber());
 		int num = orderService.insertOrder(orderBean);
+//		HttpSession session = request.getSession(false);
+//		String membername =  (String) session.getAttribute("membername");
+		logRemoter.insertLog("xiaowang", "添加订单");//测试数据
 		return num;
 	}
 	/*
 	 * 生成订单
 	 */
 	@GetMapping("/order/{oid}")
-	public OrderBean selectOrderById(@PathVariable("oid")int oid) {
-		logRemoter.insertLog("root", "添加");
+	public OrderBean selectOrderById(HttpServletRequest request,@PathVariable("oid")int oid) {
 		OrderBean orderBean = orderService.selectOrderById(oid);
 		return orderBean;
 	}
@@ -59,10 +63,9 @@ public class OrderHandler {
 	 */
 	@GetMapping("/order/status1/{status}/{page}/{size}")
 	public PageBean selectOrderByState1(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size,HttpServletRequest request) {
-		System.out.println("==============="+status+"===========");
 //		HttpSession session = request.getSession(false);
-//		int id = (int) session.getAttribute("id");
-//		System.out.println("-------"+id);
+//		int mid = (int) session.getAttribute("memberid");
+//		System.out.println("-------"+mid);
 		int mid = 1;//测试数据
 		 String str = mid+""+page+""+status;
 		PageBean pageBean = orderService.selectOrderByState1(mid, status, page, size,str);
@@ -72,7 +75,10 @@ public class OrderHandler {
 	 * 出租客分页查询
 	 */
 	@GetMapping("/order/status2/{status}/{page}/{size}")
-	public PageBean selectOrderByState2(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
+	public PageBean selectOrderByState2(HttpServletRequest request,@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
+//		HttpSession session = request.getSession(false);
+//		int mid = (int) session.getAttribute("memberid");
+//		System.out.println("-------"+mid);
 		int mid = 2;//测试数据
 		 String str = mid+""+page+""+status;
 		PageBean pageBean = orderService.selectOrderByState2(mid, status, page, size,str);
@@ -246,7 +252,7 @@ public class OrderHandler {
 	 * 修改价格生成订单
 	 */
 	@GetMapping("/order/pay/{oid}/{price}")
-	public OrderBean payMoney(@PathVariable("oid")int oid,@PathVariable("price")double price) {
+	public OrderBean payMoney(@PathVariable("oid")int oid,@PathVariable("price")double price,HttpServletRequest request) {
 		System.out.println("付款订单"+price);
 		OrderBean orderBean = orderService.selectOrderById(oid);
 		System.out.println(orderBean);
@@ -259,6 +265,10 @@ public class OrderHandler {
 		System.out.println(orderBean2);
 		orderService.updateOrderAttr(orderBean2);
 		OrderBean order = orderService.selectOrderById(oid);
+		
+//		HttpSession session = request.getSession(false);
+//		int mid = (int) session.getAttribute("memberid");
+//		System.out.println("-------"+mid);
 		int id = 1;//测试数据
 		int num = credibilityHandler.updateCreOrder(id);
 		System.out.println("---------------"+num);

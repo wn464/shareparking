@@ -16,9 +16,8 @@ public class MyAspect {
 	/**
 	 * 后置通知要执行的
 	 */
-	@Around("execution(public * insertOrder(..)&& args(param1,param2))")
+	@Around("execution(public * insertOrder(..))")
 	public void after(){
-
 		System.out.println("MyAspect=======后置通知");
 	}
 
