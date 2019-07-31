@@ -153,12 +153,11 @@
 	</div>
 	
 	<nav class="mui-bar mui-bar-tab" >
-		<a class="mui-tab-item " href="javascript:void(0)">
+		<div class="mui-tab-item "  onclick="addorder()" >
 			<div style="margin-bottom: 1rem;">
-				<button type="button" @click="addorder()" class="mui-btn mui-btn-danger">停车</button>
+				<button type="button" class="mui-btn mui-btn-danger">停车</button>
 			</div>
-			
-		</a>
+		</div>
 		<!-- <a class="mui-tab-item" >
 			
 			<div style="margin-bottom: 1rem;">
@@ -188,11 +187,13 @@
 				imagesname:[],//车位图片
 				username:"",//车位所属人的id
 				carport:{},//车位
+				cid:0,
 			},
 			mounted() {
 				mui('body').on('tap','a',function(){
 				       window.top.location.href=this.href;
 				});
+				
 				dtpicker = new mui.DtPicker({
 				type:'datetime',
 				beginDate:new Date(this.carport.begintime),
@@ -211,6 +212,7 @@
 					this.xyd=(res.data.m_id.credibility.credibility)*100
 					this.username=res.data.m_id.username
 					this.carport=res.data
+					this.cid=res.data.m_id.id
 					this.imagesname.push("http://localhost:8081/images/"+res.data.imgs_id.image1)
 					this.imagesname.push("http://localhost:8081/images/"+res.data.imgs_id.image2)
 					this.imagesname.push("http://localhost:8081/images/"+res.data.imgs_id.image3)
@@ -222,16 +224,27 @@
 			methods:{
 				addorder:function(){
 					var params=new URLSearchParams();
-					params.append("orderBean.carportBean.id",app.carport.id)
-					params.append("orderBean.memberBean2.id",app.caport.)
+					params.append("carportBean.id",app.carport.id)
+					params.append("memberBean2.id",app.cid)
+					axios.post("http://myzuul.com:9500/orders/order",params)
+					.then(res=>{
+						console.info(res.data)
+						window.location.href="../order/orderdetail.html?id="+res.data;
+					})
+					.catch(res=>{
+						console.info(res.data)
+					})
 				},
 			}
 		})
 	
 
 
+		function addorder() {
+			app.addorder();
+		}
 		
-		alert(window.location.search)
+		
 	</script>
 </body>
 </html>

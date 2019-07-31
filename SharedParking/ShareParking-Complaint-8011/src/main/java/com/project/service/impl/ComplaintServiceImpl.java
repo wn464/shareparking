@@ -46,7 +46,6 @@ public class ComplaintServiceImpl implements IComplaintService{
 		bean.setPage(page);
 		bean.setSize(size);
 		bean.setTotalPage((totalNumber%size==0)?(totalNumber/size):(totalNumber/size+1));
-		System.out.println(list);
 		return bean;
 	}
 
@@ -71,11 +70,9 @@ public class ComplaintServiceImpl implements IComplaintService{
 			accusesum = dao.findCreNum(mem_j_id);
 			double order = ordersum;
 			double accuse = accusesum;
-			System.out.println("订单数："+order);
-			System.out.println("投诉数："+accuse);
-			Double credibility = 1-(double) (accuse/order);
-//			DecimalFormat df=new DecimalFormat(".##");
-//			credibility=Double.valueOf(df.format(credibility));
+			double credibility = 1-(double) (accuse/order);
+			DecimalFormat df=new DecimalFormat(".##");
+			credibility=Double.valueOf(df.format(credibility));
 			dao2.updateCredibility(credibility, mem_j_id);
 			}
 		}else {
