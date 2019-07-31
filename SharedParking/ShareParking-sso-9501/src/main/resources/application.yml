@@ -14,7 +14,7 @@ spring:
   application:
     name: sharePark-sso
   redis:
-    database: 0 #连接数据库s
+    database: 0 #连接数据库
     host: 106.52.25.168 #主机名称
     port: 6379 #端口号
     password: 

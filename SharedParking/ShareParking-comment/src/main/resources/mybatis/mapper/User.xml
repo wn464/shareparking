@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.dao.IUserDao">
-    <select id="findByUserName" resultType="UserBean">
+    <select id="findByUserName" resultMap="map">
         select * from user where username=#{username}
     </select>
 
@@ -24,5 +24,6 @@
         <result property="email" column="email"/>
         <association property="gender" javaType="MarkBean" select="com.project.dao.Markdao.findmarkbyid" column="gender"/>
         <association property="authority" javaType="AuthorityBean" select="com.project.dao.IAuthorityDao.findById" column="a_id"/>
+    
     </resultMap>
 </mapper>
