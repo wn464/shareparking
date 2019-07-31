@@ -125,7 +125,7 @@
 									</div>
 								</div>
 								<div class="panel-body no-padding bg-primary text-center">
-		   <!--显示车位产权复印件图片的位置--><img src="assets/img/profile-bg.png" style="height: 100%;width: 100%;"/>
+		   <!--显示车位产权复印件图片的位置--><img :src="geturl(item.statusimage)"  style="height: 100%;width: 100%;"/>
 								</div>
 							</div>
 						</div>
@@ -171,9 +171,6 @@
 						location.reload()
 					}
 				})
-				.cache(res=>{
-					console.info(res.data)
-				});
 			},
 			back:function(id){
 				axios.put("http://myzuul.com:9500/port/carport/audit/"+id+"/15")
@@ -183,10 +180,11 @@
 						location.reload()
 					}
 				})
-				.cache(res=>{
-					console.info(res.data)
-				});
-			}
+			},
+			geturl:function(statusimage){
+				var url="http://localhost:8081/images/"+statusimage+"";
+				return url;
+			},
 		},
 		created(){
 			axios.get("http://myzuul.com:9500/port/carport/auauditstatus")
