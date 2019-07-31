@@ -23,11 +23,15 @@ import com.project.Bean.MarkBean;
 import com.project.Bean.MemberBean;
 import com.project.Bean.PageBean;
 import com.project.IService.CarportIService;
+import com.project.controller.interfaces.LogRemoter;
+import com.project.controller.interfaces.MemberRemoter;
 
 @Controller
 public class CarportController {
 	@Autowired
 private CarportIService service;
+@Autowired	
+private LogRemoter logservice;
 	/**
 	 * 通过所属人查询车位
 	 * @param mid
@@ -159,6 +163,9 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 		String number="ABCD"+UUID.randomUUID();
 		carport.setCarportnumber(number);
 		boolean l =service.addcarport(carport);
+		String name=(String) session.getAttribute("membername");
+		String message=name+"新增了一个车位";
+		 logservice.insertLog(name, message); 
 		return l;
 	}
 	/**
@@ -171,6 +178,7 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	@ResponseBody
 	public PageBean findcarportbyday(@PathVariable("page")int page,@PathVariable("size")int size) {
 		PageBean pagebean=service.findcarportbyday(page, size);
+		
 		return pagebean;
 	}
 	/**
