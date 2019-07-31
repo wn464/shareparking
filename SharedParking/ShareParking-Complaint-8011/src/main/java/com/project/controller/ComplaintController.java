@@ -68,6 +68,7 @@ public class ComplaintController {
     public PageBean findComplaintbydate(@PathVariable("begintime")String begintime, @PathVariable("endtime")String endtime, @PathVariable("page")int page, @PathVariable("size")int size){
 		String str = begintime+""+endtime+""+page;
 		PageBean bean =service.findByDate(begintime,endtime, page, size,str);
+		System.out.println("sdads"+bean);
 		return bean;
 	}
 	

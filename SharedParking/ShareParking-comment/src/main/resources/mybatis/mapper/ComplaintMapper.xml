@@ -26,7 +26,7 @@
         select * from complaint where id = #{id}
     </select>
     <select id="findCreNum" parameterType="int" resultType="int">
-        select count(*) from complaint where mem_y_id =#{id}
+        select count(*) from complaint where mem_y_id =#{id} and type=16
     </select>
     <select id="findComNum" parameterType="int" resultType="int">
         select count(*) from complaint where status=#{status}

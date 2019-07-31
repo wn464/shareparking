@@ -198,16 +198,14 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	 * @param endtime
 	 * @return
 	 */
-	@PutMapping(value="/carport/updatastatus/{id}/{begintime}/{endtime}")
+	@PostMapping(value="/carport/updatastatus/cz")
 	@ResponseBody
-public boolean updatacarport(@PathVariable("id")int id,@PathVariable("begintime")String begintime,@PathVariable("endtime")String endtime) {
-	CarportBean p=new CarportBean();
-	p.setBegintime(begintime);
-	p.setEndtime(endtime);
+public boolean updatacarport(CarportBean carport) {
+		System.out.println("+++++++++"+carport);
 	MarkBean status=new MarkBean();
 	status.setId(10);
-	p.setStatus(status);
-	boolean l=service.updatacarport(p);
+	carport.setStatus(status);
+	boolean l=service.updatacarport(carport);
 	return l;
 }
 	/**
