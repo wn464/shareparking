@@ -14,6 +14,8 @@
 	<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css"/>
 	<script type="text/javascript">
 	mui.init()
 	</script>
@@ -23,44 +25,34 @@
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">修改车位</h1>
 	</header>
-	<div class="mui-content">
+	<div class="mui-content" id="app">
 		<div >
 			
 			<div class="mui-card">
-				<div class="carportimgs"></div>
 				<div class="mui-input-row">
-					<label>车位图片</label>
-					<input type="file" style="margin-top: 0.3125rem;" accept="image/jpeg,image/x-png,image/gif" class="mui-input-clear">
+					<label>开始出租时间</label>
+					<input type="text" class="mui-input-clear" placeholder="请输入" readonly  @click="getbegintime" v-model="begintime">
+				</div>
+				<div class="mui-input-row">
+					<label>结束出租时间</label>
+					<input type="text" class="mui-input-clear" placeholder="请输入" placeholder="结束时间" readonly @click="getendtime" v-model="endtime">
 				</div>
 				
 			</div>
 			
 			
 			<div class="mui-card">
-				<form class="mui-input-group">
-					<div class="mui-input-row">
-						<label>名字</label>
-						<input type="text" class="mui-input-clear" placeholder="请输入">
-					</div>
-					<div class="mui-input-row">
-						<label>地址</label>
-						<input type="text" class="mui-input-clear" placeholder="请输入">
-					</div>
-					<div class="mui-input-row">
-						<label>坐标</label>
-						<input type="text" class="mui-input-clear" placeholder="请输入">
-					</div>
-					<div class="mui-input-row">
-						<label>价格</label>
-						<input type="text" class="mui-input-clear" placeholder="请输入">
-					</div>
-					
-				</form>
-				<div class="mui-input-row">
-					<label>描述</label>
-					<textarea rows="5" cols="15" maxlength="150" style="border: #000000 solid 0.0625rem;"></textarea>
-				</div>
-				
+				<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<a >
+								 
+								 <label>修改出租状态</label>
+								 <div class="mui-switch mui-active">
+								 	<div class="mui-switch-handle"></div>
+								 </div>
+							</a>
+						</li>
+					</ul>
 				
 				
 			</div>
@@ -76,6 +68,40 @@
 		</div>
 	</div>
 	
-	
+	<script type="text/javascript">
+		var dtpicker;
+		var app = new Vue({
+			el:"#app",
+			data:{
+				begintime:"",//开始出租时间
+				endtime:"",//结束时间
+			},
+			mounted() {
+				dtpicker = new mui.DtPicker({
+				type:'datetime',
+				beginDate:new Date()
+		
+				})
+				
+			},created() {
+				
+			},
+			methods:{
+				getbegintime:function(){
+					dtpicker.show(function(e) { 
+					    console.log(e.value); 
+						app.begintime=e.value;
+					})
+				},
+				getendtime:function(){
+					dtpicker.show(function(e) { 
+					    console.log(e); 
+						app.endtime=e.value;
+					})
+				},
+				
+			}
+		})
+	</script>
 </body>
 </html>

@@ -47,6 +47,10 @@ public class SSOServerHandler {
 		if(!member.getPassword().equals(password)) {
 			return false;
 		}
+		//设置session
+        HttpSession session = request.getSession();
+        session.setAttribute("memberid", member.getId());
+        session.setAttribute("membername", member.getUsername());
 		createToken(member.getId(), username, USER, "",request,response);
 		return true;
 	}
@@ -61,6 +65,10 @@ public class SSOServerHandler {
 		if(!user.getPassword().equals(password)) {
 			return false;
 		}
+		//设置session
+        HttpSession session = request.getSession();
+        session.setAttribute("userid", user.getId());
+        session.setAttribute("username", user.getUsername());
 		createToken(user.getId(), username, USER, user.getAuthority().getName(),request,response);
 		return true;
 	}
@@ -77,20 +85,14 @@ public class SSOServerHandler {
 		return "没有登录";
 	}
 	//登出
-	@GetMapping("/user/logout")
+	@GetMapping("/logout")
 	public String userLogout(HttpServletRequest request,HttpServletResponse response) {
 		//清除redis
 		clearToken(getToken(request, response));
 		//跳转登录
 		return "/user/index.html";
 	}
-	@GetMapping("/member/logout")
-	public String memberLogout(HttpServletRequest request,HttpServletResponse response) {
-		//清除redis
-		clearToken(getToken(request, response));
-		//跳转登录
-		return "/member/index.html";
-	}
+
 	
 	public String getToken(HttpServletRequest request,HttpServletResponse response) {
 		String token = "";
@@ -139,5 +141,6 @@ public class SSOServerHandler {
         response.addCookie(cookie);
         request.getSession().setAttribute("id", id);
 		//生成cookie
+        
 	}
 }
