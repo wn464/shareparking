@@ -123,5 +123,6 @@
         <module>ShareParking-html-8088</module>
         <module>ShareParking-app-8081</module>
         <module>ShareParking-sso-9501</module>
+        <module>Share-Log-8020</module>
 	</modules>
 </project>
