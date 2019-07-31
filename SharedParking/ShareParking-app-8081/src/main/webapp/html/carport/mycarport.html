@@ -160,9 +160,9 @@
 				this.carport=res.data
 				this.zt=res.data.status.name
 				this.shzt=res.data.auditstatus.name
-				this.carportimg.push("http://192.168.3.152:8081/images/"+res.data.imgs_id.image1)
-				this.carportimg.push("http://192.168.3.152:8081/images/"+res.data.imgs_id.image2)
-				this.carportimg.push("http://192.168.3.152:8081/images/"+res.data.imgs_id.image3)
+				this.carportimg.push("http://localhost:8081/images/"+res.data.imgs_id.image1)
+				this.carportimg.push("http://localhost:8081/images/"+res.data.imgs_id.image2)
+				this.carportimg.push("http://localhost:8081/images/"+res.data.imgs_id.image3)
 			})
 			.catch(res=>{
 				console.info(res.data)
