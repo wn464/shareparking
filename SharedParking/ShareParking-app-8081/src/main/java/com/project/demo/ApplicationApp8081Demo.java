@@ -19,6 +19,6 @@ public class ApplicationApp8081Demo {
 	}
 	@GetMapping("/id")
 	public String id(HttpSession session) {
-		return session.getAttribute("id").toString();
+		return session.getAttribute("userid").toString();
 	}
 }

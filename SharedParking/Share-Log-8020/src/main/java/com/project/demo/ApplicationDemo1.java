@@ -10,12 +10,9 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan({"com.project.service"})
 @ComponentScan({"com.project.controller"})
-@ComponentScan("com.project.config")
-@ComponentScan("com.project.aop")
 @MapperScan("com.project.dao")
-@EnableFeignClients(basePackages="com.project.controller.interfaces")
-public class ApplicationDemo {
+public class ApplicationDemo1 {
 	public static void main(String[] args) {
-		SpringApplication.run(ApplicationDemo.class, args);
+		SpringApplication.run(ApplicationDemo1.class, args);
 	}
 }
