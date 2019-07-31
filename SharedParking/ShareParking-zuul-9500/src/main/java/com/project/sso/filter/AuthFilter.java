@@ -55,12 +55,14 @@ public class AuthFilter extends ZuulFilter{
       if(origin == null) {
           origin = request.getHeader("Referer");
       }
+     
+      System.out.println( request.getMethod());
       System.out.println(origin);
 	  res.setContentType("text/html;charset=UTF-8");  
 	  res.setHeader("Access-Control-Allow-Origin", origin);  
-	  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");  
+	  res.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH");  
 	  res.setHeader("Access-Control-Max-Age", "30");  
-	  res.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");  
+	  res.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With, userId, token, Accept, Accept-Encoding, Accept-Language, Access-Control-Request-Method, Connection, Host, User-Agent, Cache-Control, OPTIONS");  
 	  res.setHeader("Access-Control-Allow-Credentials", "true");  
 	  res.setHeader("XDomainRequestAllowed","1");  
 	  Cookie[] cookies = request.getCookies();
@@ -72,7 +74,12 @@ public class AuthFilter extends ZuulFilter{
       if(cookies==null) {
     	  System.out.println("cookie为空");
       }
-      
+      //复杂请求直接放行
+      if( request.getMethod().equals("OPTIONS")) {
+    	  ctx.setSendZuulResponse(false);//不再路由
+    	  ctx.setResponseStatusCode(200);//设置状态码200
+    	  return false;//不过滤
+      }
 	  return false;
 	}
 
