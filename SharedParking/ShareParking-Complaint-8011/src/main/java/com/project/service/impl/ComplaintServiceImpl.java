@@ -50,7 +50,7 @@ public class ComplaintServiceImpl implements IComplaintService{
 	}
 
 	@Override
-	@CacheEvict(value="*",allEntries = true)
+	@CacheEvict(value= {"findByStatus","findComNum","findByDate","findDateNum","findById","findBymid","findByoid"},allEntries = true)
 	public void updateComplaint(int id,int type) {
 		dao.updateComplaint(id);
 		dao.updateType(id, type);
@@ -92,7 +92,7 @@ public class ComplaintServiceImpl implements IComplaintService{
 	}
 
 	@Override
-	@CacheEvict(value="*",allEntries = true)
+	@CacheEvict(value= {"findByStatus","findComNum","findByDate","findDateNum","findById","findBymid","findByoid"},allEntries = true)
 	public void deleteComplaint(int id) {
 		dao.deleteComplaint(id);
 		
@@ -135,7 +135,7 @@ public class ComplaintServiceImpl implements IComplaintService{
 	}
 
 	@Override
-	@CacheEvict(value="*",allEntries = true)
+	@CacheEvict(value= {"findByStatus","findComNum","findByDate","findDateNum","findById","findBymid","findByoid"},allEntries = true)
 	public void updateOrder(int id) {
 		int accusesum = dao.findCreNum(id);
 		int ordersum = dao1.selectOrderNumberByMem2(id);
@@ -162,6 +162,7 @@ public class ComplaintServiceImpl implements IComplaintService{
 	}
 
 	@Override
+	@CacheEvict(value= {"findByStatus","findComNum","findByDate","findDateNum","findById","findBymid","findByoid"},allEntries = true)
 	public void updateStatusTpe(int id) {
 		dao.updateStatusType(id);
 		

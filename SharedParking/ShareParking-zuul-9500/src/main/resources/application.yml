@@ -14,13 +14,10 @@ spring:
         max-active: 10 #最大连接数
         max-wait: -1 #连接等待时间
         min-idle: 0 #最小连接数
-sharePark-zuul:
-  ribbon:
-    ReadTimeout: 12000
-    ConnectTimeout: 48000
-    eureka: 
-     enabled: true
-     
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
 eureka:
   client: #客户端注册进eureka服务列表内
     service-url: 
@@ -65,6 +62,9 @@ zuul:
        service-id: park-log
        path:  /log/** 
        sensitiveHeaders: "*"
+  host:
+    connect-timeout-millis: 60000
+    socket-timeout-millis: 60000
       
 #  host:
 #    connect-timeout-millis: 60000 
@@ -74,7 +74,6 @@ zuul:
 #  ReadTimeout: 120000  #请求处理的超时时间  
 #  ConnectTimeout: 30000  #请求连接的超时时间
   
-
  
 
 info: #监控信息 
@@ -90,8 +89,3 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 12000
-
-
-  host:
-    socket-timeout-millis: 12000
-    connect-timeout-millis: 12000
