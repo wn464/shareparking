@@ -3,6 +3,9 @@ package com.project.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Bean.ComplaintBean;
 import com.project.Bean.PageBean;
+import com.project.controller.interfaces.LogRemoter;
 import com.project.service.IComplaintService;
 
 @RestController
 public class ComplaintController {
 	@Autowired
 	private IComplaintService service;
+	@Autowired
+	private LogRemoter service1;
 	
 	@PostMapping("/complaint")
-	public int addComplaint(@RequestBody ComplaintBean bean) {
+	public int addComplaint(@RequestBody ComplaintBean bean,HttpServletRequest req) {
 		service.addComplaint(bean);
+		HttpSession session = req.getSession(false);
+        String membername = (String) session.getAttribute("membername");
+        String message ="添加投诉";
+        service1.insertLog(membername, message);
 		return 1;
 	}
 	
@@ -80,8 +90,12 @@ public class ComplaintController {
 	}
 
 	@PutMapping("/complaint/statusType/{id}")
-	public int updateStatusType(@PathVariable("id")int id) {
+	public int updateStatusType(@PathVariable("id")int id,HttpServletRequest req) {
 		service.updateStatusTpe(id);
+		HttpSession session = req.getSession(false);
+        String membername = (String) session.getAttribute("membername");
+        String message ="取消投诉";
+        service1.insertLog(membername, message);
 		return 1;
 	}
 	
