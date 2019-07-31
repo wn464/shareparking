@@ -19,6 +19,7 @@ public class MemberHandler {
 
 	@GetMapping("/member/username")
 	public MemberBean findByName(String username) {
+		System.out.println(username);
 		return service.findByUserName(username);
 	}
 	
