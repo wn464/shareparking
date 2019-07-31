@@ -71,9 +71,11 @@ public class ComplaintServiceImpl implements IComplaintService{
 			accusesum = dao.findCreNum(mem_j_id);
 			double order = ordersum;
 			double accuse = accusesum;
+			System.out.println("订单数："+order);
+			System.out.println("投诉数："+accuse);
 			Double credibility = 1-(double) (accuse/order);
-			DecimalFormat df=new DecimalFormat(".##");
-			credibility=Double.valueOf(df.format(credibility));
+//			DecimalFormat df=new DecimalFormat(".##");
+//			credibility=Double.valueOf(df.format(credibility));
 			dao2.updateCredibility(credibility, mem_j_id);
 			}
 		}else {
@@ -90,14 +92,6 @@ public class ComplaintServiceImpl implements IComplaintService{
 			dao2.updateCredibility(credibility, mem_y_id);
 			}
 		}
-//		*******************************************
-//		MemberBean mem_y_id = bean3.getMem_y_id();
-//		int ordersum = dao1.selectOrderNumberByMem2(mem_y_id.getId());
-//		int accusesum = dao.findCreNum(mem_y_id.getId());
-//		double order = ordersum;
-//		double accuse = accusesum;
-//		Double credibility = (double) (accuse/order);
-//		dao2.updateCredibility(credibility, mem_y_id.getId());
 	}
 
 	@Override
@@ -126,13 +120,12 @@ public class ComplaintServiceImpl implements IComplaintService{
 		bean.setPage(page);
 		bean.setSize(size);
 		bean.setTotalPage((totalNumber%size==0)?(totalNumber/size):(totalNumber/size+1));
-		System.out.println(list);
 		return bean;
 	}
 
 	@Override
 	@Cacheable(value = "findDateNum",key = "#str")
-	public int findDateNum(String begintime, String endtime) {
+	public int findDateNum(String begintime, String endtime,String str) {
 		int i = dao.findDateNum(begintime, endtime);
 		return i;
 	}
