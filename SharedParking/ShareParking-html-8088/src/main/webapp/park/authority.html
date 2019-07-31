@@ -168,6 +168,7 @@
 	<script src="assets/js/vue.js" type="text/javascript" charset="utf-8"></script>
 	<script src="assets/js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 	<script>
+	    
 		$(function(){
 				$("#toping").load("top.html");
 		})
@@ -179,9 +180,7 @@
 				},
 				created(){
 					/* 直接发送请求，查询所有管理员  不包括自己  */
-					axios.get("http://myzuul.com:9500/user/user/findall",{
-						withCredentials: true, 
-					})
+					axios.get("http://myzuul.com:9500/user/user/findall")
 					.then(res=>{
 						this.data=res.data
 					})

@@ -47,13 +47,27 @@ public class AuthFilter extends ZuulFilter{
       //CORS实现跨域
       //https://www.cnblogs.com/lazyInsects/p/8110758.html
       HttpServletResponse res =response;  
+      String origin = request.getHeader("Origin");
+      if(origin == null) {
+          origin = request.getHeader("Referer");
+      }
 	  res.setContentType("text/html;charset=UTF-8");  
-	  res.setHeader("Access-Control-Allow-Origin", "*");  
+	  res.setHeader("Access-Control-Allow-Origin", origin);  
 	  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");  
-	  res.setHeader("Access-Control-Max-Age", "0");  
+	  res.setHeader("Access-Control-Max-Age", "30");  
 	  res.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");  
 	  res.setHeader("Access-Control-Allow-Credentials", "true");  
 	  res.setHeader("XDomainRequestAllowed","1");  
+	  Cookie[] cookies = request.getCookies();
+      if(null != cookies){
+          for (Cookie cookie : cookies) {
+              System.out.println(cookie.getName()+":"+cookie.getValue());
+          }
+      }
+      if(cookies==null) {
+    	  System.out.println("cookie为空");
+      }
+      
 	  return false;
 	}
 
