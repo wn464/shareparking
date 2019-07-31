@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.project.Bean.CarportBean;
 import com.project.Bean.MarkBean;
+import com.project.Bean.MemberBean;
 import com.project.Bean.PageBean;
 import com.project.IService.CarportIService;
 
@@ -143,8 +146,12 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 	 */
 	@PostMapping("/carport")
 	@ResponseBody
-	public boolean addcarport(CarportBean carport) {
+	public boolean addcarport(CarportBean carport,HttpSession session) {
 		System.out.println("++++++++"+carport);
+		int id=(int) session.getAttribute("memberid");
+        MemberBean m=new MemberBean();
+        m.setId(id);
+        carport.setM_id(m);
 		SimpleDateFormat datafromat=new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
 		Date te =new Date();
 		String a=datafromat.format(te);
@@ -202,10 +209,10 @@ public boolean updatacarport(@PathVariable("id")int id,@PathVariable("begintime"
 	 */
 	@GetMapping(value="/carport/memid")
 	@ResponseBody
-	public List<CarportBean> findcarportbymemid(){
-		
-		int memid=1;
+	public List<CarportBean> findcarportbymemid(HttpSession session){
+		int memid=(int) session.getAttribute("memberid");
 		System.out.println(memid);
+		
 		List<CarportBean> ports=service.findcarportbymemid(memid);
 		return ports;
 	}
