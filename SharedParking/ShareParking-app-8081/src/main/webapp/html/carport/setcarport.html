@@ -41,21 +41,7 @@
 			</div>
 			
 			
-			<div class="mui-card">
-				<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
-							<a >
-								 
-								 <label>修改出租状态</label>
-								 <div class="mui-switch mui-active">
-								 	<div class="mui-switch-handle"></div>
-								 </div>
-							</a>
-						</li>
-					</ul>
-				
-				
-			</div>
+			
 		</div>
 		<div class="mui-card">
 			<div style="margin: 0.2rem 1rem;">
@@ -75,12 +61,12 @@
 			data:{
 				begintime:"",//开始出租时间
 				endtime:"",//结束时间
+				switch1:false,
 			},
 			mounted() {
 				dtpicker = new mui.DtPicker({
 				type:'datetime',
 				beginDate:new Date()
-		
 				})
 				
 			},created() {
