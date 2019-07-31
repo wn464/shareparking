@@ -44,8 +44,14 @@ public class UserHandler {
     }
 
     @PostMapping("/user/username")
-    public UserBean findByName(String username) {
-    	System.out.println(username);
+    public UserBean findByName(HttpSession session,String username) {
+    
+    	int id = (int) session.getAttribute("userid");
+    	UserBean bean = service.findById(id);
+
+    	if(bean.getUsername()!=null) {
+    		return service.findByUserName(bean.getUsername());
+    	}
     	return service.findByUserName(username);
     }
 
