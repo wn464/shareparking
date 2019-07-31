@@ -38,6 +38,7 @@ public class OrderHandler {
 	 */
 	@PostMapping("/order")
 	public Integer insertOrder(OrderBean orderBean) {
+		System.out.println("+++++++++++++++++"+orderBean);
         orderBean.setMemberBean1(memberremoter.findById());
         orderBean.setCarNumber(memberremoter.findById().getList().get(0).getCarnumber());
 		int num = orderService.insertOrder(orderBean);
