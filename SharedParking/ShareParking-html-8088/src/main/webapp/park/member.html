@@ -40,7 +40,7 @@
 				<nav>
 					<ul class="nav" >
 						<li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>共享车位主页</span></a></li>
-						<li><a href="log.html" class=""><i class="lnr lnr-file-empty"></i> <span>日志管理</span></a></li>
+						<li  v-if="shabi==2"><a href="log.html" class=""><i class="lnr lnr-file-empty"></i> <span>日志管理</span></a></li>
 						
 						<li><a href="order.html" class=""><i class="lnr lnr-map"></i> <span>订单中心</span></a></li>
 						<li><a href="car.html" class=""><i class="lnr lnr-map-marker"></i> <span>车位信息</span></a></li>
@@ -49,7 +49,7 @@
 						<li><a href="money.html" class=""><i class="lnr lnr-linearicons"></i> <span>财务统计</span></a></li>
 						<li><a href="complain.html" class=""><i class="lnr lnr-chart-bars"></i> <span>投诉管理</span></a></li>
 						<li><a href="user-change.html" class=""><i class="lnr lnr-user"></i> <span>个人信息管理</span></a></li>
-						<li><a href="authority.html" class=""><i class="lnr lnr-cog"></i><span>操作权限管理</span></a></li>
+						<li  v-if="shabi==2"><a href="authority.html" class=""><i class="lnr lnr-cog"></i><span>操作权限管理</span></a></li>
 					</ul>
 				</nav>
 			</div>
@@ -125,14 +125,15 @@
 		})
 		
 		var vm = new Vue({
-			el:"#app",
+			el:"#wrapper",
 			data() {
 		        return {
 		            productList: [], //所有数据
 		            totalPage: 3, // 统共页数，默认为1
 		            currentPage: 1, //当前页数 ，默认为1
 		            pageSize: 5, // 每页显示数量
-		            currentPageData: [] //当前页显示内容
+		            currentPageData: [], //当前页显示内容
+		            shabi:{}
 		        };
 		    },
 		  created(){
@@ -144,7 +145,11 @@
 			        // 计算得0时设置为1
 			        this.totalPage = this.totalPage == 0 ? 1 : this.totalPage;
 			        this.getCurrentPageData();
-				}) 
+				}) ,
+				axios.post("http://myzuul.com:9500/user/user/username").then(res=>{
+					this.shabi=res.data.authority.id;
+
+				})
 		    }, 
 		    methods: {
 		 		//模糊查询

@@ -41,52 +41,58 @@
 			</div>
 			
 			
-			<div class="mui-card">
-				<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
-							<a >
-								 
-								 <label>修改出租状态</label>
-								 <div class="mui-switch mui-active">
-								 	<div class="mui-switch-handle"></div>
-								 </div>
-							</a>
-						</li>
-					</ul>
-				
-				
-			</div>
+			
 		</div>
 		<div class="mui-card">
 			<div style="margin: 0.2rem 1rem;">
 				注意：修改信息需要重新审核
 			</div>
 			<div class="mui-row">
-				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;">提交</button>
-				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;">取消</button>
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " @click="tijiao" style=" margin: 0.5rem 3rem;">提交</button>
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" @click="fh">取消</button>
 			</div>
 		</div>
 	</div>
-	
+	<script src="../../js/axios.min.js"></script>
 	<script type="text/javascript">
+	search=window.location.search.replace("\?","").split("&");
+	var urldata = {};
+	for (var i = 0; i < search.length; i++) {
+		urldata[search[i].split("=")[0]] = search[i].split("=")[1]
+	}
+	
 		var dtpicker;
 		var app = new Vue({
 			el:"#app",
 			data:{
 				begintime:"",//开始出租时间
 				endtime:"",//结束时间
+				switch1:false,
 			},
 			mounted() {
 				dtpicker = new mui.DtPicker({
 				type:'datetime',
 				beginDate:new Date()
-		
 				})
 				
 			},created() {
 				
 			},
 			methods:{
+				fh:function(){
+					window.history.go()
+				},
+				tijiao:function(){
+					var params=new URLSearchParams()
+					params.append("id",urldata.id)
+					params.append("begintime",app.begintime)
+					params.append("endtime",app.endtime)
+					
+					axios.post("http://myzuul.com:9500/port/carport/updatastatus/cz",params)
+					.then(res=>{
+					window.history.go()
+					})
+				},
 				getbegintime:function(){
 					dtpicker.show(function(e) { 
 					    console.log(e.value); 

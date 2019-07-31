@@ -5,7 +5,7 @@
 		<title></title>
 	</head>
 	<body>
-		<div class="brand">
+		<div class="brand" id="brand">
 				<a href="index.html"><img src="assets/img/logo-dark.png" class="img-responsive logo"></a>
 			</div>
 			<div class="container-fluid">
@@ -24,16 +24,18 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<img src="assets/img/user.png" class="img-circle">
-								<span>Samuel</span><i class="icon-submenu lnr lnr-chevron-down"></i></a>
+								<span></span><i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><a href="user-change.html"><i class="lnr lnr-user"></i> <span>个人中心</span></a></li>
-								<li><a href="#"><i class="lnr lnr-exit"></i> <span>注销</span></a></li>
+								<li><a href="http://myzuul.com:9500/sso/logout"><i class="lnr lnr-exit"></i> <span>注销</span></a></li>
 							</ul>
 						</li>
 					</ul>
 				</div>
 			</div>	
 	</body>
+	<script src="assets/js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="assets/js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$('.btn-toggle-fullwidth').on('click', function() {
 		if(!$('body').hasClass('layout-fullwidth')) {
@@ -54,5 +56,8 @@
 			}
 		}
 	});
+		
+		
+		
 	</script>
 </html>

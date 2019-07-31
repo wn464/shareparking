@@ -5,6 +5,8 @@ import feign.Param;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 /*
     管理员 service
  */
@@ -17,4 +19,5 @@ public interface IUserService {
     int addUser(UserBean user);
     UserBean findById(int id);
     int del(int id);
+
 }
