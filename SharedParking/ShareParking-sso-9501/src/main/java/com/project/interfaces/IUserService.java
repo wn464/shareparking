@@ -2,13 +2,17 @@ package com.project.interfaces;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.Bean.MemberBean;
 import com.project.Bean.UserBean;
 
-@FeignClient(name = "park-user")
+import feign.Param;
+
+@FeignClient(name = "PARK-USER")
 public interface IUserService {
 
-	@GetMapping("/user/username")
-	UserBean findByName(String username);
+	@PostMapping("/user/username")
+	UserBean findByName(@RequestParam(name = "username")String username);
 }

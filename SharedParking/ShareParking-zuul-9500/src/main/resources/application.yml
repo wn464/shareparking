@@ -54,9 +54,17 @@ zuul:
       sensitiveHeaders: "*"
       
     carport:
-      service-id: SHAREPARKING_CARPORT
+      service-id: SHAREPARKINGCARPORT
       path:  /port/** 
       sensitiveHeaders: "*"
+    sso: 
+       service-id: sharePark-sso
+       path:  /sso/** 
+       sensitiveHeaders: "*"
+    log: 
+       service-id: park-log
+       path:  /log/** 
+       sensitiveHeaders: "*"
       
 #  host:
 #    connect-timeout-millis: 60000 

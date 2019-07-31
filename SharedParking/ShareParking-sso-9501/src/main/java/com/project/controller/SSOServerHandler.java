@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.project.Bean.MemberBean;
 import com.project.Bean.UserBean;
 import com.project.interfaces.IMemberService;
 import com.project.interfaces.IUserService;
-
+@RestController
 public class SSOServerHandler {
 	
 	@Autowired
@@ -36,7 +38,9 @@ public class SSOServerHandler {
 	public boolean memberLogin(String username , String password ,HttpServletRequest request,HttpServletResponse response) {
 		//shiro登录
 		//成功返回true，失败返回false
+		System.out.println(username);
 		MemberBean member = memberservice.findByName(username);
+		System.out.println(member);
 		if(member==null) {
 			return false;
 		}
@@ -49,6 +53,8 @@ public class SSOServerHandler {
 	@PostMapping("/user/login")
 	public boolean userLogin(String username , String password,HttpServletRequest request,HttpServletResponse response) {
 		UserBean user = userservice.findByName(username);
+		System.out.println(user);
+		System.out.println(username);
 		if(user==null) {
 			return false;
 		}
@@ -58,9 +64,18 @@ public class SSOServerHandler {
 		createToken(user.getId(), username, USER, user.getAuthority().getName(),request,response);
 		return true;
 	}
-	
-	
-	
+	@GetMapping("/unlogin")
+	public String unlogin() {
+		return "未登录";
+	}
+	@GetMapping("/unrole")
+	public String unrole() {
+		return "没有角色";
+	}
+	@GetMapping("/unpremission")
+	public String unpremission() {
+		return "没有登录";
+	}
 	//登出
 	@GetMapping("/user/logout")
 	public String userLogout(HttpServletRequest request,HttpServletResponse response) {
