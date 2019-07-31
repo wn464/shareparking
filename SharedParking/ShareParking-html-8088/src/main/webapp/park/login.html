@@ -76,7 +76,7 @@
 					var params = new URLSearchParams();
 					params.append("username",username);
 					params.append("password",password);
-					axios.post("http://myzuul.com:9500/user/login",params).then(res=>{
+					axios.post("http://myzuul.com:9500/sso/user/login",params).then(res=>{
 						if(res.data==2){
 							layer.msg('密码输入错误 ', {
 								icon: 5,

@@ -40,8 +40,8 @@ public class MemberServiceImpl implements IMemberService {
 	 */
 	@Override
 	public MemberBean findByUserName(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		MemberBean bean = dao.findByUserName(username);
+		return bean;
 	}
 	
 	/*

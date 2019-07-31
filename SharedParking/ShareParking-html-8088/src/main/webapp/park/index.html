@@ -24,6 +24,8 @@
 				<nav>
 					<ul class="nav" >
 						<li><a href="index.html" class="active"><i class="lnr lnr-home"></i> <span>共享车位主页</span></a></li>
+						<li><a href="log.html" class=""><i class="lnr lnr-file-empty"></i> <span>日志管理</span></a></li>
+						
 						<li><a href="order.html" class=""><i class="lnr lnr-map"></i> <span>订单中心</span></a></li>
 						<li><a href="car.html" class=""><i class="lnr lnr-map-marker"></i> <span>车位信息</span></a></li>
 						<li><a href="member.html" class=""><i class="lnr lnr-users"></i> <span>用户管理</span></a></li>
@@ -59,8 +61,8 @@
 									<div class="metric">
 										<span class="icon" style="background-color: #27727b"><i class="fa fa-navicon"></i></span>
 										<p>
-											<span class="number">6</span>
-											<span class="title">今日新增车位</span>
+											<a class="number" href="car.html">{{carportnumber}}</a>
+											<a class="title" href="car.html">今日新增车位</a>
 										</p>
 									</div>
 								</div>
@@ -139,7 +141,8 @@
 	var vm = new Vue({
 				el:"#newinfo",
 				data:{
-					order:[]
+					order:[],
+					carportnumber:0,
 				},
 				created(){
 					/* 直接发送请求  查询今日的订单 */
@@ -147,6 +150,11 @@
 					.then(res=>{
 						console.info(res.data)
 						this.order=res.data
+					})
+					axios.get("http://myzuul.com:9500/port/carport/time/1/100")
+					.then(res=>{
+						console.info(res.data)
+						this.carportnumber=res.data.totalNumber
 					})
 				}
 				
