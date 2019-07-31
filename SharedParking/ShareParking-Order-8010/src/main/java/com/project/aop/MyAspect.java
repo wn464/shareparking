@@ -19,7 +19,7 @@ public class MyAspect {
 	@Around("execution(public * insertOrder(..)&& args(param1,param2))")
 	public void after(){
 
-		System.out.println("MyAspect=======后置通知"+param1);
+		System.out.println("MyAspect=======后置通知");
 	}
 
 
