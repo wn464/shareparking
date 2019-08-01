@@ -69,6 +69,7 @@ public class SSOServerHandler {
         HttpSession session = request.getSession();
         session.setAttribute("userid", user.getId());
         session.setAttribute("username", user.getUsername());
+        session.setMaxInactiveInterval(60*30);
 		createToken(user.getId(), username, USER, user.getAuthority().getName(),request,response);
 		return true;
 	}
