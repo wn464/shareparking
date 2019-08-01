@@ -39,7 +39,7 @@ public class AuthFilter extends ZuulFilter{
       HttpServletResponse response = ctx.getResponse();
       request.getSession().setAttribute("userid", 1);
       request.getSession().setAttribute("username", "ss");
-      request.getSession().setAttribute("memberid", 1);
+      request.getSession().setAttribute("memberid", 2);
       request.getSession().setAttribute("membername", "log");
       //访问路径
       System.out.println(request.getSession().getId());
