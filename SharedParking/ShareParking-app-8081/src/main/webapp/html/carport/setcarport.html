@@ -49,7 +49,7 @@
 			</div>
 			<div class="mui-row">
 				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " @click="tijiao" style=" margin: 0.5rem 3rem;">提交</button>
-				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" @click="fh">取消</button>
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" onclick="javascript:history.back(-1);">取消</button>
 			</div>
 		</div>
 	</div>
@@ -90,7 +90,8 @@
 					
 					axios.post("http://myzuul.com:9500/port/carport/updatastatus/cz",params)
 					.then(res=>{
-					window.history.go()
+						alert("设置成功")
+						window.history.go(-1);
 					})
 				},
 				getbegintime:function(){

@@ -17,7 +17,7 @@ public interface CarDao {
 	 * @param car
 	 * @return
 	 */
-	@Insert("insert into car (m_id,carnumber) values(#{car.m_id.id},#{car.carnumber})")
+	@Insert("insert into car (m_id,carnumber,name) values(#{car.m_id.id},#{car.carnumber},#{car.name})")
 int addcar(@Param("car")CarBean car);
 /**
  * 查询车位
@@ -28,7 +28,8 @@ int addcar(@Param("car")CarBean car);
 	@Results({
 			@Result(property = "id",column = "id"),
 			@Result(property="m_id",column = "m-id",one=@One(select="com.project.dao.IMemberDao.findById")),
-			@Result(property="carnumber",column = "carnumber")
+			@Result(property="carnumber",column = "carnumber"),
+			@Result(property="name",column = "name"),
 	})
 		
 List<CarBean> findcarbymid(int memid);

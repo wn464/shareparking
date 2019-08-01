@@ -66,7 +66,7 @@
 				var phone = $("#phone").val();
 				var address=$("#address").val();
 				var job = $("#job").val();
-				 axios.get("http://myzuul.com:9500/member/updatemyself")
+				 axios.put("http://myzuul.com:9500/member/updatemyself")
 					.then(res=>{
 						alert(res.data)
 					}) 

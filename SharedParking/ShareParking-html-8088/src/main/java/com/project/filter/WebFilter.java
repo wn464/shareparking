@@ -13,20 +13,17 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-
-@WebFilter(urlPatterns = "/*")
-public class AppFilter implements Filter {
+//@WebFilter(urlPatterns = "/*")
+public class WebFilter implements Filter {
 	
 	PathMatcher pathmatcher = new AntPathMatcher();
 	@Autowired
@@ -55,12 +52,9 @@ public class AppFilter implements Filter {
 		        List<String> filterPermission=new ArrayList<String>();
 		        Map<String, String> urimap = new LinkedHashMap<String, String>();
 		        
-		        urimap.put("/html/login.html", "anno");
-		        urimap.put("/html/reg.html", "anno");
-		        urimap.put("/html/forget_password.html", "anno");
+		        urimap.put("/park/login.html", "anno");
 //		      urimap.put("/getusr", "role:user,role:member");
-		        urimap.put("/html/**", "");
-		        urimap.put("/**", "anno");
+		        urimap.put("/**", "");
 		        Set<String> set =urimap.keySet();
 		        for (String string : set) {
 		        	if(pathmatcher.match(string, uri)) {
@@ -115,7 +109,7 @@ public class AppFilter implements Filter {
 		            //重定向到登录页面
 		            try {
 		            	req.getSession().setAttribute("url", url);
-		            	resp.sendRedirect("http://myzuul.com/html/login.html?url="+url);
+		            	resp.sendRedirect("http://myzuul.com:8080/park/login.html?url="+url);
 		            	//判断是web还是app
 		            } catch (IOException e) {
 		                e.printStackTrace();
@@ -133,7 +127,7 @@ public class AppFilter implements Filter {
 		            try {
 		            	//判断是web还是app
 		            	req.getSession().setAttribute("url", url);
-		            	resp.sendRedirect("http://myzuul.com/html/login.html?url="+url);
+		            	resp.sendRedirect("http://myzuul.com:8080/park/login.html?url="+url);
 		            	
 		            } catch (IOException e) {
 		                e.printStackTrace();

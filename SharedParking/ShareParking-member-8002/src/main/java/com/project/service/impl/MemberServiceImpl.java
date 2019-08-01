@@ -95,6 +95,18 @@ public class MemberServiceImpl implements IMemberService {
 		int phon = dao.updatePhone(m_id, phone);
 		return 1;
 	}
+
+	@Override
+	public int reg(MemberBean member) {
+		// TODO Auto-generated method stub
+		return dao.reg(member);
+	}
+
+	@Override
+	public int complete(MessageBean mess) {
+		// TODO Auto-generated method stub
+		return dao1.complete(mess);
+	}
 	
 	
 
