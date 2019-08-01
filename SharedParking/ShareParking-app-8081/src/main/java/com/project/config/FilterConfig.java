@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.project.filter.AppFilter;
 
-@Configuration
+//@Configuration
 public class FilterConfig {
 
 	@Bean  

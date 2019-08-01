@@ -42,4 +42,14 @@ public interface IMemberService {
      * 修改个人信息
      */
     int updateMySelf(String address,String job,int m_id,String phone);
+    
+    /*
+     * 注册
+     */
+    int reg(MemberBean member);
+    
+    /*
+     * 完善个人信息
+     */
+    int complete(MessageBean mess);
 }

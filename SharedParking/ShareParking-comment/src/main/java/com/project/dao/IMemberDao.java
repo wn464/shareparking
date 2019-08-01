@@ -2,6 +2,7 @@ package com.project.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -38,4 +39,11 @@ public interface IMemberDao {
     //message 查询用到的
     MemberBean findByMemberId(int id);
     
+    /*
+     * 注册
+     */
+    @Insert("insert into member(username,password,phonenumber) values(#{username},#{password},#{phonenumber})")
+    int reg(MemberBean member);
+   
+   
 }

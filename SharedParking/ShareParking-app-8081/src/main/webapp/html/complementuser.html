@@ -18,37 +18,65 @@
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">完善信息</h1>
 	</header>
-	<div class="mui-content">
+	<div class="mui-content" id="wrapper">
 		
 		<div class="mui-card">
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>姓名</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入">
+					<input type="text" class="mui-input-clear" placeholder="请输入" id="name">
 				</div>
 				<div class="mui-input-row">
 					<label>身份证号码</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入">
+					<input type="text" class="mui-input-clear" placeholder="请输入" id="idCard">
 				</div>
-				<div class="mui-input-row">
-					<label>性别</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入">
-				</div>
+				
 				<div class="mui-input-row">
 					<label>地址</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入">
+					<input type="text" class="mui-input-clear" placeholder="请输入" id="address">
 				</div>
 				<div class="mui-input-row">
 					<label>工作</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入">
+					<input type="text" class="mui-input-clear" placeholder="请输入" id="job">
 				</div>
 			</form>
 		</div>
 		<div class="mui-card">
-			<button type="button" class="mui-btn mui-btn-blue" style="margin:10px; margin-left: 50px;">上传</button>
+			<button type="button" class="mui-btn mui-btn-blue" style="margin:10px; margin-left: 50px;" @click=upup()>上传</button>
 		</div>
 		
 	</div>
-	
+		<script src="../../js/axios.min.js"></script>
+		<script src="../../js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	var vm = new Vue({
+		el:"#wrapper",
+		data: {
+	       data:{}
+	    },
+	    methods: {
+	    	
+	    	upup:function(){
+	    		var name = $("#name").val();
+	    		var idCard = $("#idCard").val();
+	    
+	    		var address= $("#address").val();
+	    		var job = $("#job").val();
+	    		var params = new URLSearchParams();
+	    		params.append("name",name);
+	    		params.append("idCard",idCard);
+	    		params.append("address",address);
+	    		params.append("job",job);
+	    		axios.post("http://myzuul.com:9500/member/complete",params)
+					.then(res=>{
+						alert("修改成功")
+					})
+	    	
+	    	}
+	    }
+	    
+	})
+	</script>
 </body>
 </html>
