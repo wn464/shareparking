@@ -43,6 +43,13 @@ public class ComplaintController {
 		return list;
 	}
 	
+	@GetMapping("/complaint/memberid")
+	public int findByMemberid(HttpServletRequest req){
+		HttpSession session = req.getSession(false);
+        int memberid = (int) session.getAttribute("memberid");
+		return memberid;
+	}
+	
 	@GetMapping("/complaint/{begintime}/{endtime}")
 	public int findDateNum(@PathVariable("begintime")String begintime, @PathVariable("endtime")String endtime) {
 		String str = begintime+""+endtime;
