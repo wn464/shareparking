@@ -52,7 +52,7 @@ public class WebFilter implements Filter {
 		        List<String> filterPermission=new ArrayList<String>();
 		        Map<String, String> urimap = new LinkedHashMap<String, String>();
 		        
-		        urimap.put("/html/login.html", "anno");
+		        urimap.put("/park/login.html", "anno");
 //		      urimap.put("/getusr", "role:user,role:member");
 		        urimap.put("/**", "");
 		        Set<String> set =urimap.keySet();
@@ -109,7 +109,7 @@ public class WebFilter implements Filter {
 		            //重定向到登录页面
 		            try {
 		            	req.getSession().setAttribute("url", url);
-		            	resp.sendRedirect("http://myzuul.com/html/login.html?url="+url);
+		            	resp.sendRedirect("http://myzuul.com:8080/park/login.html?url="+url);
 		            	//判断是web还是app
 		            } catch (IOException e) {
 		                e.printStackTrace();
@@ -127,7 +127,7 @@ public class WebFilter implements Filter {
 		            try {
 		            	//判断是web还是app
 		            	req.getSession().setAttribute("url", url);
-		            	resp.sendRedirect("http://myzuul.com/html/login.html?url="+url);
+		            	resp.sendRedirect("http://myzuul.com:8080/park/login.html?url="+url);
 		            	
 		            } catch (IOException e) {
 		                e.printStackTrace();
