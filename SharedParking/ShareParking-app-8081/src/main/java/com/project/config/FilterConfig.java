@@ -19,7 +19,7 @@ public class FilterConfig {
         FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>();  
         registrationBean.setFilter(filter);  
         List<String> urlPatterns = new ArrayList<String>();  
-        urlPatterns.add("/*");
+        urlPatterns.add("/user/*");
         registrationBean.setUrlPatterns(urlPatterns);  
         return registrationBean;  
     }  
