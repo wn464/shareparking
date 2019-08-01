@@ -56,7 +56,7 @@ public class WebFilter implements Filter {
 //		      urimap.put("/getusr", "role:user,role:member");
 		        urimap.put("/park/assets/**", "anno");
 		        urimap.put("/park/**", "");
-		       
+		        urimap.put("/**", "anno");
 		        Set<String> set =urimap.keySet();
 		        for (String string : set) {
 		        	if(pathmatcher.match(string, uri)) {
