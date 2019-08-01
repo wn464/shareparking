@@ -144,8 +144,11 @@
 				el:"#newinfo",
 				data:{
 					order:[],
-					shabi:{}
-
+					shabi:{},
+					carportnumber:{},
+					complaintnumber:{}
+	
+				},
 				created(){
 					/* 直接发送请求  查询今日的订单 */
 					axios.get("http://myzuul.com:9500/orders/order/dayNumber/"+time)

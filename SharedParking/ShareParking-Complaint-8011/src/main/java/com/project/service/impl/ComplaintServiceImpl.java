@@ -70,6 +70,8 @@ public class ComplaintServiceImpl implements IComplaintService{
 			accusesum = dao.findCreNum(mem_j_id);
 			double order = ordersum;
 			double accuse = accusesum;
+			System.out.println("订单"+order);
+			System.out.println("投诉"+accuse);
 			double credibility = 1-(double) (accuse/order);
 			DecimalFormat df=new DecimalFormat(".##");
 			credibility=Double.valueOf(df.format(credibility));
@@ -83,6 +85,8 @@ public class ComplaintServiceImpl implements IComplaintService{
 			accusesum = dao.findCreNum(mem_y_id);
 			double order = ordersum;
 			double accuse = accusesum;
+			System.out.println("订单"+order);
+			System.out.println("投诉"+accuse);
 			double credibility = 1-(double) (accuse/order);
 			DecimalFormat df=new DecimalFormat(".##");
 			credibility=Double.valueOf(df.format(credibility));

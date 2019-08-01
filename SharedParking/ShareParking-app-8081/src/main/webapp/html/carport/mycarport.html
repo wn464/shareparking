@@ -125,7 +125,7 @@
 		 <div class="mui-card">
 		 	<ul class="mui-table-view">
 		 			<li class="mui-table-view-cell">
-		 				<a class="mui-navigate-right" href="setcarport.html">
+		 				<a class="mui-navigate-right" @click="xiugai(carport.status.id,carport.id)">
 		 					修改车位信息
 		 				</a>
 		 			</li>
@@ -144,6 +144,17 @@
 			carportimg:[],
 			zt:"",
 			shzt:"",
+		},
+		methods:{
+			xiugai:function(id,cid){
+				if(id==11){
+					window.location.href="setcarport.html?id="+cid;
+					return ;
+				}else{
+					alert("不能修改出租车位的信息")
+				}
+				
+			},
 		},
 		created(){
 			axios.get("http://myzuul.com:9500/port/carport/cid/"+cid+"")
