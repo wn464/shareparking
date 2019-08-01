@@ -19,4 +19,5 @@ public class CarBean implements Serializable {
 	private int id;
 	private MemberBean m_id;
 	private String carnumber;
+	private String name;
 }
