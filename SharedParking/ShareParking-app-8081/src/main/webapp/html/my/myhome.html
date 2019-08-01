@@ -25,8 +25,8 @@
 					<a href="../user/mymessage.html">
 						<img class="mui-media-object mui-pull-left" src="../../img/1-1.png">
 						<div class="mui-media-body">
-							my
-							<p class="mui-ellipsis">账号ID：100000</p>
+							{{info.name}}
+							<p class="mui-ellipsis">账号ID：{{info.username}}</p>
 						</div>
 					</a>
 				</li>
@@ -105,13 +105,17 @@
 				el:"#app",
 				data:{
 			        data:{},
+			        info:{}
 			    },
 				created(){
 			    	 axios.get("http://myzuul.com:9500/member/findbyid")
 					.then(res=>{
+						this.info=res.data
 						this.data=res.data.credibility;
-						console.info(res.data.credibility)
-					}) 
+						
+						console.info(res.data)
+					})
+					
 			    }
 				
 			})
