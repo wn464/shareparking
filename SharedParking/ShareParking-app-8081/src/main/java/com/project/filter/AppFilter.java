@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-//@WebFilter(urlPatterns = "/*")
+@WebFilter(urlPatterns = "/*")
 public class AppFilter implements Filter {
 	
 	PathMatcher pathmatcher = new AntPathMatcher();
@@ -55,8 +55,11 @@ public class AppFilter implements Filter {
 		        Map<String, String> urimap = new LinkedHashMap<String, String>();
 		        
 		        urimap.put("/html/login.html", "anno");
+		        urimap.put("/html/reg.html", "anno");
+		        urimap.put("/html/forget_password.html", "anno");
 //		      urimap.put("/getusr", "role:user,role:member");
-		        urimap.put("/**", "");
+		        urimap.put("/html/**", "");
+		        urimap.put("/**", "anno");
 		        Set<String> set =urimap.keySet();
 		        for (String string : set) {
 		        	if(pathmatcher.match(string, uri)) {
