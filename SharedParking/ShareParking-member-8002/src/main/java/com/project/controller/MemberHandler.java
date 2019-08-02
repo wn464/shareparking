@@ -76,7 +76,7 @@ public class MemberHandler {
 		return bean;
 	}
 	
-	@PostMapping("/member/findid")
+	@GetMapping("/member/findid/{id}")
 	public MemberBean findId(@PathVariable("id")Integer id) {
 		MemberBean bean = service.findById(id);
 		System.out.println(bean);
