@@ -12,7 +12,7 @@ public interface MemberRemoter {
 	@GetMapping("/member/findbyid")
 	public MemberBean findById();
 	
-	@GetMapping("/member/findid")
+	@PutMapping("/member/findid")
 	public MemberBean findId(@PathVariable("id")Integer id);
 	
 
