@@ -14,6 +14,7 @@ import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
@@ -37,10 +38,7 @@ public class AuthFilter extends ZuulFilter{
 	  RequestContext ctx = RequestContext.getCurrentContext();
       HttpServletRequest request = ctx.getRequest();
       HttpServletResponse response = ctx.getResponse();
-      request.getSession().setAttribute("userid", 1);
-      request.getSession().setAttribute("username", "ss");
-      request.getSession().setAttribute("memberid", 1);
-      request.getSession().setAttribute("membername", "log");
+      
       //访问路径
       System.out.println(request.getSession().getId());
       //String url = request.getRequestURL().toString();
@@ -80,7 +78,7 @@ public class AuthFilter extends ZuulFilter{
     	  ctx.setResponseStatusCode(200);//设置状态码200
     	  return false;//不过滤
       }
-	  return false;
+	  return true;
 	}
 
 	//过滤器的具体逻辑
@@ -91,7 +89,7 @@ public class AuthFilter extends ZuulFilter{
 		//查询cookie是否存有数据
 		//查询request是否存有数据
 		//验证失败保存请求地址
-		
+		System.out.println("开始检验token");
 		RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         HttpServletResponse response = ctx.getResponse();
@@ -112,7 +110,7 @@ public class AuthFilter extends ZuulFilter{
         urimap.put("/sso/member/login", "anno");
         urimap.put("/sso/member/logout", "anno");
 //      urimap.put("/getusr", "role:user,role:member");
-        urimap.put("/**", "");
+        urimap.put("/**", "anno");
         Set<String> set =urimap.keySet();
         for (String string : set) {
         	if(pathmatcher.match(string, uri)) {
@@ -121,6 +119,7 @@ public class AuthFilter extends ZuulFilter{
         	}
 		}
         if(filterUri==null) {
+        	System.out.println("filterUri为空");
         	//不放行
         	//不受理页面
         	ctx.setSendZuulResponse(false);
@@ -146,6 +145,56 @@ public class AuthFilter extends ZuulFilter{
 //        	//不需要登录，放行
 //        	return null;
 //        }
+         
+         
+         
+         String accessToken = request.getParameter("accessToken");
+         Cookie[] cookies = request.getCookies();
+         if(null != cookies){
+             for (Cookie cookie : cookies) {
+                 if ("accessToken".equals(cookie.getName())) {
+                     accessToken = cookie.getValue();
+                 }
+             }
+         }
+         
+         
+         if(accessToken!=null) {
+        	 Object obj = redisTemplate.opsForValue().get(accessToken);
+        	 if(obj!=null) {
+        		 //获取redis参数
+        	        Map<String, String> map = (Map<String, String>) obj;
+        	        
+        	        //判断session是否有效
+        	        HttpSession session = request.getSession();
+        	        String role = map.get("role");
+        	        String permission = map.get("permission");
+        	        String id = map.get("id");
+        	        System.out.println("redis中id:"+id);
+        	        String name = map.get("username");
+        	        System.out.println("redis中name:"+name);
+        	        if(role.equals("user")) {
+        	        	Object userid = session.getAttribute("userid");
+        	        	Object username =  session.getAttribute("username");
+        	        	if(userid==null || username==null) {
+        	        		System.out.println("user失效");
+        	        		session.setAttribute("userid", Integer.parseInt(id));
+        	        		session.setAttribute("username", name);
+        	        	}
+        	        }
+        	        if(role.equals("member")) {
+        	        	Object userid = session.getAttribute("memberid");
+        	        	Object username =  session.getAttribute("membername");
+        	        	System.out.println(userid);
+        	        	if(userid==null || username==null) {
+        	        		System.out.println("member失效");
+        	        		session.setAttribute("memberid", Integer.parseInt(id));
+        	        		session.setAttribute("membername", name);
+        	        	}
+        	        }
+        	 }
+         }
+         
         if(arry.length==1 && arry[0].equals("anno")) {
         	ctx.setSendZuulResponse(true);
             ctx.setResponseStatusCode(200);
@@ -154,15 +203,10 @@ public class AuthFilter extends ZuulFilter{
         
         //判断是否登录
         //从cookie里面取值（Zuul丢失Cookie的解决方案：https://blog.csdn.net/lindan1984/article/details/79308396）
-        String accessToken = request.getParameter("accessToken");
-        Cookie[] cookies = request.getCookies();
-        if(null != cookies){
-            for (Cookie cookie : cookies) {
-                if ("accessToken".equals(cookie.getName())) {
-                    accessToken = cookie.getValue();
-                }
-            }
-        }
+       
+        
+       
+        
         if(accessToken==null) {
         	//跳转登录
         	ctx.setSendZuulResponse(false);
@@ -198,15 +242,16 @@ public class AuthFilter extends ZuulFilter{
         
         //获取redis参数
         Map<String, String> map = (Map<String, String>) obj;
-        
-        
-        
+        String role = map.get("role");
+        String permission = map.get("permission");
+        String id = map.get("id");
+        String name = map.get("username");
 //        //判断是否拥有角色
 //        if(filterPermission.contains("role:")) {
 //        	filterPermission.replace("role:", "");
 //        }
         if(filterRole.size()!=0) {
-        	String role = map.get("role");
+        	
         	for (String string : filterRole) {
 				if(!string.equals(role)) {
 					//提示权限不足
@@ -234,7 +279,7 @@ public class AuthFilter extends ZuulFilter{
 //        	filterPermission.replace("perm:", "");
 //        }
         if(filterPermission.size()!=0) {
-        	String permission = map.get("permission");
+        	
         	for (String string : filterPermission) {
 				if(!string.equals(permission)) {
 					//提示权限不足
@@ -264,6 +309,7 @@ public class AuthFilter extends ZuulFilter{
         
 	}
 
+	
 	// Filter 的类型，前置过滤器返回 PRE_TYPE
 	@Override
 	public String filterType() {

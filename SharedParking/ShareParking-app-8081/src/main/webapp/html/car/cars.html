@@ -18,21 +18,36 @@
 		<h1 class="mui-title">我的车辆</h1>
 		<a href="addcar.html" class="mui-pull-right mui-icon mui-icon mui-icon mui-icon-plus"></a>
 	</header>
-	<div class="mui-content">
-		<div class="mui-card">
+	<div class="mui-content" id="zxc">
+		<div class="mui-card" v-for="item in cars">
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell mui-media">
-					<a href="showcar.html">
-						<img class="mui-media-object mui-pull-left" src="../../img/1-1.png">
+					<a href="#">
 						<div class="mui-media-body">
-							宝马A6
-							<p class="mui-ellipsis">车牌号：川A8888</p>
+							{{item.name}}
+							<p class="mui-ellipsis">车牌号：{{item.carnumber}}</p>
 						</div>
 					</a>
 				</li>
 			</ul>
 		</div>
 	</div>
+			<script src="../../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+	var zxc =new Vue({
+		el:"#zxc",
+		data:{
+			cars:{}
+		},
+		created(){
+			axios.get("http://myzuul.com:9500/port/car/find")
+			.then(res=>{
+				this.cars=res.data
+				console.info(res.data)
+			})
+		},
+	})
 	
+	</script>
 </body>
 </html>

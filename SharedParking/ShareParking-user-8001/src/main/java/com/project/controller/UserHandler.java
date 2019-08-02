@@ -45,14 +45,20 @@ public class UserHandler {
 
     @PostMapping("/user/username")
     public UserBean findByName(HttpSession session,String username) {
-    
-    	int id = (int) session.getAttribute("userid");
-    	UserBean bean = service.findById(id);
+    	
+    	if(session.getAttribute("userid")==null) {
+    		return service.findByUserName(username);
+    	}else {
+    		int id = (int) session.getAttribute("userid");
+        	UserBean bean = service.findById(id);
 
-    	if(bean.getUsername()!=null) {
-    		return service.findByUserName(bean.getUsername());
+        	if(bean.getUsername()!=null) {
+        		return service.findByUserName(bean.getUsername());
+        	}
+        	return service.findByUserName(username);
     	}
-    	return service.findByUserName(username);
+    	
+    	
     }
 
     /*
@@ -72,8 +78,10 @@ public class UserHandler {
     
     //通过id查询管理员
     @GetMapping("/user/findById")
-    public UserBean findById(){
-        UserBean user = service.findById(1);
+    public UserBean findById(HttpServletRequest request){
+    	HttpSession session = request.getSession();
+    	int id = (int) session.getAttribute("userid");	//获取当前登录的id
+        UserBean user = service.findById(id);
         return user;
     }
 
@@ -138,21 +146,17 @@ public class UserHandler {
         3：前台输入是密码长度不合格
      */
     @PostMapping("/user/updatePassword")
-    public String updataPassword(HttpSession session,String password, String repassword) {
+    public String updataPassword(HttpServletRequest request,String password, String repassword) {
     
+    	HttpSession session = request.getSession();
+    	int id = (int) session.getAttribute("userid");	//获取当前登录的id
            
-            int id = (int) session.getAttribute("id");	//获取当前登录的id
-
-            UserBean user = service.findById(id);
-
-            //将输入的原密码加密
-            Object obj = new SimpleHash("MD5",password,user.getUsername(),1024);
+           UserBean user = service.findById(id);
 
             //如果输入的原密码正确
-            if(user.getPassword().equals(obj.toString())) {
-                //将输入的新密码加密
-                Object obj1 = new SimpleHash("MD5",repassword,user.getUsername(),1024);
-                int num = service.updatePassword(user.getId(),obj1.toString());		//如果旧密码匹配 执行修改密码sql
+            if(user.getPassword().equals(password)) {
+                
+                int num = service.updatePassword(id,repassword);		//如果旧密码匹配 执行修改密码sql
 
                 return "1";					//1是修改成功
             }
@@ -173,7 +177,7 @@ public class UserHandler {
     	
         if(code.equals(generateCode.toString())){
            
-            int id = (int) session.getAttribute("id");
+            int id = (int) session.getAttribute("userid");
             int i = service.updatePhone(1, phone);
             return 1;
         }

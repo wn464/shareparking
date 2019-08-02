@@ -100,7 +100,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value= {"findcarportbyunkezu","findcarportbykezu","findcarportbymid","findcarportbycoordinate","findcarportbynumber"},allEntries = true)
+	@CacheEvict(value= {"findcarportbyunkezu","findcarportbykezu","findcarportbymid","findcarportbycoordinate","findcarportbynumber","findcarportbyauditstatus"},allEntries = true)
 	public boolean updatecarportstatusy(int cid) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
@@ -117,7 +117,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value= {"findcarportbyunkezu","findcarportbykezu","findcarportbymid","findcarportbycoordinate","findcarportbynumber"},allEntries = true)
+	@CacheEvict(value= {"findcarportbyunkezu","findcarportbykezu","findcarportbymid","findcarportbycoordinate","findcarportbynumber","findcarportbyauditstatus"},allEntries = true)
 	public boolean updatecarportstatusf(int cid) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
@@ -134,7 +134,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
-	@CacheEvict(value= {"findcarportbyunkezu","findcarportbykezu","findcarportbymid","findcarportbycoordinate","findcarportbynumber"},allEntries = true)
+	@CacheEvict(value= {"findcarportbyunkezu","findcarportbykezu","findcarportbymid","findcarportbycoordinate","findcarportbynumber","findcarportbyauditstatus"},allEntries = true)
 	public boolean updatecarauditstatus(int cid,int audit) {
 		CarportBean carport=new CarportBean();
 		carport.setId(cid);
@@ -224,7 +224,9 @@ private CarportDao dao;
 	@Override
 	@Cacheable(value="findcarportbymemid",key="#memid")
 	public List<CarportBean> findcarportbymemid(int memid) {
+		
 		List<CarportBean> pos=dao.findcarportbymemid(memid);
+	
 		return pos;
 	}
 

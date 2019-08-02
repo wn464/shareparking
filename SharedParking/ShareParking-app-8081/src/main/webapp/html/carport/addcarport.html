@@ -71,11 +71,11 @@
 					</div>
 					<div class="mui-input-row">
 						<label>地址</label>
-						<input type="text" v-model="address" class="mui-input-clear" placeholder="请输入">
+						<input type="text" v-model="address" class="mui-input-clear" placeholder="请输入" readonly onclick="showmap()" >
 					</div>
 					<div class="mui-input-row">
 						<label>坐标</label>
-						<input type="text" class="mui-input-clear" placeholder="请输入">
+						<input type="text" class="mui-input-clear" placeholder="请输入" readonly onclick="showmap()" :value="'x:'+jindu+'y:'+weidu">
 					</div>
 					<div class="mui-input-row">
 						<label>开始出租时间</label>
@@ -181,7 +181,7 @@
 			map.onclick = function( point ){
 				map.removeOverlay(centerpoint)
 				centerpoint = new plus.maps.Marker(point);
-				centerpoint.setIcon('../../img/map/map-marker-red.png');
+				centerpoint.setIcon('http://myzuul.com:8082/img/map/map-marker-red.png');
 				var bubble = new plus.maps.Bubble("目标地点");
 				centerpoint.setBubble(bubble);
 				map.addOverlay(centerpoint);
@@ -253,7 +253,7 @@
 				 formData.append("file",img);
 				 console.info(formData);
 				 $.ajax({
-					url:"http://localhost:8081/upimage",
+					url:"http://myzuul.com:8082/upimage",
 					type: 'post',
 					cache: false,
 					data: formData,
@@ -261,7 +261,7 @@
 					contentType: false,
 					success:function(mes){
 						console.log("sss"+JSON.stringify(mes));
-						app.imglist.push("http://localhost:8081/images/"+mes);
+						app.imglist.push("http://myzuul.com:8082/images/"+mes);
 						app.inagenamelist.push(mes);
 					}
 			 })
@@ -272,7 +272,7 @@
 				 formData.append("file",img);
 				 console.info(formData);
 				 $.ajax({
-					url:"http://localhost:8081/upimage",
+					url:"http://myzuul.com:8082/upimage",
 					type: 'post',
 					cache: false,
 					data: formData,
@@ -280,7 +280,7 @@
 					contentType: false,
 					success:function(mes){
 						console.log("sss"+JSON.stringify(mes));
-						app.carimg="http://localhost:8081/images/"+mes;
+						app.carimg="http://myzuul.com:8082/images/"+mes;
 						app.carimgname=mes;
 					}
 			 })
@@ -323,6 +323,13 @@
 
 
 </script>
-	
+	<style type="text/css">
+		#map {
+		width: 100%;
+		height: 300px;
+		text-align: center;
+		background: #FFFFFF;
+		position: static;
+	</style>
 </body>
 </html>
