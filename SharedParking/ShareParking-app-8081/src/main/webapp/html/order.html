@@ -9,6 +9,7 @@
 		<script src="../js/mui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/jquery-3.4.1.js"></script>
 		<script src="../js/vue.js"></script>
+		<script src="../js/axios.min.js" type="text/javascript" charset="utf-8"></script>			
 		<script type="text/javascript">
 			mui.init()
 		</script>
@@ -18,7 +19,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">订单</h1>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content" id="app">
 			<div class="mui-card">
 				<ul class="mui-table-view">
 				<li class="mui-table-view-cell mui-collapse">
@@ -48,7 +49,7 @@
 			</div>
 			<div class="mui-card">
 				<div class="mui-row mui-table-view-cell">
-					<a href="complaint/complaints.html" class="mui-navigate-right">投诉受理</a>
+					<div  v-on:click="ck1" class="mui-navigate-right">投诉受理</div>
 				</div>
 				
 			</div>
@@ -82,6 +83,22 @@
 				
 			})
 			
+	   var vm = new Vue({
+		el:"#app",
+		data:{
+		},
+		methods:{
+			ck1:function(){
+    			axios.get("http://myzuul.com:9500/complaint/complaint/memberid")
+    			.then(res=>{
+    				window.location.href="complaint/complaints.html?id="+res.data;
+    				
+    			})
+    		}
+		},
+			
+		})
+		
 		</script>
 	</body>
 
