@@ -75,6 +75,13 @@ public class MemberHandler {
 		return bean;
 	}
 	
+	@GetMapping("/member/findid")
+	public MemberBean findId(Integer id) {
+		MemberBean bean = service.findById(id);
+		System.out.println(bean);
+		return bean;
+	}
+	
 	/*
 	 * 注册
 	 */
