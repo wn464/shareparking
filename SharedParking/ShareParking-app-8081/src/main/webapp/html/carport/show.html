@@ -213,9 +213,9 @@
 					this.username=res.data.m_id.username
 					this.carport=res.data
 					this.cid=res.data.m_id.id
-					this.imagesname.push("http://localhost:8081/images/"+res.data.imgs_id.image1)
-					this.imagesname.push("http://localhost:8081/images/"+res.data.imgs_id.image2)
-					this.imagesname.push("http://localhost:8081/images/"+res.data.imgs_id.image3)
+					this.imagesname.push("http://myzuul.com:8082/images/"+res.data.imgs_id.image1)
+					this.imagesname.push("http://myzuul.com:8082/images/"+res.data.imgs_id.image2)
+					this.imagesname.push("http://myzuul.com:8082/images/"+res.data.imgs_id.image3)
 				})
 				.catch(res=>{
 					console.info(res.data)

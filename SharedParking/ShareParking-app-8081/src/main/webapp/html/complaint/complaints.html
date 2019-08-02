@@ -53,7 +53,7 @@
  		   axios.get("http://myzuul.com:9500/complaint/complaint/user/"+id)
  		   .then(res=>{
  			   for(var i=0;i<res.data.length;i++){
- 				   res.data[i].imgName="http://myzuul.com:80/images/"+res.data[i].imgName;
+ 				   res.data[i].imgName="http://myzuul.com:8082/images/"+res.data[i].imgName;
  			   }
  			   console.info(res.data);
  			  this.complaint=res.data;

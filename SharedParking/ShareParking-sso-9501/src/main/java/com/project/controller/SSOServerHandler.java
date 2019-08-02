@@ -52,6 +52,7 @@ public class SSOServerHandler {
         HttpSession session = request.getSession();
         session.setAttribute("memberid", member.getId());
         session.setAttribute("membername", member.getUsername());
+        session.setMaxInactiveInterval(60*30);
 		createToken(member.getId(), username, MEMBER, "",request,response);
 		return true;
 	}
@@ -91,30 +92,30 @@ public class SSOServerHandler {
 	public void userLogout(HttpServletRequest request,HttpServletResponse response) {
 		//清除redis
 		
+		HttpSession session = request.getSession();
 		Map<String, String > map = getRedis(getToken(request, response));
 		clearToken(getToken(request, response));
 		if(map!=null) {
 			String role = map.get("role");
-			switch (role) {
-			case USER:
+			if(session.getAttribute("userid")!=null) {
 				try {
 					response.sendRedirect("http://myzuul.com:8083");
+					return;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				break;
-
-			case MEMBER:
+			}
+			if(session.getAttribute("memberid")!=null) {
 				try {
 					response.sendRedirect("http://myzuul.com:8082");
+					return;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				break;
-
 			}
+			
 			
 		}
 		
@@ -173,7 +174,7 @@ public class SSOServerHandler {
 		map.put("permission", permission);
 		redisTemplate.opsForValue().set(tokenKey, map, 60*30, TimeUnit.SECONDS);
 		Cookie cookie = new Cookie(TOKEN, tokenKey);
-        cookie.setMaxAge(60 * 3);
+        cookie.setMaxAge(60 * 30);
         //设置域
         //cookie.setDomain("huanzi.cn");
         //设置访问路径
