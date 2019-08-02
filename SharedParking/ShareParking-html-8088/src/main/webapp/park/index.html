@@ -95,14 +95,14 @@
 							<!-- MULTI CHARTS -->
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title">本年度销售额</h3>
+									<h3 class="panel-title">本年度营业额</h3>
 									<div class="right">
 										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
 										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
 									</div>
 								</div>
 								<div class="panel-body">
-									<div id="container" style="width:1200px;height:400px;"></div>
+									<div id="container" style="width:1600px;height:470px;"></div>
 								</div>
 							</div>
 							<!-- END MULTI CHARTS -->
@@ -246,7 +246,7 @@
 		    yAxis: [
 		        {
 		            type: 'value',
-		            name: '销售金额',
+		            name: '营业额',
 		            min: 0,
 
 		            axisLabel: {
@@ -266,9 +266,9 @@
 		    series: [
 		       
 		        {
-		            name:'销售金额',
+		            name:'营业额',
 		            type:'bar',
-		            data:[a1, b1, c1, d1, e1, f1, g1, h1, i1, j1, k1, l1],
+		            data:[a1*0.05, b1*0.05, c1*0.05, d1*0.05, e1*0.05, f1*0.05, g1*0.05, h1*0.05, i1*0.05, j1*0.05, k1*0.05, l1*0.05],
 		            itemStyle: {   
 		                //通常情况下：
 		                normal:{  
