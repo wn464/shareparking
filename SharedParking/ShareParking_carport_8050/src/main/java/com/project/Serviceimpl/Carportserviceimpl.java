@@ -224,7 +224,9 @@ private CarportDao dao;
 	@Override
 	@Cacheable(value="findcarportbymemid",key="#memid")
 	public List<CarportBean> findcarportbymemid(int memid) {
+		
 		List<CarportBean> pos=dao.findcarportbymemid(memid);
+	
 		return pos;
 	}
 
