@@ -1,5 +1,8 @@
 package com.project.demo;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.boot.SpringApplication;
@@ -19,8 +22,13 @@ public class Application8088Demo {
 	public static void main(String[] args) {
 		SpringApplication.run(Application8088Demo.class, args);
 	}
-	@GetMapping("/id")
-	public String sessionid(HttpSession session) {
-		return session.getId().toString();
+	@GetMapping("/")
+	public void sessionid(HttpServletResponse response) {
+		try {
+			response.sendRedirect("/park/index.html");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -22,7 +22,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-//@WebFilter(urlPatterns = "/*")
+@javax.servlet.annotation.WebFilter(urlPatterns = "/*")
 public class WebFilter implements Filter {
 	
 	PathMatcher pathmatcher = new AntPathMatcher();
@@ -54,7 +54,9 @@ public class WebFilter implements Filter {
 		        
 		        urimap.put("/park/login.html", "anno");
 //		      urimap.put("/getusr", "role:user,role:member");
-		        urimap.put("/**", "");
+		        urimap.put("/park/assets/**", "anno");
+		        urimap.put("/park/**", "");
+		        urimap.put("/**", "anno");
 		        Set<String> set =urimap.keySet();
 		        for (String string : set) {
 		        	if(pathmatcher.match(string, uri)) {
@@ -109,7 +111,7 @@ public class WebFilter implements Filter {
 		            //重定向到登录页面
 		            try {
 		            	req.getSession().setAttribute("url", url);
-		            	resp.sendRedirect("http://myzuul.com:8080/park/login.html?url="+url);
+		            	resp.sendRedirect("http://myzuul.com:8083/park/login.html?url="+url);
 		            	//判断是web还是app
 		            } catch (IOException e) {
 		                e.printStackTrace();
@@ -127,7 +129,7 @@ public class WebFilter implements Filter {
 		            try {
 		            	//判断是web还是app
 		            	req.getSession().setAttribute("url", url);
-		            	resp.sendRedirect("http://myzuul.com:8080/park/login.html?url="+url);
+		            	resp.sendRedirect("http://myzuul.com:8083/park/login.html?url="+url);
 		            	
 		            } catch (IOException e) {
 		                e.printStackTrace();
