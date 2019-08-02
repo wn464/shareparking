@@ -37,10 +37,7 @@ public class AuthFilter extends ZuulFilter{
 	  RequestContext ctx = RequestContext.getCurrentContext();
       HttpServletRequest request = ctx.getRequest();
       HttpServletResponse response = ctx.getResponse();
-      request.getSession().setAttribute("userid", 1);
-      request.getSession().setAttribute("username", "ss");
-      request.getSession().setAttribute("memberid", 2);
-      request.getSession().setAttribute("membername", "log");
+      
       //访问路径
       System.out.println(request.getSession().getId());
       //String url = request.getRequestURL().toString();
@@ -199,7 +196,7 @@ public class AuthFilter extends ZuulFilter{
         //获取redis参数
         Map<String, String> map = (Map<String, String>) obj;
         
-        
+        //判断session是否有效
         
 //        //判断是否拥有角色
 //        if(filterPermission.contains("role:")) {

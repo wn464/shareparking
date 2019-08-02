@@ -46,6 +46,9 @@ public class AppFilter implements Filter {
 		        HttpServletResponse resp = (HttpServletResponse) response;
 		        //访问路径
 		 
+		        
+		      
+				
 		        String url = req.getRequestURL().toString();
 		        String uri = req.getRequestURI().toString();
 		        System.out.println(url);
@@ -74,7 +77,20 @@ public class AppFilter implements Filter {
 		        	
 		        	return;
 		        }
-		        
+		        //页面不缓存
+		        if(pathmatcher.match("/**/*.html", uri)) {
+		        	System.out.println("html页面设置不缓存");
+		        	//resp.setHeader:发送一个报头，告诉浏览器当前页面不进行缓存，每次访问的时间必须从服务器上读取最新的数据
+					//no-cache：客户端每次请求时必须向服务器发送
+					//must-revalidate:作用与no-cache相同，但更严谨
+					//no-store:缓存将不存在response,包括header和body。
+					resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+					// 本地无缓存，自动刷新页面
+					resp.setHeader("Pragma", "no-cache"); 
+					// Expires实体报头域给出响应过期的日期和时间，小于等于0表示当前页面立即过期，
+					// 为了让浏览器不要缓存页面，也可以利用Expires实体报关域，设置为0
+					resp.setDateHeader("Expires", 0); 
+		        }
 		        //判断是否需要登录
 		         String[] arry = urimap.get(filterUri).split(",");
 		         for (String string : arry) {
@@ -97,7 +113,7 @@ public class AppFilter implements Filter {
 		        	chain.doFilter(request, response);
 		            return ;
 		        }
-		        
+		       
 		        //判断是否登录
 		        //从cookie里面取值（Zuul丢失Cookie的解决方案：https://blog.csdn.net/lindan1984/article/details/79308396）
 		        String accessToken = req.getParameter("accessToken");
@@ -115,7 +131,7 @@ public class AppFilter implements Filter {
 		            //重定向到登录页面
 		            try {
 		            	req.getSession().setAttribute("url", url);
-		            	resp.sendRedirect("http://myzuul.com/html/login.html?url="+url);
+		            	resp.sendRedirect("http://myzuul.com:8082/html/login.html?url="+url);
 		            	//判断是web还是app
 		            } catch (IOException e) {
 		                e.printStackTrace();
@@ -126,14 +142,14 @@ public class AppFilter implements Filter {
 		        
 		        //判断redis是否有效
 		        Object obj = redisTemplate.opsForValue().get(accessToken);
+		        System.out.println(obj);
 		        if(obj==null) {
 		        	//登录失效
 		        	
 		            //重定向到登录页面
 		            try {
 		            	//判断是web还是app
-		            	req.getSession().setAttribute("url", url);
-		            	resp.sendRedirect("http://myzuul.com/html/login.html?url="+url);
+		            	resp.sendRedirect("http://myzuul.com:8082/html/login.html?url="+url);
 		            	
 		            } catch (IOException e) {
 		                e.printStackTrace();
