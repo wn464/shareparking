@@ -13,11 +13,11 @@
   </select>
   <!-- 查询今日新增可租车位数量 -->
   <select id="findcarportbydaynumber" resultType="int">
-  select count(*) from carport where status=10 and begintime&gt;=#{endtime} and begintime&lt;=#{day}
+  select count(*) from carport where  addtime&gt;=#{endtime} and addtime&lt;=#{day}
   </select>
   <!-- 查询今日新增车位 -->
   <select id="findcarportdaybytime" resultMap="onemap">
-  select * from carport where  status=10 and begintime&gt;=#{endtime} and begintime&lt;=#{day} limit #{page},#{size}
+  select * from carport where  addtime&gt;=#{endtime} and addtime&lt;=#{day} limit #{page},#{size}
   </select>
   <!-- 添加车位 -->
   <insert id="addcarport">
