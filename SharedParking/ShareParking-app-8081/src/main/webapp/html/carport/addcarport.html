@@ -181,7 +181,7 @@
 			map.onclick = function( point ){
 				map.removeOverlay(centerpoint)
 				centerpoint = new plus.maps.Marker(point);
-				centerpoint.setIcon('../../img/map/map-marker-red.png');
+				centerpoint.setIcon('http://myzuul.com:8082/img/map/map-marker-red.png');
 				var bubble = new plus.maps.Bubble("目标地点");
 				centerpoint.setBubble(bubble);
 				map.addOverlay(centerpoint);
