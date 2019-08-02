@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -51,7 +52,7 @@ public class SSOServerHandler {
         HttpSession session = request.getSession();
         session.setAttribute("memberid", member.getId());
         session.setAttribute("membername", member.getUsername());
-		createToken(member.getId(), username, USER, "",request,response);
+		createToken(member.getId(), username, MEMBER, "",request,response);
 		return true;
 	}
 	@PostMapping("/user/login")
@@ -69,6 +70,7 @@ public class SSOServerHandler {
         HttpSession session = request.getSession();
         session.setAttribute("userid", user.getId());
         session.setAttribute("username", user.getUsername());
+        session.setMaxInactiveInterval(60*30);
 		createToken(user.getId(), username, USER, user.getAuthority().getName(),request,response);
 		return true;
 	}
@@ -86,11 +88,37 @@ public class SSOServerHandler {
 	}
 	//登出
 	@GetMapping("/logout")
-	public String userLogout(HttpServletRequest request,HttpServletResponse response) {
+	public void userLogout(HttpServletRequest request,HttpServletResponse response) {
 		//清除redis
+		
+		Map<String, String > map = getRedis(getToken(request, response));
 		clearToken(getToken(request, response));
+		if(map!=null) {
+			String role = map.get("role");
+			switch (role) {
+			case USER:
+				try {
+					response.sendRedirect("http://myzuul.com:8083");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+
+			case MEMBER:
+				try {
+					response.sendRedirect("http://myzuul.com:8082");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+
+			}
+			
+		}
+		
 		//跳转登录
-		return "/user/index.html";
 	}
 
 	
@@ -112,15 +140,27 @@ public class SSOServerHandler {
 	}
 	public void clearToken(String token) {
 		if(token=="") {
+			return ;
+		}
+		Object obj = redisTemplate.opsForValue().get(token);
+		if(obj==null) {
 			return;
 		}
-		//获取角色，进行跳转
-		Map<String, String> map = (Map<String, String>) redisTemplate.opsForValue().get(token);
-		String role = map.get("role");
+		
 		//删除信息
+		System.out.println("登出");
 		redisTemplate.delete(token);
 		//返回网页
-		
+	}
+	
+	public Map<String, String> getRedis(String token){
+		//获取角色，进行跳转
+		Object obj = redisTemplate.opsForValue().get(token);
+		if(obj==null) {
+			return null;
+		}
+		Map<String, String> map = (Map<String, String>) obj;
+		return map;
 	}
 	//生成token
 	public void createToken(int id,String username,String role,String permission,HttpServletRequest request,HttpServletResponse response) {

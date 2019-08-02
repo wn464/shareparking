@@ -115,7 +115,7 @@ public class AppFilter implements Filter {
 		            //重定向到登录页面
 		            try {
 		            	req.getSession().setAttribute("url", url);
-		            	resp.sendRedirect("http://myzuul.com/html/login.html?url="+url);
+		            	resp.sendRedirect("http://myzuul.com:8082/html/login.html?url="+url);
 		            	//判断是web还是app
 		            } catch (IOException e) {
 		                e.printStackTrace();
@@ -126,14 +126,14 @@ public class AppFilter implements Filter {
 		        
 		        //判断redis是否有效
 		        Object obj = redisTemplate.opsForValue().get(accessToken);
+		        System.out.println(obj);
 		        if(obj==null) {
 		        	//登录失效
 		        	
 		            //重定向到登录页面
 		            try {
 		            	//判断是web还是app
-		            	req.getSession().setAttribute("url", url);
-		            	resp.sendRedirect("http://myzuul.com/html/login.html?url="+url);
+		            	resp.sendRedirect("http://myzuul.com:8082/html/login.html?url="+url);
 		            	
 		            } catch (IOException e) {
 		                e.printStackTrace();

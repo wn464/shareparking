@@ -3,6 +3,7 @@ package com.project.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -160,7 +161,7 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 		Date te =new Date();
 		String a=datafromat.format(te);
 		carport.setAddtime(a);
-		String number="ABCD"+UUID.randomUUID();
+		String number="ABCD"+new Random(System.currentTimeMillis());
 		carport.setCarportnumber(number);
 		boolean l =service.addcarport(carport);
 		String name=(String) session.getAttribute("membername");
