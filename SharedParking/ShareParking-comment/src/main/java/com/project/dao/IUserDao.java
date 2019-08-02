@@ -50,7 +50,7 @@ public interface IUserDao {
     /*
         修改手机号
      */
-    @Update("update user set phonenumber=#{phone}")
+    @Update("update user set phonenumber=#{phone} where id =#{id}")
     int updatePhone(@Param("id")int id,@Param("phone")String phone);
     /*
      * 删除管理员

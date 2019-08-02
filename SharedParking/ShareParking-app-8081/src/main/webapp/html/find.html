@@ -132,7 +132,7 @@
 		}
 		function getcarport(x,y){
 			//获取车库列表
-			mui.ajax('http://192.168.3.166:9500/port/carport/coordinate/'+x+'/'+y,{
+			mui.ajax('http://myzuul.com:9500/port/carport/coordinate/'+x+'/'+y,{
 				type:'get',//HTTP请求类型
 				timeout:2000,//超时时间设置为10秒；
 				success:function(data){
@@ -153,7 +153,7 @@
 			map.onclick = function( point ){
 				map.removeOverlay(centerpoint)
 				centerpoint = new plus.maps.Marker(point);
-				centerpoint.setIcon('../img/map/map-marker-red.png');
+				centerpoint.setIcon('/img/map/map-marker-red.png');
 				var bubble = new plus.maps.Bubble("目标地点");
 				centerpoint.setBubble(bubble);
 				map.addOverlay(centerpoint);
@@ -218,7 +218,7 @@
 						console.log(JSON.stringify(mes));
 						var bike1 = new plus.maps.Point(mes.coordinate_x, mes.coordinate_y);
 						var bike1Icon = new plus.maps.Marker(bike1);
-						bike1Icon.setIcon('../img/map/map-marker-green.png');
+						bike1Icon.setIcon('/img/map/map-marker-green.png');
 						var bubble = new plus.maps.Bubble(mes.address);
 						bike1Icon.setBubble(bubble);
 						map.addOverlay(bike1Icon);
