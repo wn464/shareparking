@@ -58,7 +58,6 @@ public class UserServiceImpl implements IUserService {
     @CacheEvict(value= {"findAll"},allEntries = true)
     @Override
     public int update(int id, int a_id) {
-    	System.out.println("asdasdasdsadasdsadsadsadasdasdddddddddddddddddddd==="+a_id);
         return dao.update(id,a_id);
     }
 
@@ -79,7 +78,7 @@ public class UserServiceImpl implements IUserService {
     public UserBean findById(int id) {
         return dao.findById(id);
     }
-
+    
 	@Override
 	public int del(int id) {
 		// TODO Auto-generated method stub
