@@ -8,7 +8,7 @@
 	    update reliable set credibility =#{credibility},accusesum = accusesum+1 where m_id =#{id}
 	</update>
 	<update id="updateCreOrder" >
-	    update reliable set credibility =#{credibility},ordersum = ordersum+1 where m_id =#{id}
+	    update reliable set credibility =#{credibility},ordersum = #{order} where m_id =#{id}
 	</update>
     <select id="findById" parameterType="int" resultType="CredibilityBean">
         select * from reliable where m_id =#{id}
