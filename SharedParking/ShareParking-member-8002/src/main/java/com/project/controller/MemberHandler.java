@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.Bean.MemberBean;
 import com.project.Bean.MessageBean;
 import com.project.Bean.UserBean;
+import com.project.controller.interfaces.LogRemoter;
 import com.project.service.IMemberService;
 
 @RestController
 public class MemberHandler {
 	@Autowired
 	private IMemberService service;
+	@Autowired	
+	private LogRemoter logservice;
 
 	@GetMapping("/member/username")
 	public MemberBean findByName(String username) {
@@ -51,12 +54,17 @@ public class MemberHandler {
 	 * 2：修改失败
 	 */
 	@PutMapping("/member/updatemyself")
-	public int updateMySelf(HttpSession session,String address,String job,String phone) {
-		
+	public int updateMySelf(HttpSession session,String phone,String address,String job) {
+		System.out.println(address);
+		System.out.println(phone);
 		int id = (int) session.getAttribute("memberid");
 		int mySelf = service.updateMySelf(address, job,id, phone);
 		if(mySelf!=0) {
-			return 1;
+			
+			String name=(String) session.getAttribute("membername");
+			String message=name+"修改个人信息";
+			 logservice.insertLog(name, message); 
+			 return 1;
 		}
 		return 2;			
 	}
@@ -87,8 +95,12 @@ public class MemberHandler {
 	 * 注册
 	 */
 	@PostMapping("/member/reg")
-	public int reg(MemberBean member) {
+	public int reg(HttpSession session,MemberBean member) {
 		int i = service.reg(member);
+		
+		String name=(String) session.getAttribute("membername");
+		String message=name+"注册了";
+		 logservice.insertLog(name, message); 
 		return i ;
 	}
 	
@@ -103,8 +115,11 @@ public class MemberHandler {
 		MemberBean member = new MemberBean();
 		member.setId(id);
 		mess.setMember(member);
-		
-		return service.complete(mess);
+		int i = service.complete(mess);
+		String name=(String) session.getAttribute("membername");
+		String message=name+"完善了个人信息";
+		 logservice.insertLog(name, message); 
+		return i;
 	}
 	
 }
