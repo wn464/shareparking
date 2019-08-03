@@ -19,7 +19,7 @@
 	</select>
 	<!-- 	后台通过支付状态分页查询订单 -->
 	<select id="selectOrderByStatus" parameterType="int" resultMap="map">
-		select * from orders where status = #{status} and delStatus = 6
+		select * from orders where status = #{status} and delStatus = 6 ORDER BY id DESC
 		limit #{page},#{size}	
 	</select>
 		<!-- 	查询支付数量 -->
@@ -29,7 +29,7 @@
 	
 	<!-- 	通过支付状态分页查询订单 1-->
 	<select id="selectOrderByState1" parameterType="int" resultMap="map">
-		select * from orders where status = #{status} and mem_j_id = #{mid} and delStatus = 6
+		select * from orders where status = #{status} and mem_j_id = #{mid} and delStatus = 6 ORDER BY id DESC
 		limit #{page},#{size}	
 	</select>
 	<!-- 	查询支付数量 -->
@@ -38,7 +38,7 @@
 	</select>
 	<!-- 	通过支付状态分页查询订单2 -->
 	<select id="selectOrderByState2" parameterType="int" resultMap="map">
-		select * from orders where status = #{status} and mem_y_id = #{mid} and delStatus = 6
+		select * from orders where status = #{status} and mem_y_id = #{mid} and delStatus = 6 ORDER BY id DESC
 		limit #{page},#{size}	
 	</select>
 	<!-- 	查询支付数量 -->
