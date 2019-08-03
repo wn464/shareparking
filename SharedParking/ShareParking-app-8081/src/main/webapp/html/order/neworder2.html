@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+	<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	mui.init()
+	</script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">订单</h1>
+	</header>
+	<div class="mui-content" id="app">
+		<div class="mui-card">
+			<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a >
+							订单编号
+							<span class="mui-pull-right">{{data.orderNumber}}</span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							地点：
+							<span class="mui-pull-right">{{bean.address}}</span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a >
+							 车牌号：
+							 <span class="mui-pull-right">{{data.carNumber}}</span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a >
+							 下单时间：
+							 <span class="mui-pull-right">{{data.orderTime}}</span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a >
+							 总价：
+							 <span class="mui-pull-right">{{data.price}}元</span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							出租人姓名：
+							<span class="mui-pull-right">{{peo.name}}</span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							出租人手机号：
+							<span class="mui-pull-right">{{phone.phonenumber}}</span>
+						</a>
+					</li>
+				</ul>
+		</div>
+		
+		<div class="mui-card">
+			<div class="mui-row">
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-danger " style=" margin: 0.5rem 3rem;">返回</button>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script type="text/javascript">
+	var id = window.location.href.split("=")[1];
+	var arr = id.split("&");
+ 	var oid = arr[0];
+	var price = window.location.href.split("=")[2];
+	var app = new Vue({
+		el:"#app",
+		data:{
+			data:{},
+			bean:{},
+			peo:{},
+			phone:{},
+		},
+		created(){
+			axios.get("http://myzuul.com:9500/orders/order/pay/"+oid+"/"+price).then(res=>{
+				console.info(res)
+				this.data = res.data;
+				this.bean = res.data.carportBean;
+				this.phone = res.data.memberBean2;
+				this.peo = res.data.memberBean2.message;
+			}).catch();
+		},
+	})
+	
+	
+	</script>
+</body>
+</html>
