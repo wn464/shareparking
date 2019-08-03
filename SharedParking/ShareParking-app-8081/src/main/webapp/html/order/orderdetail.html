@@ -71,11 +71,8 @@
 		
 		<div class="mui-card">
 			<div class="mui-row">
-<<<<<<< HEAD
+
 				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" @click="com()">确认</button>
-=======
-				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" ><a href="http://myzuul.com:8082" style="color: #ffffff">确认<a></button>
->>>>>>> branch 'master' of https://github.com/wn464/shareparking.git
 				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-danger " style=" margin: 0.5rem 3rem;">返回</button>
 			</div>
 		</div>
@@ -95,12 +92,10 @@
 			.then(res=>{
 				console.info(res)
 				this.order=res.data
-<<<<<<< HEAD
+
 				this.mem=res.data.memberBean1
 				this.mem1=res.data.memberBean2
-=======
-				alert("停车成功")
->>>>>>> branch 'master' of https://github.com/wn464/shareparking.git
+
 			})
 			.catch(res=>{
 				console.info(res)
@@ -113,6 +108,7 @@
 				.then(res=>{
 					console.info(res)
 					this.order=res.data
+					alert("停车成功")
 					window.location.href="http://myzuul.com:8082"
 					
 				})

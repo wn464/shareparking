@@ -26,7 +26,7 @@ private CarDao dao;
 	}
 
 	@Override
-	@Cacheable(value="findcars",key="memid") 
+	@Cacheable(value="findcars",key="#memid") 
 	public List<CarBean> findcars(int memid) {
 	List<CarBean> cars=new ArrayList<CarBean>();
 	cars=dao.findcarbymid(memid);

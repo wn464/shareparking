@@ -16,11 +16,11 @@ import org.springframework.context.annotation.Configuration;
  * @author lenovo
  *
  */
-//@Configuration
-//@EnableCaching //开启缓存
+@Configuration
+@EnableCaching //开启缓存
 public class redisconfig extends CachingConfigurerSupport {
 @Override
-//@Bean
+@Bean
 public KeyGenerator keyGenerator() {
 	
 	return new KeyGenerator() {

@@ -51,7 +51,7 @@
 			tijiao:function(){
 				var params=new  URLSearchParams();
 				params.append("carnumber",zxc.carnumber)
-				params.append("name",zxc.name)
+				params.append("name",zxc.carname)
 				axios.post("http://myzuul.com:9500/port/car/add",params)
 				.then(res=>{
 					alert("添加成功")

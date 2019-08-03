@@ -42,8 +42,8 @@
 			
 			<div class="mui-card">
 				<div class="carportimgs"></div>
-				<div class="layui-upload-list" id="demo2">
-    				<img :src="item" height="100%" width="33%" v-for="(item,index) in imglist" />
+				<div class="layui-upload-list" id="demo2" >
+    				<img :src="item" height="100%" width="33%" v-for="(item,index) in imglist" style="width:100px;height: 100px"/>
     			</div> 
 				<div class="mui-input-row">
 					<label>车位图片</label>
@@ -54,8 +54,8 @@
 			
 			<div class="mui-card">
 				<div class="proveimg"></div>
-				<div class="layui-upload-list" id="demo3">
-    				<img   :src="carimg" />
+				<div class="layui-upload-list" id="demo3" style="width:100px;height: 100px;">
+    				<img  v-if="carimg!=''" :src="carimg"  width="100%" height="100%"/>
     			</div> 
 				
 				<div class="mui-input-row">
