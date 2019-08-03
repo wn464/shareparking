@@ -22,7 +22,14 @@
 	<script src="../../js/layui/layui.all.js"></script>
 	<script src="../../js/layui/layui.js"></script>
 	<script type="text/javascript">
-	mui.init()
+	mui.init({
+		beforeback: function() {
+			if(map!=null){
+				map.close();
+			}
+			
+	},
+	})
 	</script>
 </head>
 <body>

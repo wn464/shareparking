@@ -32,7 +32,7 @@ public class OrderServiceImp implements IOrderService{
 	 *
 	 */
 	@Override
-	@CacheEvict(value="*",allEntries = true)
+	@CacheEvict(value= {"selectOrderById","selectOrderByOrderNumber","selectOrderByState1","selectOrderByState2","selectOrderByMonth","selectOrderCount","selcetOrderByDate","selectOrderNumberByDate","selcetOrderByDay","selectOrderByStatus"},allEntries = true)
 	public int insertOrder(OrderBean orderBean) {
 	//生成订单时间
 	String orderTime= CreateOrderInfo.getCreateTime();
@@ -103,8 +103,9 @@ public class OrderServiceImp implements IOrderService{
 	
 	//修改订单属性
 	@Override
-	@CacheEvict(value="*",allEntries = true)
+	@CacheEvict(value={"selectOrderById","selectOrderByOrderNumber","selectOrderByState1","selectOrderByState2","selectOrderByMonth","selectOrderCount","selcetOrderByDate","selectOrderNumberByDate","selcetOrderByDay","selectOrderByStatus"},allEntries = true)
 	public int updateOrderAttr(OrderBean orderBean) {
+		System.out.println(orderBean+"修改状态");
 		int num = orderDao.updateOrderAttr(orderBean);
 		return num;
 	}
@@ -196,7 +197,7 @@ public class OrderServiceImp implements IOrderService{
 		List<Double> price = orderDao.selcetOrderByDate(startTime, endTime);
 		return price;
 	}
-
+	
 	//统计每日新增订单数
 	@Override
 	@Cacheable(value = "selectOrderNumberByDate",key = "#date")

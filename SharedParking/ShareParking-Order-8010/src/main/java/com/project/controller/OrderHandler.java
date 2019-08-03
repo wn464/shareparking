@@ -21,6 +21,7 @@ import com.project.Bean.PageBean;
 import com.project.controller.interfaces.CredibilityHandler;
 import com.project.controller.interfaces.LogRemoter;
 import com.project.controller.interfaces.MemberRemoter;
+import com.project.controller.interfaces.carportHandler;
 import com.project.service.IOrderService;
 import com.project.util.CountPrice;
 @RestController
@@ -34,24 +35,31 @@ public class OrderHandler {
 	private MemberRemoter memberremoter;
 	@Autowired
 	private LogRemoter logRemoter;
+	@Autowired
+	private carportHandler carportHandler ;
 	
 	/*
 	 * 添加订单
 	 */
 	@PostMapping("/order")
-	public Integer insertOrder(OrderBean orderBean) {
-		System.out.println("+++++++++++++++++"+orderBean);
-        orderBean.setMemberBean1(memberremoter.findById());
-        orderBean.setCarNumber(memberremoter.findById().getList().get(0).getCarnumber());
+	public Integer insertOrder(HttpSession session,OrderBean orderBean) {
+		System.out.println("添加订单-----"+orderBean);
+		int mid =  (int) session.getAttribute("memberid");
+		System.out.println("member"+memberremoter.findId(mid));
+        orderBean.setMemberBean1(memberremoter.findId(mid));
+        orderBean.setCarNumber(memberremoter.findId(mid).getList().get(0).getCarnumber());
 		int num = orderService.insertOrder(orderBean);
+		carportHandler.updatestatusf(orderBean.getCarportBean().getId());
+		String membername =  (String) session.getAttribute("membername");
+		logRemoter.insertLog(membername, "添加订单");//测试数据
+	
 		return num;
 	}
 	/*
 	 * 生成订单
 	 */
 	@GetMapping("/order/{oid}")
-	public OrderBean selectOrderById(@PathVariable("oid")int oid) {
-		logRemoter.insertLog("root", "添加");
+	public OrderBean selectOrderById(HttpServletRequest request,@PathVariable("oid")int oid) {
 		OrderBean orderBean = orderService.selectOrderById(oid);
 		return orderBean;
 	}
@@ -59,22 +67,23 @@ public class OrderHandler {
 	 * 租客分页查询
 	 */
 	@GetMapping("/order/status1/{status}/{page}/{size}")
-	public PageBean selectOrderByState1(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size,HttpServletRequest request) {
-		System.out.println("==============="+status+"===========");
-//		HttpSession session = request.getSession(false);
-//		int id = (int) session.getAttribute("id");
-//		System.out.println("-------"+id);
-		int mid = 1;//测试数据
+	public PageBean selectOrderByState1(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size,HttpSession session) {
+		int mid = (int) session.getAttribute("memberid");
+		System.out.println("-------"+mid);
+//		int mid = 1;//测试数据
 		 String str = mid+""+page+""+status;
 		PageBean pageBean = orderService.selectOrderByState1(mid, status, page, size,str);
+		System.out.println("pagebena"+pageBean);
 		return pageBean;
 	}
 	/*
 	 * 出租客分页查询
 	 */
 	@GetMapping("/order/status2/{status}/{page}/{size}")
-	public PageBean selectOrderByState2(@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
-		int mid = 2;//测试数据
+	public PageBean selectOrderByState2(HttpSession session,@PathVariable("status")int status, @PathVariable("page")int page, @PathVariable("size")int size) {
+		int mid = (int) session.getAttribute("memberid");
+		System.out.println("-------"+mid);
+//		int mid = 2;//测试数据
 		 String str = mid+""+page+""+status;
 		PageBean pageBean = orderService.selectOrderByState2(mid, status, page, size,str);
 		return pageBean;
@@ -247,7 +256,7 @@ public class OrderHandler {
 	 * 修改价格生成订单
 	 */
 	@GetMapping("/order/pay/{oid}/{price}")
-	public OrderBean payMoney(@PathVariable("oid")int oid,@PathVariable("price")double price) {
+	public OrderBean payMoney(@PathVariable("oid")int oid,@PathVariable("price")double price,HttpSession session) {
 		System.out.println("付款订单"+price);
 		OrderBean orderBean = orderService.selectOrderById(oid);
 		System.out.println(orderBean);
@@ -256,15 +265,22 @@ public class OrderHandler {
 		//修改订单价格
 		OrderBean orderBean2 = new OrderBean();
 		orderBean2.setPrice(Math.floor(totalPrice));
-		orderBean2.setOrderNumber(orderBean.getOrderNumber());
-		System.out.println(orderBean2);
+		orderBean2.setId(oid);
+		System.out.println("修改价格"+orderBean2);
 		orderService.updateOrderAttr(orderBean2);
 		OrderBean order = orderService.selectOrderById(oid);
-		int id = 1;//测试数据
-		int num = credibilityHandler.updateCreOrder(id);
-		System.out.println("---------------"+num);
 		return order;
 	}
+	
+	//确认订单，修改信誉表
+	@GetMapping("/order/com")
+	public int comfirm(HttpSession session) {
+		int id =  (int) session.getAttribute("memberid");
+		int num1 = credibilityHandler.updateCreOrder(id);
+		System.out.println("---------------"+num1);
+		return num1;
+	}
+	
 		
 	
 }

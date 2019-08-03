@@ -161,7 +161,7 @@ public List<CarportBean> findcarportbymid(String mid,String address) {
 		Date te =new Date();
 		String a=datafromat.format(te);
 		carport.setAddtime(a);
-		String number="ABCD"+new Random(System.currentTimeMillis());
+		String number="ABCD"+carport.hashCode();
 		carport.setCarportnumber(number);
 		boolean l =service.addcarport(carport);
 		String name=(String) session.getAttribute("membername");
@@ -218,9 +218,10 @@ public boolean updatacarport(CarportBean carport) {
 	@ResponseBody
 	public List<CarportBean> findcarportbymemid(HttpSession session){
 		int memid=(int) session.getAttribute("memberid");
-		System.out.println(memid);
 		
 		List<CarportBean> ports=service.findcarportbymemid(memid);
+		
+		
 		return ports;
 	}
 }

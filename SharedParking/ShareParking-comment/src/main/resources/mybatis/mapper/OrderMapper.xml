@@ -68,7 +68,7 @@
 	
 		<!-- 查询今日所有订单 -->
 	<select id="selcetOrderByDay"  resultMap="map">
-		select * from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6 limit #{page},#{size}	
+		select * from orders where orderTime  between #{beginTime} and #{endTime} and delStatus = 6 ORDER BY id DESC limit #{page},#{size} 
 	</select>
 	
 	<select id="selectOrderNumberByMem1"  resultType="int">
@@ -94,7 +94,7 @@
 				price= #{price} 
 			</if>
 		</set>
-		where ordernumber = #{orderNumber} 
+		where id = #{id} 
 	</update>
 	<resultMap id="map" type="OrderBean">
 		<id property="id" column="id"></id>

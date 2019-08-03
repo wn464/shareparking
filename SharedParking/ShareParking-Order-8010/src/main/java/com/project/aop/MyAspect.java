@@ -12,15 +12,14 @@ import com.project.Bean.OrderBean;
 public class MyAspect {
 	
 	
-	
-	/**
-	 * 后置通知要执行的
-	 */
-	@Around("execution(public * insertOrder(..)&& args(param1,param2))")
-	public void after(){
-
-		System.out.println("MyAspect=======后置通知");
-	}
+//	
+//	/**
+//	 * 后置通知要执行的
+//	 */
+//	@Around("execution(public * insertOrder(..))")
+//	public void after(){
+//		System.out.println("MyAspect=======后置通知");
+//	}
 
 
 
