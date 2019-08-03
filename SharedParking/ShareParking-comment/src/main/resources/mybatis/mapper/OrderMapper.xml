@@ -94,7 +94,7 @@
 				price= #{price} 
 			</if>
 		</set>
-		where ordernumber = #{orderNumber} 
+		where id = #{id} 
 	</update>
 	<resultMap id="map" type="OrderBean">
 		<id property="id" column="id"></id>

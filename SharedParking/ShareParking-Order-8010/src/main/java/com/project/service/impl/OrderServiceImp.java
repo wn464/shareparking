@@ -105,6 +105,7 @@ public class OrderServiceImp implements IOrderService{
 	@Override
 	@CacheEvict(value={"selectOrderById","selectOrderByOrderNumber","selectOrderByState1","selectOrderByState2","selectOrderByMonth","selectOrderCount","selcetOrderByDate","selectOrderNumberByDate","selcetOrderByDay","selectOrderByStatus"},allEntries = true)
 	public int updateOrderAttr(OrderBean orderBean) {
+		System.out.println(orderBean+"修改状态");
 		int num = orderDao.updateOrderAttr(orderBean);
 		return num;
 	}

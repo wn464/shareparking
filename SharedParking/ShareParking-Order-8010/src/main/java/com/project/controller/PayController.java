@@ -85,11 +85,13 @@ public class PayController {
 			System.out.println(num[1]);
 			OrderBean orderBean = orderService.selectOrderByOrderNumber(num[0]);
 //			//修改支付宝号
+			System.out.println("修改支付宝"+orderBean);
 			OrderBean orderBean2 = new OrderBean();
 			orderBean2.setId(orderBean.getId());
 			orderBean2.setAlipayNumber(num[1]);
 			orderService.updateOrderAttr(orderBean2);
 			//修改订单状态
+			System.out.println("修改订单状态"+orderBean);
 			OrderBean orderBean3 = new OrderBean();
 			orderBean3.setId(orderBean.getId());
 			MarkBean statusBean = new MarkBean();
@@ -109,7 +111,7 @@ public class PayController {
 			e.printStackTrace();
 		}
 		System.out.println("回调");
-		return "redirect:/index.html";
+		return "redirect:http://myzuul.com:8082";
 	}
 	
 	//响应回调1
