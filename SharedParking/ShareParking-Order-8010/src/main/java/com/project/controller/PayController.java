@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alipay.api.AlipayApiException;
 import com.project.Bean.MarkBean;
 import com.project.Bean.OrderBean;
+import com.project.controller.interfaces.carportHandler;
 import com.project.service.IOrderService;
 import com.project.util.AlipayUtil;
 import com.project.util.CountPrice;
@@ -26,6 +27,8 @@ public class PayController {
 	@Autowired
 	private IOrderService orderService;
 	
+	@Autowired
+	private carportHandler carportHandler;
 	//调用支付宝接口
 	@GetMapping("/pay/{oid}")
 	@ResponseBody
@@ -82,17 +85,21 @@ public class PayController {
 			System.out.println(num[1]);
 			OrderBean orderBean = orderService.selectOrderByOrderNumber(num[0]);
 //			//修改支付宝号
+			System.out.println("修改支付宝"+orderBean);
 			OrderBean orderBean2 = new OrderBean();
 			orderBean2.setId(orderBean.getId());
 			orderBean2.setAlipayNumber(num[1]);
 			orderService.updateOrderAttr(orderBean2);
 			//修改订单状态
+			System.out.println("修改订单状态"+orderBean);
 			OrderBean orderBean3 = new OrderBean();
 			orderBean3.setId(orderBean.getId());
 			MarkBean statusBean = new MarkBean();
 			statusBean.setId(4);
 			orderBean3.setStatusBean(statusBean);
 			orderService.updateOrderAttr(orderBean3);
+			//修改车位状态
+			carportHandler.updatestatusy(orderBean.getCarportBean().getId());
 			
 			//发送推送消息
 //			System.out.println("推送-------------------"+orderBean.getId());
@@ -104,7 +111,7 @@ public class PayController {
 			e.printStackTrace();
 		}
 		System.out.println("回调");
-		return "redirect:/index.html";
+		return "redirect:http://myzuul.com:8082";
 	}
 	
 	//响应回调1
