@@ -170,7 +170,7 @@ public class UserHandler {
         1:修改成功
         2：修改失败
      */
-    @GetMapping("/user/updatePhone")
+    @PutMapping("/user/updatePhone")
     public int updatePhone(HttpSession session,String code,String phone){
     	System.out.println(code);
     	System.out.println(generateCode.toString()+"================");
@@ -178,7 +178,7 @@ public class UserHandler {
         if(code.equals(generateCode.toString())){
            
             int id = (int) session.getAttribute("userid");
-            int i = service.updatePhone(1, phone);
+            int i = service.updatePhone(id, phone);
             return 1;
         }
         return 2;
@@ -200,6 +200,7 @@ public class UserHandler {
     /**
      * 删除管理员
      */
+    @DeleteMapping("/user/del")
     public int delete(Integer id) {
     	
     	return service.del(id);

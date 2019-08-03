@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication
-@EnableCaching //开启缓存
 @ComponentScan("com.project.controller")
 @ComponentScan("com.project.Serviceimpl")
 @MapperScan("com.project.dao")
