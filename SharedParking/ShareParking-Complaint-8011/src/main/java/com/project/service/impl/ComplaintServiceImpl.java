@@ -45,7 +45,11 @@ public class ComplaintServiceImpl implements IComplaintService{
 		bean.setTotalNumber(totalNumber);
 		bean.setPage(page);
 		bean.setSize(size);
-		bean.setTotalPage((totalNumber%size==0)?(totalNumber/size):(totalNumber/size+1));
+		int totalPage=(totalNumber%size==0)?(totalNumber/size):(totalNumber/size+1);
+		if(totalPage==0) {
+			totalPage=1;
+		}
+		bean.setTotalPage(totalPage);
 		return bean;
 	}
 
