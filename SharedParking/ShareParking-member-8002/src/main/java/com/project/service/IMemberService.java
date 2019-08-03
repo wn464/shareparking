@@ -52,4 +52,6 @@ public interface IMemberService {
      * 完善个人信息
      */
     int complete(MessageBean mess);
+    
+    int all();
 }

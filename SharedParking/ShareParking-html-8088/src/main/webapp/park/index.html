@@ -80,7 +80,7 @@
 									<div class="metric">
 										<span class="icon" style="background-color: #a4c879"><i class="fa fa-user"></i></span>
 										<p>
-											<span class="number">10000</span>
+											<span class="number">{{membernumber}}</span>
 											<span class="title">总计用户数</span>
 										</p>
 									</div>
@@ -146,7 +146,8 @@
 					order:[],
 					shabi:{},
 					carportnumber:{},
-					complaintnumber:{}
+					complaintnumber:{},
+					membernumber:{}
 	
 				},
 				created(){
@@ -169,7 +170,12 @@
 					.then(res=>{
 						console.info(res.data)
 						this.complaintnumber=res.data
-					})
+					}),
+					axios.get("http://myzuul.com:9500/member/all").then(
+						res=>{
+							this.membernumber=res.data
+						}		
+					)
 				}
 				
 				
