@@ -27,7 +27,10 @@ int addcar(@Param("car")CarBean car);
 	@Select("select * from car where m_id=#{memid}")
 	@Results({
 			@Result(property = "id",column = "id"),
-			@Result(property="m_id",column = "m-id",one=@One(select="com.project.dao.IMemberDao.findById")),
+			/*
+			 * @Result(property="m_id",column =
+			 * "m_id",one=@One(select="com.project.dao.IMemberDao.findById")),
+			 */
 			@Result(property="carnumber",column = "carnumber"),
 			@Result(property="name",column = "name"),
 	})
