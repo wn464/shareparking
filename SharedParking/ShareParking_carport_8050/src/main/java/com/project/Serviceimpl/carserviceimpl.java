@@ -16,7 +16,7 @@ public class carserviceimpl implements carService {
 	@Autowired
 private CarDao dao;
 	@Override
-	@CacheEvict(value= {"findcars"},allEntries = true)
+	@CacheEvict(value= {"findcars"},allEntries = true) 
 	public boolean addcar(CarBean car) {
 		int s=dao.addcar(car);
 		if(s>0) {
@@ -26,7 +26,7 @@ private CarDao dao;
 	}
 
 	@Override
-	@Cacheable(value="findcars",key="memid")
+	@Cacheable(value="findcars",key="memid") 
 	public List<CarBean> findcars(int memid) {
 	List<CarBean> cars=new ArrayList<CarBean>();
 	cars=dao.findcarbymid(memid);
