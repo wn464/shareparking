@@ -50,6 +50,19 @@ public class WebFilter implements Filter {
 		        String filterUri=null;
 		        List<String> filterRole=new ArrayList<String>();
 		        List<String> filterPermission=new ArrayList<String>();
+		        if(pathmatcher.match("/**/*.html", uri)) {
+		        	System.out.println("html页面设置不缓存");
+		        	//resp.setHeader:发送一个报头，告诉浏览器当前页面不进行缓存，每次访问的时间必须从服务器上读取最新的数据
+					//no-cache：客户端每次请求时必须向服务器发送
+					//must-revalidate:作用与no-cache相同，但更严谨
+					//no-store:缓存将不存在response,包括header和body。
+					resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+					// 本地无缓存，自动刷新页面
+					resp.setHeader("Pragma", "no-cache"); 
+					// Expires实体报头域给出响应过期的日期和时间，小于等于0表示当前页面立即过期，
+					// 为了让浏览器不要缓存页面，也可以利用Expires实体报关域，设置为0
+					resp.setDateHeader("Expires", 0); 
+		        }
 		        Map<String, String> urimap = new LinkedHashMap<String, String>();
 		        
 		        urimap.put("/park/login.html", "anno");

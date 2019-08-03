@@ -18,8 +18,8 @@
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">订单</h1>
 	</header>
-	<div class="mui-content">
-		<div class="mui-card" id="app">
+	<div class="mui-content" id="app">
+		<div class="mui-card" >
 			<ul class="mui-table-view">
 					<li class="mui-table-view-cell">
 						<a >
@@ -30,31 +30,31 @@
 					<li class="mui-table-view-cell">
 						<a >
 							 车位所属人：
-							 <span class="mui-pull-right">{{order.memberBean2.message.name}}</span>
+							 <span class="mui-pull-right" v-if="mem.message!=undefined">{{mem.message.name}}</span>
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
 						<a >
 							 所属人手机号：
-							 <span class="mui-pull-right">{{order.memberBean2.phonenumber}}</span>
+							 <span class="mui-pull-right">{{mem1.phonenumber}}</span>
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
 						<a class="mui-navigate-right">
 							车位地址：
-							<span class="mui-pull-right">{{order.carportBean.address}}</span>
+							<span class="mui-pull-right" v-if="order.carportBean!=undefined">{{order.carportBean.address}}</span>
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
 						<a class="mui-navigate-right">
 							车位编号：
-							<span class="mui-pull-right">{{order.carportBean.carportnumber}}</span>
+							<span class="mui-pull-right" v-if="order.carportBean!=undefined">{{order.carportBean.carportnumber}}</span>
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
 						<a >
 							 车牌号：
-							 <span class="mui-pull-right">{{order.carNumber}}</span>
+							 <span class="mui-pull-right" >{{order.carNumber}}</span>
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
@@ -71,7 +71,11 @@
 		
 		<div class="mui-card">
 			<div class="mui-row">
-				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" ><a href="http://localhost:8081/html/order/renterorders.html" style="color: #ffffff">确认<a></button>
+<<<<<<< HEAD
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" @click="com()">确认</button>
+=======
+				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-blue " style=" margin: 0.5rem 3rem;" ><a href="http://myzuul.com:8082" style="color: #ffffff">确认<a></button>
+>>>>>>> branch 'master' of https://github.com/wn464/shareparking.git
 				<button type="button" class="mui-col-sm-2 mui-btn mui-btn-danger " style=" margin: 0.5rem 3rem;">返回</button>
 			</div>
 		</div>
@@ -82,18 +86,38 @@
 	var app = new Vue({
 		el:"#app",
 		data:{
-			order:[]
+			order:[],
+			mem:{},
+			mem1:{}
 		},
 		created(){
 			axios.get("http://myzuul.com:9500/orders/order/"+oid)
 			.then(res=>{
 				console.info(res)
 				this.order=res.data
+<<<<<<< HEAD
+				this.mem=res.data.memberBean1
+				this.mem1=res.data.memberBean2
+=======
+				alert("停车成功")
+>>>>>>> branch 'master' of https://github.com/wn464/shareparking.git
 			})
 			.catch(res=>{
 				console.info(res)
 			})
-		}
+		},
+		methods:{
+			com:function(){
+				
+				axios.get("http://myzuul.com:9500/orders/order/com")
+				.then(res=>{
+					console.info(res)
+					this.order=res.data
+					window.location.href="http://myzuul.com:8082"
+					
+				})
+			},
+		},
 	})
 
 	</script>

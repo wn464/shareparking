@@ -27,10 +27,10 @@ public class AlipayConfig {
     public static String alipay_public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmClpgFHgrWHYSJJUevA4CeEjBgIS4deuFw2ZbIl7kCw8vQGjMeKxoUmNug4S2mHjX0ZrPYEU8Ejo6Y/1cRuGtewzWYKQ2VhBGjKFdUs8i/3XHTuK7KihG6KidYj1lKgaCG7PjoisXh50ZwHcUT5V1+X5MD/nn+M8G6wKdg5MYwZdNm0EyVxuk1O6MhB3s53Y68adApHAiQEHpOsvA74obMku4mJhx3wgFED71F5dO7aBy2geXgWv3iplh81Hquji+/wJaSIEyKFgLb/nkiwh1S1rZQ4k9YvKuc0RNLva8VHvWBsMEnhCvPOX3jpTPjV4FG8eVTRtwwYmbNzZCyQpdQIDAQAB";
 
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String notify_url = "http://k2481770p3.zicp.vip:53365/ret1";
+	public static String notify_url = "http://k2481770p3.zicp.vip:55427/ret1";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String return_url = "http://k2481770p3.zicp.vip:53365/ret";
+	public static String return_url = "http://k2481770p3.zicp.vip:55427/ret";
 	/*
 	 * http://2485201h3o.zicp.vip:59366 http://k2481770p3.zicp.vip:53365
 	 */
