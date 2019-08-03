@@ -18,17 +18,7 @@
 		<h1 class="mui-title">修改账号信息</h1>
 	</header>
 	<div class="mui-content" id="app">
-		<div class="mui-card">
-			<div class="mui-card-content">
-				<img src="../../img/1-1.png" height="100px" >上传头像
-			</div>
-			<div class="mui-card-footer">
-				<div class="mui-row">
-					<input type="file" accept="" />
-				</div>
-				
-			</div>
-		</div>
+		
 		<div class="mui-card">
 			<form class="mui-input-group">
 				<div class="mui-input-row">
@@ -66,10 +56,9 @@
 				var phone = $("#phone").val();
 				var address=$("#addresss").val();
 				var job = $("#job").val();
-			
-				 axios.put("http://myzuul.com:9500/member/updatemyself?phone="+phone+"&address="+address+"&job="+job)
+				 axios.put("http://myzuul.com:9500/member/updatemyself/"+phone+"/"+address+"/"+job)
 					.then(res=>{
-						alert(res.data)
+						window.location.href="http://myzuul.com/html/user/mymessage.html";
 					}) 
 			}
 	    	

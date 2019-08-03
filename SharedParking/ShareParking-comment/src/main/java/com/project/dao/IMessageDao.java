@@ -3,6 +3,7 @@ package com.project.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
 import com.project.Bean.MemberBean;
@@ -29,7 +30,7 @@ public interface IMessageDao {
     /*
      * 修改个人信息
      */
-   int updateMySelf(String address,String job,int m_id);
+   int updateMySelf(@Param("address")String address,@Param("job")String job,@Param("m_id")int m_id);
    
    /*
     *完善个人信息 

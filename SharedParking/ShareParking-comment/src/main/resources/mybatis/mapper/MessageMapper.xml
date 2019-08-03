@@ -38,10 +38,10 @@
     <update id="updateMySelf">
     	update message 
     		<set>
-    			<if test="address!=null and address!=''">
-    				address = #{address}
+    			<if test="address!=null">
+    				address = #{address},
     			</if>
-    			<if test="job!=null and job != ''">
+    			<if test="job!=null">
     				job = #{job}
     			</if>
     		</set>

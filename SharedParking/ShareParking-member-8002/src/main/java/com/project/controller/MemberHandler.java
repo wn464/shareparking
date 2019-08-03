@@ -53,8 +53,8 @@ public class MemberHandler {
 	 * 1：修改成功
 	 * 2：修改失败
 	 */
-	@PutMapping("/member/updatemyself")
-	public int updateMySelf(HttpSession session,String phone,String address,String job) {
+	@PutMapping("/member/updatemyself/{phone}/{address}/{job}")
+	public int updateMySelf(HttpSession session,@PathVariable("phone")String phone,@PathVariable("address")String address,@PathVariable("job")String job) {
 		System.out.println(address);
 		System.out.println(phone);
 		int id = (int) session.getAttribute("memberid");
@@ -122,4 +122,11 @@ public class MemberHandler {
 		return i;
 	}
 	
+	/*
+	 *查询用户数量
+	 */
+	@GetMapping("/member/all")
+	public int all() {
+		return service.all();
+	}
 }

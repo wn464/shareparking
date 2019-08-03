@@ -3,6 +3,8 @@ package com.project.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -27,7 +29,7 @@ public interface IMemberDao {
         修改手机号
      */
     @Update("update member set phonenumber = #{phone} where id=#{id}")
-    int updatePhone(int id,String phone);
+    int updatePhone(@Param("id")int id,@Param("phone")String phone);
 
     /*
         修改密码
@@ -45,5 +47,9 @@ public interface IMemberDao {
     @Insert("insert into member(username,password,phonenumber) values(#{username},#{password},#{phonenumber})")
     int reg(MemberBean member);
    
-   
+   /*
+    * 查询所有
+    */
+    @Select("select count(*) from member")
+    int all();
 }

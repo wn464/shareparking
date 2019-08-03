@@ -47,7 +47,7 @@ public class MemberServiceImpl implements IMemberService {
 	/*
 	 * 修改手机号
 	 */
-	@CacheEvict(value= {"updatePhone"},allEntries = true)
+	@CacheEvict(value= {"findById"},allEntries = true)
 	@Override
 	public int updatePhone(int id, String phone) {
 		// TODO Auto-generated method stub
@@ -57,7 +57,7 @@ public class MemberServiceImpl implements IMemberService {
 	/*
 	 * 修改密码
 	 */
-	@CacheEvict(value= {"updatePassword"},allEntries = true)
+	@CacheEvict(value= {"findById"},allEntries = true)
 	@Override
 	public int updatePassword(int id, String repassword) {
 		// TODO Auto-generated method stub
@@ -88,6 +88,7 @@ public class MemberServiceImpl implements IMemberService {
 	/*
 	 * 修改个人信息
 	 */
+	@CacheEvict(value= {"findById"},allEntries = true)
 	@Override
 	public int updateMySelf(String address, String job, int m_id,String phone) {
 		// TODO Auto-generated method stub
@@ -95,19 +96,32 @@ public class MemberServiceImpl implements IMemberService {
 		int phon = dao.updatePhone(m_id, phone);
 		return 1;
 	}
-
+	/*
+	 * 注册
+	 */
 	@Override
 	public int reg(MemberBean member) {
 		// TODO Auto-generated method stub
 		return dao.reg(member);
 	}
-
+	
+	/*
+	 * 完善信息
+	 */
+	@CacheEvict(value= {"findById"},allEntries = true)
 	@Override
 	public int complete(MessageBean mess) {
 		// TODO Auto-generated method stub
 		return dao1.complete(mess);
 	}
 	
-	
+	/*
+	 * 查询用户数量
+	 */
+	@Cacheable(value="all")
+	@Override
+	public int all() {
+		return dao.all();
+	}
 
 }
