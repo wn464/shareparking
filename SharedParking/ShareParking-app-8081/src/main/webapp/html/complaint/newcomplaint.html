@@ -57,7 +57,9 @@
 	var id = window.location.href.split("=")[1];
 	var arr = id.split("&");
  	var oid = arr[0];
+ 	alert(oid);
 	var mid = window.location.href.split("=")[2];
+	alert(mid);
 // 	window.location.href="miaosha.html?id="+id;
 //     alert(oid);
 //     alert(mid);
@@ -97,7 +99,7 @@
 	  		},
 	  		//跳转到投诉项目，进行投诉添加
 	  		newcomplaint:function(){	  			
-	  			if(mid==0){
+	  			if(mid==1){
 	  				var mem_j_id=vum.order.memberBean1;
  	  				var mem_y_id=vum.order.memberBean2;	  				
 	  			}else{
@@ -115,7 +117,7 @@
 	  			})
 	      		   .then(res=>{  
 	      			   alert("投诉成功！")
-	      			 location.reload();
+	      			 window.location.href="complaints.html";
 	      		   })
 	  		},
 		}

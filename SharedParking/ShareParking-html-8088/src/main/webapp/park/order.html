@@ -190,7 +190,7 @@
 			            productList: [], //所有数据
 			            totalPage: 3, // 统共页数，默认为1
 			            currentPage: 1, //当前页数 ，默认为1
-			            pageSize: 5, // 每页显示数量
+			            pageSize: 10, // 每页显示数量
 			            currentPageData: [], //当前页显示内容
 			            shabi:{}
 			        };
@@ -207,7 +207,7 @@
 				        this.getCurrentPageData();
 					}),
 					axios.post("http://myzuul.com:9500/user/user/username").then(res=>{
-						this.shabi=res.data.authority.id;
+						this.shabi=1;
 						console.info(this.shabi)
 					})
 				},

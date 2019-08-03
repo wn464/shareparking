@@ -9,7 +9,7 @@
 	
 	<!--查询日志 -->
 	<select id="selectLog"  resultMap="map">
-		select * from log 
+		select * from log ORDER BY id DESC
 	</select>
 	
 	

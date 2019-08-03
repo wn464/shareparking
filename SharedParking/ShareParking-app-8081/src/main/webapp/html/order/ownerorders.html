@@ -20,7 +20,7 @@
 	<div class="mui-content" id="app">
 		<ul class="mui-table-view" style="margin:10px 0" v-for="(item,index) in data">
 			<li class="mui-table-view-cell mui-media">
-				<a  @click="mess(item.id)">
+				<a  @click="mess(item.id,item.carportBean.price)">
 					<div class="mui-media-body">
 						订单号：{{item.orderNumber}}
 						<button type="button"  class="mui-pull-right mui-badge-blue">详情</button>
@@ -45,8 +45,8 @@
 				})	
 			},
 			methods :{
-				mess:function(id){
-					location.href="neworder2.html?id="+id;
+				mess:function(id,price){
+					location.href="neworder2.html?id="+id+"&price="+price;
 				} 	
 			}
 		})

@@ -28,7 +28,7 @@ public class ComplaintServiceImpl implements IComplaintService{
     @Autowired
     private CredibilityDao dao2;
 	@Override
-	@CacheEvict(value="*",allEntries = true)
+	@CacheEvict(value= {"findByStatus","findComNum","findByDate","findDateNum","findById","findBymid","findByoid"},allEntries = true)
 	public void addComplaint(ComplaintBean bean) {
 		dao.addComplaint(bean);
 		
@@ -45,7 +45,11 @@ public class ComplaintServiceImpl implements IComplaintService{
 		bean.setTotalNumber(totalNumber);
 		bean.setPage(page);
 		bean.setSize(size);
-		bean.setTotalPage((totalNumber%size==0)?(totalNumber/size):(totalNumber/size+1));
+		int totalPage=(totalNumber%size==0)?(totalNumber/size):(totalNumber/size+1);
+		if(totalPage==0) {
+			totalPage=1;
+		}
+		bean.setTotalPage(totalPage);
 		return bean;
 	}
 
@@ -146,9 +150,13 @@ public class ComplaintServiceImpl implements IComplaintService{
 		int ordersum1 = dao1.selectOrderNumberByMem1(id);
 		ordersum=ordersum+ordersum1;
 		double accu = accusesum;
-		double order = ordersum;
+		double order = ordersum+ordersum1;
+		System.out.println("定："+order);
+		System.out.println("toou:"+accu);
 		double credibility = 1-(accu/order);
-		dao2.updateCreOrder(credibility, id);
+		DecimalFormat df=new DecimalFormat(".##");
+		credibility=Double.valueOf(df.format(credibility));
+		dao2.updateCreOrder(credibility,id,order);
 	}
 
 	@Override
