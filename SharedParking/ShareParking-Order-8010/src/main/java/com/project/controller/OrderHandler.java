@@ -275,6 +275,7 @@ public class OrderHandler {
 	//确认订单，修改信誉表
 	@GetMapping("/order/com")
 	public int comfirm(HttpSession session) {
+		System.out.println("com");
 		int id =  (int) session.getAttribute("memberid");
 		int num1 = credibilityHandler.updateCreOrder(id);
 		System.out.println("---------------"+num1);
