@@ -24,7 +24,10 @@
 	<script type="text/javascript">
 	mui.init({
 		beforeback: function() {
-			map.close();
+			if(map!=null){
+				map.close();
+			}
+			
 	},
 	})
 	</script>
