@@ -98,9 +98,7 @@ public class MemberHandler {
 	public int reg(HttpSession session,MemberBean member) {
 		int i = service.reg(member);
 		
-		String name=(String) session.getAttribute("membername");
-		String message=name+"注册了";
-		 logservice.insertLog(name, message); 
+	
 		return i ;
 	}
 	

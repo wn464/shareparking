@@ -106,14 +106,8 @@ public class UserHandler {
             //判断是否存在这个用户
             UserBean bean = service.findByUserName(user.getUsername());
             if(bean==null) {
-                Object obj = new SimpleHash("MD5",user.getPassword(),user.getUsername(),1024);		//盐值
-                UserBean user1 = new UserBean();									//创建user对象 然后封装
-                user1.setUsername(user.getUsername());
-                user1.setPassword(obj.toString());
-                user1.setName(user.getName());
-                user1.setPhonenumber(user.getPhonenumber());
-                user1.setAuthority(user.getAuthority());
-                int i = service.addUser(user1);
+                
+                int i = service.addUser(user);
 
                 return 1; // 注册成功  跳转注册成功页面
             }else {

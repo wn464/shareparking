@@ -102,6 +102,9 @@ public class MemberServiceImpl implements IMemberService {
 	@Override
 	public int reg(MemberBean member) {
 		// TODO Auto-generated method stub
+		MessageBean mess = new MessageBean();
+		mess.setMember(member);
+		dao1.addMess(mess);
 		return dao.reg(member);
 	}
 	
