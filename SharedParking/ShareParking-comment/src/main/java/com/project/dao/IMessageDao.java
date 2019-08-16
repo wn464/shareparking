@@ -37,4 +37,11 @@ public interface IMessageDao {
     */
    @Update("update message set name=#{name},idCard=#{idCard},address=#{address},job=#{job} where m_id=#{member.id}")
    int complete(MessageBean mess);
+   
+   /*
+    *添加mess表
+    */
+   @Insert("insert into message(name,idCard,address,m_id,job) values(#{name},#{idCard},#{address},#{member.id},#{job})")
+   int addMess(MessageBean mess);
+
 }

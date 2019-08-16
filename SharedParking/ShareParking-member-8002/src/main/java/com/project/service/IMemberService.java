@@ -54,4 +54,6 @@ public interface IMemberService {
     int complete(MessageBean mess);
     
     int all();
+    
+
 }
