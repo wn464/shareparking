@@ -157,6 +157,7 @@ private CarportDao dao;
 	 * 
 	 */
 	@Override
+	@CacheEvict(value= {"findcarportbymemid","findcarportbycid","findcarportbyunkezu","findcarportbykezu","findcarportbymid","findcarportbycoordinate","findcarportbynumber","findcarportbyauditstatus"},allEntries = true)
 	@Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
 	public boolean addcarport(CarportBean carport) {
 		idao.addimages(carport.getImgs_id());
